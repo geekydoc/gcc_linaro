@@ -75,7 +75,7 @@ Next: <a href="Alignment-Output.html#Alignment-Output" accesskey="n" rel="next">
 </div>
 <hr>
 <a name="Assembler-Commands-for-Exception-Regions"></a>
-<h4 class="subsection">17.21.9 Assembler Commands for Exception Regions</h4>
+<h4 class="subsection">17.20.9 Assembler Commands for Exception Regions</h4>
 
 
 <p>This describes commands marking the start and the end of an exception
@@ -202,6 +202,14 @@ register and its mode are represented in Dwarf in non-contiguous
 locations, or if the register should be represented in more than one
 register in Dwarf.  Otherwise, this hook should return <code>NULL_RTX</code>.
 If not defined, the default is to return <code>NULL_RTX</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fDWARF_005fFRAME_005fREG_005fMODE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_DWARF_FRAME_REG_MODE</strong> <em>(int <var>regno</var>)</em></dt>
+<dd><p>Given a register, this hook should return the mode which the
+corresponding Dwarf frame register should have.  This is normally
+used to return a smaller mode than the raw mode to prevent call
+clobbered parts of a register altering the frame register size
 </p></dd></dl>
 
 <dl>

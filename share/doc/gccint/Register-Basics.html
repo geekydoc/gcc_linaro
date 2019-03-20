@@ -176,10 +176,9 @@ command options have been applied.
 <p>If the usage of an entire class of registers depends on the target
 flags, you may indicate this to GCC by using this macro to modify
 <code>fixed_regs</code> and <code>call_used_regs</code> to 1 for each of the
-registers in the classes which should not be used by GCC.  Also define
-the macro <code>REG_CLASS_FROM_LETTER</code> / <code>REG_CLASS_FROM_CONSTRAINT</code>
-to return <code>NO_REGS</code> if it
-is called with a letter for a class that shouldn&rsquo;t be used.
+registers in the classes which should not be used by GCC.  Also make
+<code>define_register_constraint</code>s return <code>NO_REGS</code> for constraints
+that shouldn&rsquo;t be used.
 </p>
 <p>(However, if this class is not included in <code>GENERAL_REGS</code> and all
 of the insn patterns whose constraints permit this class are

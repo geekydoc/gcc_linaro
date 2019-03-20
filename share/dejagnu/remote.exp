@@ -28,7 +28,6 @@ load_lib "tip.exp"
 load_lib "rsh.exp"
 load_lib "ssh.exp"
 load_lib "ftp.exp"
-load_lib "lava-tool.exp"
 
 # Open a connection to a remote host or target. This requires the target_info
 # array be filled in with the proper info to work.
@@ -59,8 +58,7 @@ proc remote_raw_open { args } {
 }
 
 # Close a spawn ID, and wait for the process to die.  If PID is not
-# -1, then if the process doesn't exit gracefully promptly, we kill
-# it.
+# -1, then the process is killed if it doesn't exit gracefully.
 #
 proc close_wait_program { program_id pid {wres_varname ""} } {
     if {$wres_varname != "" } {
@@ -78,7 +76,7 @@ proc close_wait_program { program_id pid {wres_varname ""} } {
 	set pgid "-$pid"
 	# Send SIGINT to give the program a better chance to interrupt
 	# whatever it might be doing and react to stdin closing.
-	# E.g., in case of GDB, this should get it back to the prompt.
+	# eg, in case of GDB, this should get it back to the prompt.
 	exec sh -c "exec > /dev/null 2>&1 && (kill -2 $pgid || kill -2 $pid)"
 
 	# If the program doesn't exit gracefully when stdin closes,
@@ -113,13 +111,14 @@ proc close_wait_program { program_id pid {wres_varname ""} } {
     return $res
 }
 
-# Run the specified COMMANDLINE on the local machine, redirecting input
-# to file INP (if non-empty), redirecting output to file OUTP (if non-empty),
-# and waiting TIMEOUT seconds for the command to complete before killing
-# it. A two-member list is returned; the first member is the exit status
-# of the command, the second is any output produced from the command
-# (if output is redirected, this may or may not be empty). If output is
-# redirected, both stdout and stderr will appear in the specified file.
+# Run the specified COMMANDLINE on the local machine, redirecting
+# input from file INP (if non-empty), redirecting output to file OUTP
+# (if non-empty), and waiting TIMEOUT seconds for the command to
+# complete before killing it. A list of two elements is returned: the
+# first member is the exit status of the command, the second is any
+# output produced from the command (if output is redirected, this may
+# or may not be empty). If output is redirected, both stdout and
+# stderr will appear in the specified file.
 #
 # Caveats: A pipeline is used if input or output is redirected. There
 # will be problems with killing the program if a pipeline is used. Either
@@ -128,8 +127,8 @@ proc close_wait_program { program_id pid {wres_varname ""} } {
 # the kill command will be invoked.
 #
 proc local_exec { commandline inp outp timeout } {
-    # Tcl's exec is a pile of crap. It does two very inappropriate things
-    # firstly, it has no business returning an error if the program being
+    # Tcl's exec is a pile of crap. It does two very inappropriate things.
+    # Firstly, it has no business returning an error if the program being
     # executed happens to write to stderr. Secondly, it appends its own
     # error messages to the output of the command if the process exits with
     # non-zero status.
@@ -139,10 +138,10 @@ proc local_exec { commandline inp outp timeout } {
     # redirected I/O. We also hope that nobody passes in a command that's
     # a pipeline, because spawn can't handle it.
     #
-    # We want to use spawn in most cases, because tcl's pipe mechanism
+    # We want to use spawn in most cases, because Tcl's pipe mechanism
     # doesn't assign process groups correctly and we can't reliably kill
-    # programs that bear children. We can't use tcl's exec because it has
-    # no way to timeout programs that hang. *sigh*
+    # programs that bear children. We can't use Tcl's exec because it has
+    # no way to timeout programs that hang.
     #
     # The expect command will close the connection when it sees
     # EOF. Closing the connection may send SIGHUP to the child and
@@ -159,8 +158,7 @@ proc local_exec { commandline inp outp timeout } {
 	    set result2 5
 	}
     } else {
-	# Can you say "uuuuuugly"? I knew you could!
-	# All in the name of non-infinite hangs.
+	# Use a command pipeline with open.
 	if { $inp != "" } {
 	    set inp "< $inp"
 	    set mode "r"
@@ -217,20 +215,17 @@ proc local_exec { commandline inp outp timeout } {
     expect {
 	-i $spawn_id -timeout $timeout -re ".+" {
 	    append output $expect_out(buffer)
-	    if { [string length $output] < 512000 } {
-		exp_continue -continue_timer
-	    }
+	    exp_continue -continue_timer
 	}
 	timeout {
-	    warning "program timed out."
+	    warning "program timed out"
 	}
 	eof {
 	    set got_eof 1
 	}
     }
 
-    # Uuuuuuugh. Now I'm getting really sick.
-    # If we didn't get an EOF, we have to kill the poor defenseless program.
+    # If we didn't get EOF, we have to kill the poor defenseless program.
     if { $got_eof } {
 	set pid -1
     }
@@ -301,6 +296,10 @@ proc remote_exec { hostname program args } {
 	set outp ""
     }
 
+    # call_remote below gets its timeout from global variable, so set
+    # it here.
+    global timeout
+    set old_timeout $timeout
     # 300 is probably a lame default.
     if { [llength $args] > 3 } {
 	set timeout "[lindex $args 3]"
@@ -312,10 +311,22 @@ proc remote_exec { hostname program args } {
 
     # Run it locally if appropriate.
     if { ![is_remote $hostname] } {
-	return [local_exec "$program $pargs" $inp $outp $timeout]
+	set result [local_exec "$program $pargs" $inp $outp $timeout]
     } else {
-	return [call_remote "" exec $hostname $program $pargs $inp $outp]
+        if { [board_info $hostname exists remotedir] } {
+            set remotedir [board_info $hostname remotedir]
+	    # This is a bit too clever. Join cd $remotedir and
+	    # $program on the command line with ';' and not '&&'. When
+	    # called, $program may be mkdir to initially create the
+	    # remote directory, in which case cd would fail.
+            set program "test -d $remotedir && cd $remotedir; $program"
+        }
+	set result [call_remote "" exec $hostname $program $pargs $inp $outp]
     }
+
+    # Restore timeout.
+    set timeout $old_timeout
+    return $result
 }
 
 proc standard_exec { hostname args } {
@@ -399,7 +410,7 @@ proc remote_reboot { host } {
     if {[board_info $host exists name]} {
 	set host [board_info $host name]
     }
-    if { [info proc ${host}_init] != "" } {
+    if { [info procs ${host}_init] != "" } {
 	${host}_init $host
     }
     return $status
@@ -446,6 +457,15 @@ proc remote_download { dest file args } {
 		return $destfile
 	    }
 	}
+    }
+    if { [board_info $dest exists remotedir] } {
+        set remotedir [board_info $dest remotedir]
+        set status [remote_exec $dest mkdir "-p $remotedir"]
+        if { [lindex $status 0] != 0 } {
+            perror "Couldn't create remote directory $remotedir on $dest"
+	    return ""
+        }
+        set destfile "$remotedir/$destfile"
     }
 
     return [call_remote "" download $dest $file $destfile]
@@ -542,8 +562,6 @@ proc standard_upload { dest srcfile destfile } {
     } else {
 	return $destfile
     }
-
-    return [rsh_upload $dest $srcfile $destfile]
 }
 
 # A standard procedure to call the appropriate function. It first looks
@@ -589,7 +607,7 @@ proc call_remote { type proc dest args } {
     if { $proc == "close" || $proc == "open" } {
 	foreach try "$high_prot [board_info $dest connect] telnet standard" {
 	    if { $try != "" } {
-		if { [info proc "${try}_${proc}"] != "" } {
+		if { [info procs "${try}_${proc}"] != "" } {
 		    verbose "call_remote calling ${try}_${proc}" 3
 		    set result [eval ${try}_${proc} \"$dest\" $args]
 		    break
@@ -597,7 +615,7 @@ proc call_remote { type proc dest args } {
 	    }
 	}
 	set ft "[board_info $dest file_transfer]"
-	if { [info proc "${ft}_${proc}"] != "" } {
+	if { [info procs "${ft}_${proc}"] != "" } {
 	    verbose "calling ${ft}_${proc} $dest $args" 3
 	    set result2 [eval ${ft}_${proc} \"$dest\" $args]
 	}
@@ -610,11 +628,10 @@ proc call_remote { type proc dest args } {
 	}
 	return $result
     }
-
     foreach try "${high_prot} [board_info $dest file_transfer] [board_info $dest connect] telnet standard" {
 	verbose "looking for ${try}_${proc}" 4
 	if { $try != "" } {
-	    if { [info proc "${try}_${proc}"] != "" } {
+	    if { [info procs "${try}_${proc}"] != "" } {
 		verbose "call_remote calling ${try}_${proc}" 3
 		return [eval ${try}_${proc} \"$dest\" $args]
 	    }
@@ -624,7 +641,6 @@ proc call_remote { type proc dest args } {
 	return ""
     }
     error "No procedure for '$proc' in call_remote"
-    return -1
 }
 
 # Send FILE through the existing session established to DEST.
@@ -722,7 +738,7 @@ proc standard_file { dest op args } {
     set file [lindex $args 0]
     verbose "dest in proc standard_file is $dest" 3
     if { ![is_remote $dest] } {
-	switch $op {
+	switch -- $op {
 	    cmp {
 		set otherfile [lindex $args 1]
 		if { [file exists $file] && [file exists $otherfile]
@@ -762,25 +778,25 @@ proc standard_file { dest op args } {
 			file delete -force -- $x
 		    }
 		}
-		return
+		return {}
 	    }
 	}
-    }
-    switch $op {
-	exists {
-	    # mmmm, quotes.
-	    set status [remote_exec $dest "sh -c 'exit `\[ -f $file \]`'"]
-	    return [lindex $status 0]
-	}
-	delete {
-	    set file ""
-	    # Allow multiple files to be deleted at once.
-	    foreach x $args {
-		append file " $x"
+    } else {
+	switch -- $op {
+	    exists {
+		set status [remote_exec $dest "test -f $file"]
+		return [expr {[lindex $status 0] == 0}]
 	    }
-	    verbose "remote_file deleting $file"
-	    set status [remote_exec $dest "rm -f $file"]
-	    return [lindex $status 0]
+	    delete {
+		set file ""
+		# Allow multiple files to be deleted at once.
+		foreach x $args {
+		    append file " $x"
+		}
+		verbose "remote_file deleting $file"
+		set status [remote_exec $dest "rm -f $file"]
+		return [lindex $status 0]
+	    }
 	}
     }
 }
@@ -1031,6 +1047,8 @@ proc remote_raw_load { dest prog args } {
 # remote_download and remote_exec to load and execute the program.
 #
 proc standard_load { dest prog args } {
+    global board_info
+
     if { [llength $args] > 0 } {
 	set pargs [lindex $args 0]
     } else {
@@ -1051,7 +1069,10 @@ proc standard_load { dest prog args } {
     }
 
     if {[is_remote $dest]} {
-	set remotefile "/tmp/[file tail $prog].[pid]"
+        if {![board_info $dest exists remotedir]} {
+            set board_info($dest,remotedir) "/tmp/runtest.[pid]"
+        }
+	set remotefile [file tail $prog]
 	set remotefile [remote_download $dest $prog $remotefile]
 	if { $remotefile == "" } {
 	    verbose -log "Download of $prog to [board_info $dest name] failed." 3
@@ -1169,7 +1190,7 @@ proc standard_wait { dest timeout } {
     return [list $status $output]
 }
 
-# This checks the value cotained in the variable named "variable" in
+# This checks the value contained in the variable named "variable" in
 # the calling procedure for output from the status wrapper and returns
 # a non-negative value if it exists; otherwise, it returns -1. The
 # output from the wrapper is removed from the variable.
@@ -1296,12 +1317,14 @@ proc remote_expect { board timeout args } {
     }
 
     if {$code == 1} {
-	if {[info exists string]} {send_user "ERROR OCCURED: $errorInfo $errorCode $string"}
+	if {[info exists string]} {
+	    perror "$errorInfo $errorCode $string"
+	}
 
 	if { $error_sect != "" } {
 	    set code [catch {uplevel $error_sect} string]
 	} else {
-	    warning "remote_expect statement without a default case?!"
+	    warning "remote_expect statement without a default case"
 	    return
 	}
     }

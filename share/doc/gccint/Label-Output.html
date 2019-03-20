@@ -75,7 +75,7 @@ Next: <a href="Initialization.html#Initialization" accesskey="n" rel="next">Init
 </div>
 <hr>
 <a name="Output-and-Generation-of-Labels"></a>
-<h4 class="subsection">17.21.4 Output and Generation of Labels</h4>
+<h4 class="subsection">17.20.4 Output and Generation of Labels</h4>
 
 <p>This is about outputting labels.
 </p>
@@ -307,6 +307,14 @@ that is, available for reference from other files.
 global; that is, available for reference from other files.
 </p>
 <p>The default implementation uses the TARGET_ASM_GLOBALIZE_LABEL target hook.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fASM_005fASSEMBLE_005fUNDEFINED_005fDECL"></a>Target Hook: <em>void</em> <strong>TARGET_ASM_ASSEMBLE_UNDEFINED_DECL</strong> <em>(FILE *<var>stream</var>, const char *<var>name</var>, const_tree <var>decl</var>)</em></dt>
+<dd><p>This target hook is a function to output to the stdio stream
+<var>stream</var> some commands that will declare the name associated with
+<var>decl</var> which is not defined in the current translation unit.  Most
+assemblers do not require anything to be output in this case.
 </p></dd></dl>
 
 <dl>

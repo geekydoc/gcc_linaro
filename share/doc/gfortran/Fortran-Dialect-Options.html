@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1999-2014 Free Software Foundation, Inc.
+<!-- Copyright (C) 1999-2015 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -87,7 +87,7 @@ accepted by the compiler:
 <dt><code>-ffree-form</code></dt>
 <dt><code>-ffixed-form</code></dt>
 <dd><a name="index-ffree_002dform"></a>
-<a name="index-fno_002dfixed_002dform"></a>
+<a name="index-ffixed_002dform"></a>
 <a name="index-options_002c-Fortran-dialect"></a>
 <a name="index-file-format_002c-free"></a>
 <a name="index-file-format_002c-fixed"></a>
@@ -201,6 +201,21 @@ lines in the source file. The default value is 132.
 functionality.
 </p>
 </dd>
+<dt><code>-fopenacc</code></dt>
+<dd><a name="index-fopenacc"></a>
+<a name="index-OpenACC"></a>
+<p>Enable the OpenACC extensions.  This includes OpenACC <code>!$acc</code>
+directives in free form and <code>c$acc</code>, <code>*$acc</code> and
+<code>!$acc</code> directives in fixed form, <code>!$</code> conditional
+compilation sentinels in free form and <code>c$</code>, <code>*$</code> and
+<code>!$</code> sentinels in fixed form, and when linking arranges for the
+OpenACC runtime library to be linked in.
+</p>
+<p>Note that this is an experimental feature, incomplete, and subject to
+change in future versions of GCC.  See
+<a href="https://gcc.gnu.org/wiki/OpenACC">https://gcc.gnu.org/wiki/OpenACC</a><!-- /@w --> for more information.
+</p>
+</dd>
 <dt><code>-fopenmp</code></dt>
 <dd><a name="index-fopenmp"></a>
 <a name="index-OpenMP"></a>
@@ -308,7 +323,7 @@ language standard, and warnings are given for the Fortran 77 features
 that are permitted but obsolescent in later standards. &lsquo;<samp>-std=f2008ts</samp>&rsquo;
 allows the Fortran 2008 standard including the additions of the 
 Technical Specification (TS) 29113 on Further Interoperability of Fortran
-with C.
+with C and TS 18508 on Additional Parallel Features in Fortran.
 </p>
 </dd>
 </dl>

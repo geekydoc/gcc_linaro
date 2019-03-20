@@ -516,6 +516,11 @@ in use.
 in use.
 </p>
 </dd>
+<dt><code>__SSP_EXPLICIT__</code></dt>
+<dd><p>This macro is defined, with value 4, when <samp>-fstack-protector-explicit</samp> is
+in use.
+</p>
+</dd>
 <dt><code>__SANITIZE_ADDRESS__</code></dt>
 <dd><p>This macro is defined, with value 1, when <samp>-fsanitize=address</samp>
 or <samp>-fsanitize=kernel-address</samp> are in use.
@@ -592,6 +597,11 @@ Annex G requirements (for example, because <samp>-fcx-limited-range</samp>
 was used).  If 1 or more, it indicates that it is intended to support
 those requirements; this does not mean that all relevant language
 features are supported by GCC.
+</p>
+</dd>
+<dt><code>__NO_MATH_ERRNO__</code></dt>
+<dd><p>This macro is defined if <samp>-fno-math-errno</samp> is used, or enabled
+by another option such as <samp>-ffast-math</samp> or by default.
 </p></dd>
 </dl>
 

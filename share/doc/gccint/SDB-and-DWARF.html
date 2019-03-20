@@ -75,7 +75,7 @@ Next: <a href="VMS-Debug.html#VMS-Debug" accesskey="n" rel="next">VMS Debug</a>,
 </div>
 <hr>
 <a name="Macros-for-SDB-and-DWARF-Output"></a>
-<h4 class="subsection">17.22.5 Macros for SDB and DWARF Output</h4>
+<h4 class="subsection">17.21.5 Macros for SDB and DWARF Output</h4>
 
 <p>Here are macros for SDB and DWARF output.
 </p>
@@ -146,12 +146,21 @@ tables, and hence is desirable if it works.
 
 <dl>
 <dt><a name="index-TARGET_005fDELAY_005fSCHED2"></a>Target Hook: <em>bool</em> <strong>TARGET_DELAY_SCHED2</strong></dt>
-<dd><p>True if sched2 is not to be run at its normal place.  This usually means it will be run as part of machine-specific reorg.
+<dd><p>True if sched2 is not to be run at its normal place.
+This usually means it will be run as part of machine-specific reorg.
 </p></dd></dl>
 
 <dl>
 <dt><a name="index-TARGET_005fDELAY_005fVARTRACK"></a>Target Hook: <em>bool</em> <strong>TARGET_DELAY_VARTRACK</strong></dt>
-<dd><p>True if vartrack is not to be run at its normal place.  This usually means it will be run as part of machine-specific reorg.
+<dd><p>True if vartrack is not to be run at its normal place.
+This usually means it will be run as part of machine-specific reorg.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fNO_005fREGISTER_005fALLOCATION"></a>Target Hook: <em>bool</em> <strong>TARGET_NO_REGISTER_ALLOCATION</strong></dt>
+<dd><p>True if register allocation and the passes
+following it should not be run.  Usually true only for virtual assembler
+targets.
 </p></dd></dl>
 
 <dl>

@@ -75,7 +75,7 @@ Next: <a href="Modifiers.html#Modifiers" accesskey="n" rel="next">Modifiers</a>,
 </div>
 <hr>
 <a name="Multiple-Alternative-Constraints"></a>
-<h4 class="subsection">6.42.2 Multiple Alternative Constraints</h4>
+<h4 class="subsubsection">6.43.3.2 Multiple Alternative Constraints</h4>
 <a name="index-multiple-alternative-constraints"></a>
 
 <p>Sometimes a single instruction has multiple alternative sets of possible
@@ -114,6 +114,20 @@ in it.
 <dd><p>Disparage severely the alternative that the &lsquo;<samp>!</samp>&rsquo; appears in.
 This alternative can still be used if it fits without reloading,
 but if reloading is needed, some other alternative will be used.
+</p>
+<a name="index-_005e-in-constraint"></a>
+<a name="index-caret"></a>
+</dd>
+<dt><code>^</code></dt>
+<dd><p>This constraint is analogous to &lsquo;<samp>?</samp>&rsquo; but it disparages slightly
+the alternative only if the operand with the &lsquo;<samp>^</samp>&rsquo; needs a reload.
+</p>
+<a name="index-_0024-in-constraint"></a>
+<a name="index-dollar-sign"></a>
+</dd>
+<dt><code>$</code></dt>
+<dd><p>This constraint is analogous to &lsquo;<samp>!</samp>&rsquo; but it disparages severely
+the alternative only if the operand with the &lsquo;<samp>$</samp>&rsquo; needs a reload.
 </p></dd>
 </dl>
 

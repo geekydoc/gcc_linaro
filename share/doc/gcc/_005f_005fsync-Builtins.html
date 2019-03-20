@@ -75,23 +75,27 @@ Next: <a href="_005f_005fatomic-Builtins.html#g_t_005f_005fatomic-Builtins" acce
 </div>
 <hr>
 <a name="Legacy-_005f_005fsync-Built_002din-Functions-for-Atomic-Memory-Access"></a>
-<h3 class="section">6.51 Legacy __sync Built-in Functions for Atomic Memory Access</h3>
+<h3 class="section">6.50 Legacy <code>__sync</code> Built-in Functions for Atomic Memory Access</h3>
 
 <p>The following built-in functions
 are intended to be compatible with those described
 in the <cite>Intel Itanium Processor-specific Application Binary Interface</cite>,
-section 7.4.  As such, they depart from the normal GCC practice of using
-the &lsquo;<samp>__builtin_</samp>&rsquo; prefix, and further that they are overloaded such that
-they work on multiple types.
+section 7.4.  As such, they depart from normal GCC practice by not using
+the &lsquo;<samp>__builtin_</samp>&rsquo; prefix and also by being overloaded so that they
+work on multiple types.
 </p>
 <p>The definition given in the Intel documentation allows only for the use of
-the types <code>int</code>, <code>long</code>, <code>long long</code> as well as their unsigned
+the types <code>int</code>, <code>long</code>, <code>long long</code> or their unsigned
 counterparts.  GCC allows any integral scalar or pointer type that is
 1, 2, 4 or 8 bytes in length.
 </p>
+<p>These functions are implemented in terms of the &lsquo;<samp>__atomic</samp>&rsquo;
+builtins (see <a href="_005f_005fatomic-Builtins.html#g_t_005f_005fatomic-Builtins">__atomic Builtins</a>).  They should not be used for new
+code which should use the &lsquo;<samp>__atomic</samp>&rsquo; builtins instead.
+</p>
 <p>Not all operations are supported by all target processors.  If a particular
 operation cannot be implemented on the target processor, a warning is
-generated and a call an external function is generated.  The external
+generated and a call to an external function is generated.  The external
 function carries the same name as the built-in version,
 with an additional suffix
 &lsquo;<samp>_<var>n</var></samp>&rsquo; where <var>n</var> is the size of the data type.
@@ -107,11 +111,10 @@ after the operation.
 <p>All of the routines are described in the Intel documentation to take
 &ldquo;an optional list of variables protected by the memory barrier&rdquo;.  It&rsquo;s
 not clear what is meant by that; it could mean that <em>only</em> the
-following variables are protected, or it could mean that these variables
-should in addition be protected.  At present GCC ignores this list and
-protects all variables that are globally accessible.  If in the future
-we make some use of this list, an empty list will continue to mean all
-globally accessible variables.
+listed variables are protected, or it could mean a list of additional
+variables to be protected.  The list is ignored by GCC which treats it as
+empty.  GCC interprets an empty list as meaning that all globally
+accessible variables should be protected.
 </p>
 <dl compact="compact">
 <dt><code><var>type</var> __sync_fetch_and_add (<var>type</var> *ptr, <var>type</var> value, ...)</code></dt>

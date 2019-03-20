@@ -1,5 +1,6 @@
-# Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001
-# 2002, 2003, 2005, 2006, 2007, 2008, 2009, 2010, 2012 Free Software Foundation, Inc.
+# Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
+# 2001 2002, 2003, 2005, 2006, 2007, 2008, 2009, 2010, 2012, 2016 Free
+# Software Foundation, Inc.
 #
 # This file is part of DejaGnu.
 #
@@ -29,15 +30,6 @@ proc mail_file { file to subject } {
     if {[file readable $file]} {
 	catch "exec mail -s \"$subject\" $to < $file"
     }
-}
-
-# Check for XML output flag or environment variable.
-#
-proc check_xml { } {
-    global env
-
-    set x "RUNTESTFLAGS"
-    return [format "%s" $env($x)]
 }
 
 # Insert DTD for xml format checking.
@@ -182,7 +174,7 @@ proc is_remote { board } {
     return 1
 }
 
-# If this is a canadian (3 way) cross. This means the tools are
+# If this is a Canadian (3 way) cross. This means the tools are
 # being built with a cross compiler for another host.
 #
 proc is3way {} {
@@ -280,7 +272,7 @@ proc unknown args {
 	if {[info exists errorInfo]} {
 	    send_error "The info on the error is:\n$errorInfo\n"
 	}
-	set exit_status 1
+	set exit_status 2
 	log_and_exit
     }
 }
@@ -303,7 +295,7 @@ proc clone_output { message } {
     }
 
     regsub "^\[ \t\]*(\[^ \t\]+).*$" "$message" "\\1" firstword
-    switch -glob "$firstword" {
+    switch -glob -- "$firstword" {
 	"PASS:" -
 	"XFAIL:" -
 	"KFAIL:" -
@@ -365,7 +357,6 @@ proc log_and_exit {} {
 	}
     }
     close_logs
-    cleanup
     verbose -log "runtest completed at [timestamp -format %c]"
     if {$mail_logs} {
 	if { ${tool} ==  "" } {
@@ -463,18 +454,6 @@ proc log_summary { args } {
     }
 }
 
-# Close all open files, remove temp file and core files.
-#
-proc cleanup {} {
-    global sum_file
-    global exit_status
-    global done_list
-    global subdir
-
-    #catch "exec rm -f [glob xgdb core *.x *.o *_soc a.out]"
-    #catch "exec rm -f [glob -nocomplain $subdir/*.o $subdir/*.x $subdir/*_soc]"
-}
-
 # Setup a flag to control whether a failure is expected or not
 #
 # Multiple target triplet patterns can be specified for targets
@@ -505,7 +484,7 @@ proc setup_xfail { args } {
 #
 # A bug report ID _MUST_ be specified, and is the first argument.
 # It still must be a string without '-' so we can be sure someone
-# did not just forget it and we end-up using a taget triple as
+# did not just forget it and we end-up using a target triple as
 # bug id.
 #
 # Multiple target triplet patterns can be specified for targets
@@ -641,7 +620,7 @@ proc clear_xfail { args } {
     set argc [ llength $args ]
     for { set i 0 } { $i < $argc } { incr i } {
 	set sub_arg [ lindex $args $i ]
-	switch -glob $sub_arg {
+	switch -glob -- $sub_arg {
 	    "*-*-*" {			# is a configuration triplet
 		if {[istarget $sub_arg]} {
 		    set xfail_flag 0
@@ -662,7 +641,7 @@ proc clear_kfail { args } {
     set argc [ llength $args ]
     for { set i 0 } { $i < $argc } { incr i } {
 	set sub_arg [ lindex $args $i ]
-	switch -glob $sub_arg {
+	switch -glob -- $sub_arg {
 	    "*-*-*" {			# is a configuration triplet
 		if {[istarget $sub_arg]} {
 		    set kfail_flag 0
@@ -730,7 +709,7 @@ proc record_test { type message args } {
 	xml_output "  </test>"
     }
 
-    switch $type {
+    switch -- $type {
 	PASS {
 	    if {$prms_id} {
 		set message [concat $message "\t(PRMS $prms_id)"]
@@ -1047,15 +1026,5 @@ proc incr_count { name args } {
 	incr test_counts($name,total) $count
     } else {
 	perror "$name doesn't exist in incr_count"
-    }
-}
-
-# Create an exp_continue proc if it doesn't exist.
-# For compatibility with old versions.
-#
-global argv0
-if {![info exists argv0]} {
-    proc exp_continue { } {
-	continue -expect
     }
 }

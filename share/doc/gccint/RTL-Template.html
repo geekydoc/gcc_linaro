@@ -147,7 +147,7 @@ expression.
 <p>When matching patterns, this is equivalent to
 </p>
 <div class="smallexample">
-<pre class="smallexample">(match_operand:<var>m</var> <var>n</var> &quot;scratch_operand&quot; <var>pred</var>)
+<pre class="smallexample">(match_operand:<var>m</var> <var>n</var> &quot;scratch_operand&quot; <var>constraint</var>)
 </pre></div>
 
 <p>but, when generating RTL, it produces a (<code>scratch</code>:<var>m</var>)
@@ -204,7 +204,7 @@ commutative arithmetic operators of RTL and whose mode is <var>mode</var>:
 <pre class="smallexample">int
 commutative_integer_operator (x, mode)
      rtx x;
-     enum machine_mode mode;
+     machine_mode mode;
 {
   enum rtx_code code = GET_CODE (x);
   if (GET_MODE (x) != mode)

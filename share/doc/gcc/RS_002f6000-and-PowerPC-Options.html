@@ -75,7 +75,7 @@ Next: <a href="RX-Options.html#RX-Options" accesskey="n" rel="next">RX Options</
 </div>
 <hr>
 <a name="IBM-RS_002f6000-and-PowerPC-Options"></a>
-<h4 class="subsection">3.17.38 IBM RS/6000 and PowerPC Options</h4>
+<h4 class="subsection">3.17.37 IBM RS/6000 and PowerPC Options</h4>
 <a name="index-RS_002f6000-and-PowerPC-Options"></a>
 <a name="index-IBM-RS_002f6000-and-PowerPC-Options"></a>
 
@@ -166,7 +166,7 @@ and to treat GPRs as 64-bit, doubleword quantities.  GCC defaults to
 </p>
 </dd>
 <dt><code>-mcpu=<var>cpu_type</var></code></dt>
-<dd><a name="index-mcpu-9"></a>
+<dd><a name="index-mcpu-8"></a>
 <p>Set architecture type, register usage, and
 instruction scheduling parameters for machine type <var>cpu_type</var>.
 Supported values for <var>cpu_type</var> are &lsquo;<samp>401</samp>&rsquo;, &lsquo;<samp>403</samp>&rsquo;,
@@ -199,7 +199,7 @@ following options:
 -mpopcntb -mpopcntd  -mpowerpc64 
 -mpowerpc-gpopt  -mpowerpc-gfxopt  -msingle-float -mdouble-float 
 -msimple-fpu -mstring  -mmulhw  -mdlmzb  -mmfpgpr -mvsx 
--mcrypto -mdirect-move -mpower8-fusion -mpower8-vector 
+-mcrypto -mdirect-move -mhtm -mpower8-fusion -mpower8-vector 
 -mquad-memory -mquad-memory-atomic
 </pre></div>
 
@@ -218,7 +218,7 @@ environment.
 </p>
 </dd>
 <dt><code>-mtune=<var>cpu_type</var></code></dt>
-<dd><a name="index-mtune-11"></a>
+<dd><a name="index-mtune-10"></a>
 <p>Set the instruction scheduling parameters for machine type
 <var>cpu_type</var>, but do not set the architecture type or register usage,
 as <samp>-mcpu=<var>cpu_type</var></samp> does.  The same
@@ -229,19 +229,19 @@ scheduling parameters set by <samp>-mtune</samp>.
 </p>
 </dd>
 <dt><code>-mcmodel=small</code></dt>
-<dd><a name="index-mcmodel_003dsmall-2"></a>
+<dd><a name="index-mcmodel_003dsmall-1"></a>
 <p>Generate PowerPC64 code for the small model: The TOC is limited to
 64k.
 </p>
 </dd>
 <dt><code>-mcmodel=medium</code></dt>
-<dd><a name="index-mcmodel_003dmedium-1"></a>
+<dd><a name="index-mcmodel_003dmedium"></a>
 <p>Generate PowerPC64 code for the medium model: The TOC and other static
 data may be up to a total of 4G in size.
 </p>
 </dd>
 <dt><code>-mcmodel=large</code></dt>
-<dd><a name="index-mcmodel_003dlarge-2"></a>
+<dd><a name="index-mcmodel_003dlarge-1"></a>
 <p>Generate PowerPC64 code for the large model: The TOC may be up to 4G
 in size.  Other data and code is only limited by the 64-bit address
 space.
@@ -259,7 +259,7 @@ enhancements.
 </p>
 <p>When <samp>-maltivec</samp> is used, rather than <samp>-maltivec=le</samp> or
 <samp>-maltivec=be</samp>, the element order for Altivec intrinsics such
-as <code>vec_splat</code>, <code>vec_extract</code>, and <code>vec_insert</code> will
+as <code>vec_splat</code>, <code>vec_extract</code>, and <code>vec_insert</code> 
 match array element order corresponding to the endianness of the
 target.  That is, element zero identifies the leftmost element in a
 vector register when targeting a big-endian platform, and identifies
@@ -275,7 +275,7 @@ the default when targeting a big-endian platform.
 </p>
 <p>The element order is used to interpret element numbers in Altivec
 intrinsics such as <code>vec_splat</code>, <code>vec_extract</code>, and
-<code>vec_insert</code>.  By default, these will match array element order
+<code>vec_insert</code>.  By default, these match array element order
 corresponding to the endianness for the target.
 </p>
 </dd>
@@ -288,7 +288,7 @@ currently ignored when targeting a big-endian platform.
 </p>
 <p>The element order is used to interpret element numbers in Altivec
 intrinsics such as <code>vec_splat</code>, <code>vec_extract</code>, and
-<code>vec_insert</code>.  By default, these will match array element order
+<code>vec_insert</code>.  By default, these match array element order
 corresponding to the endianness for the target.
 </p>
 </dd>
@@ -388,6 +388,15 @@ between the general purpose registers and the vector/scalar (VSX)
 registers that were added in version 2.07 of the PowerPC ISA.
 </p>
 </dd>
+<dt><code>-mhtm</code></dt>
+<dt><code>-mno-htm</code></dt>
+<dd><a name="index-mhtm"></a>
+<a name="index-mno_002dhtm"></a>
+<p>Enable (disable) the use of the built-in functions that allow direct
+access to the Hardware Transactional Memory (HTM) instructions that
+were added in version 2.07 of the PowerPC ISA.
+</p>
+</dd>
 <dt><code>-mpower8-fusion</code></dt>
 <dt><code>-mno-power8-fusion</code></dt>
 <dd><a name="index-mpower8_002dfusion"></a>
@@ -425,6 +434,42 @@ instructions.  The <samp>-mquad-memory-atomic</samp> option requires use of
 64-bit mode.
 </p>
 </dd>
+<dt><code>-mupper-regs-df</code></dt>
+<dt><code>-mno-upper-regs-df</code></dt>
+<dd><a name="index-mupper_002dregs_002ddf"></a>
+<a name="index-mno_002dupper_002dregs_002ddf"></a>
+<p>Generate code that uses (does not use) the scalar double precision
+instructions that target all 64 registers in the vector/scalar
+floating point register set that were added in version 2.06 of the
+PowerPC ISA.  <samp>-mupper-regs-df</samp> is turned on by default if you
+use any of the <samp>-mcpu=power7</samp>, <samp>-mcpu=power8</samp>, or
+<samp>-mvsx</samp> options.
+</p>
+</dd>
+<dt><code>-mupper-regs-sf</code></dt>
+<dt><code>-mno-upper-regs-sf</code></dt>
+<dd><a name="index-mupper_002dregs_002dsf"></a>
+<a name="index-mno_002dupper_002dregs_002dsf"></a>
+<p>Generate code that uses (does not use) the scalar single precision
+instructions that target all 64 registers in the vector/scalar
+floating point register set that were added in version 2.07 of the
+PowerPC ISA.  <samp>-mupper-regs-sf</samp> is turned on by default if you
+use either of the <samp>-mcpu=power8</samp> or <samp>-mpower8-vector</samp>
+options.
+</p>
+</dd>
+<dt><code>-mupper-regs</code></dt>
+<dt><code>-mno-upper-regs</code></dt>
+<dd><a name="index-mupper_002dregs"></a>
+<a name="index-mno_002dupper_002dregs"></a>
+<p>Generate code that uses (does not use) the scalar
+instructions that target all 64 registers in the vector/scalar
+floating point register set, depending on the model of the machine.
+</p>
+<p>If the <samp>-mno-upper-regs</samp> option is used, it turns off both
+<samp>-mupper-regs-sf</samp> and <samp>-mupper-regs-df</samp> options.
+</p>
+</dd>
 <dt><code>-mfloat-gprs=<var>yes/single/double/no</var></code></dt>
 <dt><code>-mfloat-gprs</code></dt>
 <dd><a name="index-mfloat_002dgprs"></a>
@@ -432,13 +477,13 @@ instructions.  The <samp>-mquad-memory-atomic</samp> option requires use of
 operations on the general-purpose registers for architectures that
 support it.
 </p>
-<p>The argument <var>yes</var> or <var>single</var> enables the use of
+<p>The argument &lsquo;<samp>yes</samp>&rsquo; or &lsquo;<samp>single</samp>&rsquo; enables the use of
 single-precision floating-point operations.
 </p>
-<p>The argument <var>double</var> enables the use of single and
+<p>The argument &lsquo;<samp>double</samp>&rsquo; enables the use of single and
 double-precision floating-point operations.
 </p>
-<p>The argument <var>no</var> disables floating-point operations on the
+<p>The argument &lsquo;<samp>no</samp>&rsquo; disables floating-point operations on the
 general-purpose registers.
 </p>
 <p>This option is currently only available on the MPC854x.
@@ -551,7 +596,7 @@ is not supported.
 </dd>
 <dt><code>-msoft-float</code></dt>
 <dt><code>-mhard-float</code></dt>
-<dd><a name="index-msoft_002dfloat-9"></a>
+<dd><a name="index-msoft_002dfloat-8"></a>
 <a name="index-mhard_002dfloat-4"></a>
 <p>Generate code that does not use (uses) the floating-point register set.
 Software floating-point emulation is provided if you use the
@@ -891,11 +936,11 @@ SVR4 ABI).
 </p>
 </dd>
 <dt><code>-mabi=<var>abi-type</var></code></dt>
-<dd><a name="index-mabi-3"></a>
+<dd><a name="index-mabi-2"></a>
 <p>Extend the current ABI with a particular extension, or remove such extension.
-Valid values are <var>altivec</var>, <var>no-altivec</var>, <var>spe</var>,
-<var>no-spe</var>, <var>ibmlongdouble</var>, <var>ieeelongdouble</var>,
-<var>elfv1</var>, <var>elfv2</var>.
+Valid values are &lsquo;<samp>altivec</samp>&rsquo;, &lsquo;<samp>no-altivec</samp>&rsquo;, &lsquo;<samp>spe</samp>&rsquo;,
+&lsquo;<samp>no-spe</samp>&rsquo;, &lsquo;<samp>ibmlongdouble</samp>&rsquo;, &lsquo;<samp>ieeelongdouble</samp>&rsquo;,
+&lsquo;<samp>elfv1</samp>&rsquo;, &lsquo;<samp>elfv2</samp>&rsquo;.
 </p>
 </dd>
 <dt><code>-mabi=spe</code></dt>
@@ -945,7 +990,7 @@ likely to fail in spectacular ways.
 <p>On System V.4 and embedded PowerPC systems assume that all calls to
 variable argument functions are properly prototyped.  Otherwise, the
 compiler must insert an instruction before every non-prototyped call to
-set or clear bit 6 of the condition code register (<var>CR</var>) to
+set or clear bit 6 of the condition code register (<code>CR</code>) to
 indicate whether floating-point values are passed in the floating-point
 registers in case the function takes variable arguments.  With
 <samp>-mprototype</samp>, only calls to prototyped variable argument functions
@@ -989,7 +1034,7 @@ compiling for a VxWorks system.
 </dd>
 <dt><code>-memb</code></dt>
 <dd><a name="index-memb"></a>
-<p>On embedded PowerPC systems, set the <var>PPC_EMB</var> bit in the ELF flags
+<p>On embedded PowerPC systems, set the <code>PPC_EMB</code> bit in the ELF flags
 header to indicate that &lsquo;<samp>eabi</samp>&rsquo; extended relocations are used.
 </p>
 </dd>
@@ -1014,12 +1059,12 @@ configured GCC using one of the &lsquo;<samp>powerpc*-*-eabi*</samp>&rsquo; opti
 <dt><code>-msdata=eabi</code></dt>
 <dd><a name="index-msdata_003deabi"></a>
 <p>On System V.4 and embedded PowerPC systems, put small initialized
-<code>const</code> global and static data in the &lsquo;<samp>.sdata2</samp>&rsquo; section, which
+<code>const</code> global and static data in the <code>.sdata2</code> section, which
 is pointed to by register <code>r2</code>.  Put small initialized
-non-<code>const</code> global and static data in the &lsquo;<samp>.sdata</samp>&rsquo; section,
+non-<code>const</code> global and static data in the <code>.sdata</code> section,
 which is pointed to by register <code>r13</code>.  Put small uninitialized
-global and static data in the &lsquo;<samp>.sbss</samp>&rsquo; section, which is adjacent to
-the &lsquo;<samp>.sdata</samp>&rsquo; section.  The <samp>-msdata=eabi</samp> option is
+global and static data in the <code>.sbss</code> section, which is adjacent to
+the <code>.sdata</code> section.  The <samp>-msdata=eabi</samp> option is
 incompatible with the <samp>-mrelocatable</samp> option.  The
 <samp>-msdata=eabi</samp> option also sets the <samp>-memb</samp> option.
 </p>
@@ -1027,9 +1072,9 @@ incompatible with the <samp>-mrelocatable</samp> option.  The
 <dt><code>-msdata=sysv</code></dt>
 <dd><a name="index-msdata_003dsysv"></a>
 <p>On System V.4 and embedded PowerPC systems, put small global and static
-data in the &lsquo;<samp>.sdata</samp>&rsquo; section, which is pointed to by register
+data in the <code>.sdata</code> section, which is pointed to by register
 <code>r13</code>.  Put small uninitialized global and static data in the
-&lsquo;<samp>.sbss</samp>&rsquo; section, which is adjacent to the &lsquo;<samp>.sdata</samp>&rsquo; section.
+<code>.sbss</code> section, which is adjacent to the <code>.sdata</code> section.
 The <samp>-msdata=sysv</samp> option is incompatible with the
 <samp>-mrelocatable</samp> option.
 </p>
@@ -1046,8 +1091,8 @@ same as <samp>-msdata=sysv</samp>.
 <dt><code>-msdata=data</code></dt>
 <dd><a name="index-msdata_003ddata"></a>
 <p>On System V.4 and embedded PowerPC systems, put small global
-data in the &lsquo;<samp>.sdata</samp>&rsquo; section.  Put small uninitialized global
-data in the &lsquo;<samp>.sbss</samp>&rsquo; section.  Do not use register <code>r13</code>
+data in the <code>.sdata</code> section.  Put small uninitialized global
+data in the <code>.sbss</code> section.  Do not use register <code>r13</code>
 to address small data however.  This is the default behavior unless
 other <samp>-msdata</samp> options are used.
 </p>
@@ -1057,8 +1102,8 @@ other <samp>-msdata</samp> options are used.
 <dd><a name="index-msdata_003dnone-2"></a>
 <a name="index-mno_002dsdata-2"></a>
 <p>On embedded PowerPC systems, put all initialized global and static data
-in the &lsquo;<samp>.data</samp>&rsquo; section, and all uninitialized data in the
-&lsquo;<samp>.bss</samp>&rsquo; section.
+in the <code>.data</code> section, and all uninitialized data in the
+<code>.bss</code> section.
 </p>
 </dd>
 <dt><code>-mblock-move-inline-limit=<var>num</var></code></dt>
@@ -1143,7 +1188,7 @@ This option sets flags for both the preprocessor and linker.
 </dd>
 <dt><code>-mrecip</code></dt>
 <dt><code>-mno-recip</code></dt>
-<dd><a name="index-mrecip-1"></a>
+<dd><a name="index-mrecip"></a>
 <p>This option enables use of the reciprocal estimate and
 reciprocal square root estimate instructions with additional
 Newton-Raphson steps to increase precision instead of doing a divide or
@@ -1159,20 +1204,52 @@ roots.
 </p>
 </dd>
 <dt><code>-mrecip=<var>opt</var></code></dt>
-<dd><a name="index-mrecip_003dopt-1"></a>
+<dd><a name="index-mrecip_003dopt"></a>
 <p>This option controls which reciprocal estimate instructions
 may be used.  <var>opt</var> is a comma-separated list of options, which may
 be preceded by a <code>!</code> to invert the option:
-<code>all</code>: enable all estimate instructions,
-<code>default</code>: enable the default instructions, equivalent to <samp>-mrecip</samp>,
-<code>none</code>: disable all estimate instructions, equivalent to <samp>-mno-recip</samp>;
-<code>div</code>: enable the reciprocal approximation instructions for both single and double precision;
-<code>divf</code>: enable the single-precision reciprocal approximation instructions;
-<code>divd</code>: enable the double-precision reciprocal approximation instructions;
-<code>rsqrt</code>: enable the reciprocal square root approximation instructions for both single and double precision;
-<code>rsqrtf</code>: enable the single-precision reciprocal square root approximation instructions;
-<code>rsqrtd</code>: enable the double-precision reciprocal square root approximation instructions;
 </p>
+<dl compact="compact">
+<dt>&lsquo;<samp>all</samp>&rsquo;</dt>
+<dd><p>Enable all estimate instructions.
+</p>
+</dd>
+<dt>&lsquo;<samp>default</samp>&rsquo;</dt>
+<dd><p>Enable the default instructions, equivalent to <samp>-mrecip</samp>.
+</p>
+</dd>
+<dt>&lsquo;<samp>none</samp>&rsquo;</dt>
+<dd><p>Disable all estimate instructions, equivalent to <samp>-mno-recip</samp>.
+</p>
+</dd>
+<dt>&lsquo;<samp>div</samp>&rsquo;</dt>
+<dd><p>Enable the reciprocal approximation instructions for both 
+single and double precision.
+</p>
+</dd>
+<dt>&lsquo;<samp>divf</samp>&rsquo;</dt>
+<dd><p>Enable the single-precision reciprocal approximation instructions.
+</p>
+</dd>
+<dt>&lsquo;<samp>divd</samp>&rsquo;</dt>
+<dd><p>Enable the double-precision reciprocal approximation instructions.
+</p>
+</dd>
+<dt>&lsquo;<samp>rsqrt</samp>&rsquo;</dt>
+<dd><p>Enable the reciprocal square root approximation instructions for both
+single and double precision.
+</p>
+</dd>
+<dt>&lsquo;<samp>rsqrtf</samp>&rsquo;</dt>
+<dd><p>Enable the single-precision reciprocal square root approximation instructions.
+</p>
+</dd>
+<dt>&lsquo;<samp>rsqrtd</samp>&rsquo;</dt>
+<dd><p>Enable the double-precision reciprocal square root approximation instructions.
+</p>
+</dd>
+</dl>
+
 <p>So, for example, <samp>-mrecip=all,!rsqrtd</samp> enables
 all of the reciprocal estimate instructions, except for the
 <code>FRSQRTE</code>, <code>XSRSQRTEDP</code>, and <code>XVRSQRTEDP</code> instructions
@@ -1192,9 +1269,9 @@ estimate that converges after three steps.
 </p>
 </dd>
 <dt><code>-mveclibabi=<var>type</var></code></dt>
-<dd><a name="index-mveclibabi-1"></a>
+<dd><a name="index-mveclibabi"></a>
 <p>Specifies the ABI type to use for vectorizing intrinsics using an
-external library.  The only type supported at present is <code>mass</code>,
+external library.  The only type supported at present is &lsquo;<samp>mass</samp>&rsquo;,
 which specifies to use IBM&rsquo;s Mathematical Acceleration Subsystem
 (MASS) libraries for vectorizing intrinsics using external libraries.
 GCC currently emits calls to <code>acosd2</code>, <code>acosf4</code>,
@@ -1230,14 +1307,14 @@ the floating-point number is too large to fit in an integer.
 <dt><code>-mno-pointers-to-nested-functions</code></dt>
 <dd><a name="index-mpointers_002dto_002dnested_002dfunctions"></a>
 <p>Generate (do not generate) code to load up the static chain register
-(<var>r11</var>) when calling through a pointer on AIX and 64-bit Linux
+(<code>r11</code>) when calling through a pointer on AIX and 64-bit Linux
 systems where a function pointer points to a 3-word descriptor giving
-the function address, TOC value to be loaded in register <var>r2</var>, and
-static chain value to be loaded in register <var>r11</var>.  The
+the function address, TOC value to be loaded in register <code>r2</code>, and
+static chain value to be loaded in register <code>r11</code>.  The
 <samp>-mpointers-to-nested-functions</samp> is on by default.  You cannot
 call through pointers to nested functions or pointers
 to functions compiled in other languages that use the static chain if
-you use the <samp>-mno-pointers-to-nested-functions</samp>.
+you use <samp>-mno-pointers-to-nested-functions</samp>.
 </p>
 </dd>
 <dt><code>-msave-toc-indirect</code></dt>

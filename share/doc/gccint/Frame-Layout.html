@@ -75,7 +75,7 @@ Next: <a href="Exception-Handling.html#Exception-Handling" accesskey="n" rel="ne
 </div>
 <hr>
 <a name="Basic-Stack-Layout"></a>
-<h4 class="subsection">17.10.1 Basic Stack Layout</h4>
+<h4 class="subsection">17.9.1 Basic Stack Layout</h4>
 <a name="index-stack-frame-layout"></a>
 <a name="index-frame-layout"></a>
 
@@ -226,7 +226,7 @@ as the frame pointer.  Most machines do not need to define it.
 address for the frame <var>count</var> steps up from the current frame, after
 the prologue.  <var>frameaddr</var> is the frame pointer of the <var>count</var>
 frame, or the frame pointer of the <var>count</var> - 1 frame if
-<code>RETURN_ADDR_IN_PREVIOUS_FRAME</code> is defined.
+<code>RETURN_ADDR_IN_PREVIOUS_FRAME</code> is nonzero.
 </p>
 <p>The value of the expression must always be the correct address when
 <var>count</var> is zero, but may be <code>NULL_RTX</code> if there is no way to
@@ -235,8 +235,9 @@ determine the return address of other frames.
 
 <dl>
 <dt><a name="index-RETURN_005fADDR_005fIN_005fPREVIOUS_005fFRAME"></a>Macro: <strong>RETURN_ADDR_IN_PREVIOUS_FRAME</strong></dt>
-<dd><p>Define this if the return address of a particular stack frame is accessed
-from the frame pointer of the previous stack frame.
+<dd><p>Define this macro to nonzero value if the return address of a particular
+stack frame is accessed from the frame pointer of the previous stack
+frame.  The zero default for this macro is suitable for most ports.
 </p></dd></dl>
 
 <dl>

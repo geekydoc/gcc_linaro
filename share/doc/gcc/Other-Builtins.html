@@ -75,8 +75,9 @@ Next: <a href="Target-Builtins.html#Target-Builtins" accesskey="n" rel="next">Ta
 </div>
 <hr>
 <a name="Other-Built_002din-Functions-Provided-by-GCC"></a>
-<h3 class="section">6.56 Other Built-in Functions Provided by GCC</h3>
+<h3 class="section">6.57 Other Built-in Functions Provided by GCC</h3>
 <a name="index-built_002din-functions-1"></a>
+<a name="index-_005f_005fbuiltin_005fcall_005fwith_005fstatic_005fchain"></a>
 <a name="index-_005f_005fbuiltin_005ffpclassify"></a>
 <a name="index-_005f_005fbuiltin_005fisfinite"></a>
 <a name="index-_005f_005fbuiltin_005fisnormal"></a>
@@ -667,6 +668,19 @@ depending on the arguments&rsquo; types.  For example:
 </dd></dl>
 
 <dl>
+<dt><a name="index-_005f_005fbuiltin_005fcall_005fwith_005fstatic_005fchain-1"></a>Built-in Function: <em><var>type</var></em> <strong>__builtin_call_with_static_chain</strong> <em>(<var>call_exp</var>, <var>pointer_exp</var>)</em></dt>
+<dd>
+<p>The <var>call_exp</var> expression must be a function call, and the
+<var>pointer_exp</var> expression must be a pointer.  The <var>pointer_exp</var>
+is passed to the function call in the target&rsquo;s static chain location.
+The result of builtin is the result of the function call.
+</p>
+<p><em>Note:</em> This builtin is only available for C.
+This builtin can be used to call Go closures from C.
+</p>
+</dd></dl>
+
+<dl>
 <dt><a name="index-_005f_005fbuiltin_005fchoose_005fexpr"></a>Built-in Function: <em><var>type</var></em> <strong>__builtin_choose_expr</strong> <em>(<var>const_exp</var>, <var>exp1</var>, <var>exp2</var>)</em></dt>
 <dd>
 <p>You can use the built-in function <code>__builtin_choose_expr</code> to
@@ -771,10 +785,6 @@ not otherwise permitted in a static initializer (for example,
 <code>0 &amp;&amp; foo ()</code>).  GCC must be more conservative about evaluating the
 built-in in this case, because it has no opportunity to perform
 optimization.
-</p>
-<p>Previous versions of GCC did not accept this built-in in data
-initializers.  The earliest version where it is completely safe is
-3.0.1.
 </p></dd></dl>
 
 <dl>

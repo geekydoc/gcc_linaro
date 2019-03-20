@@ -111,7 +111,7 @@ temporary beyond the end point defined by the language.  When a lifetime of
 a variable ends, and if the variable lives in memory, the optimizing compiler
 has the freedom to reuse its stack space with other temporaries or scoped
 local variables whose live range does not overlap with it. Legacy code extending
-local lifetime will likely to break with the stack reuse optimization.
+local lifetime is likely to break with the stack reuse optimization.
 </p>
 <p>For example,
 </p>
@@ -317,8 +317,8 @@ Use it to conform to a non-default application binary interface.
 </dd>
 <dt><code>-fshort-wchar</code></dt>
 <dd><a name="index-fshort_002dwchar"></a>
-<p>Override the underlying type for &lsquo;<samp>wchar_t</samp>&rsquo; to be &lsquo;<samp>short
-unsigned int</samp>&rsquo; instead of the default for the target.  This option is
+<p>Override the underlying type for <code>wchar_t</code> to be <code>short
+unsigned int</code> instead of the default for the target.  This option is
 useful for building programs to run under WINE.
 </p>
 <p><strong>Warning:</strong> the <samp>-fshort-wchar</samp> switch causes GCC to generate
@@ -351,7 +351,7 @@ variable declarations this way.
 </dd>
 <dt><code>-fno-ident</code></dt>
 <dd><a name="index-fno_002dident"></a>
-<p>Ignore the &lsquo;<samp>#ident</samp>&rsquo; directive.
+<p>Ignore the <code>#ident</code> directive.
 </p>
 </dd>
 <dt><code>-finhibit-size-directive</code></dt>
@@ -401,11 +401,11 @@ loader is not part of GCC; it is part of the operating system).  If
 the GOT size for the linked executable exceeds a machine-specific
 maximum size, you get an error message from the linker indicating that
 <samp>-fpic</samp> does not work; in that case, recompile with <samp>-fPIC</samp>
-instead.  (These maximums are 8k on the SPARC and 32k
-on the m68k and RS/6000.  The 386 has no such limit.)
+instead.  (These maximums are 8k on the SPARC, 28k on AArch64 and 32k
+on the m68k and RS/6000.  The x86 has no such limit.)
 </p>
 <p>Position-independent code requires special support, and therefore works
-only on certain machines.  For the 386, GCC supports PIC for System V
+only on certain machines.  For the x86, GCC supports PIC for System V
 but not for the Sun 386i.  Code generated for the IBM RS/6000 is always
 position-independent.
 </p>
@@ -417,7 +417,7 @@ are defined to 1.
 <dd><a name="index-fPIC"></a>
 <p>If supported for the target machine, emit position-independent code,
 suitable for dynamic linking and avoiding any limit on the size of the
-global offset table.  This option makes a difference on the m68k,
+global offset table.  This option makes a difference on AArch64, m68k,
 PowerPC and SPARC.
 </p>
 <p>Position-independent code requires special support, and therefore works
@@ -439,6 +439,25 @@ used during linking.
 <p><samp>-fpie</samp> and <samp>-fPIE</samp> both define the macros
 <code>__pie__</code> and <code>__PIE__</code>.  The macros have the value 1
 for <samp>-fpie</samp> and 2 for <samp>-fPIE</samp>.
+</p>
+</dd>
+<dt><code>-fno-plt</code></dt>
+<dd><a name="index-fno_002dplt"></a>
+<p>Do not use PLT for external function calls in position-independent code.
+Instead, load callee address at call site from GOT and branch to it.
+This leads to more efficient code by eliminating PLT stubs and exposing
+GOT load to optimizations.  On architectures such as 32-bit x86 where
+PLT stubs expect GOT pointer in a specific register, this gives more
+register allocation freedom to the compiler.  Lazy binding requires PLT:
+with <samp>-fno-plt</samp> all external symbols are resolved at load time.
+</p>
+<p>Alternatively, function attribute <code>noplt</code> can be used to avoid PLT
+for calls to specific external functions by marking those functions with
+this attribute.
+</p>
+<p>Additionally, a few targets also convert calls to those functions that are
+marked to not use the PLT to use the GOT instead for non-position independent
+code.
 </p>
 </dd>
 <dt><code>-fno-jump-tables</code></dt>
@@ -537,7 +556,7 @@ functions.  The profiling calls indicate where, conceptually, the
 inline function is entered and exited.  This means that addressable
 versions of such functions must be available.  If all your uses of a
 function are expanded inline, this may mean an additional expansion of
-code size.  If you use &lsquo;<samp>extern inline</samp>&rsquo; in your C code, an
+code size.  If you use <code>extern inline</code> in your C code, an
 addressable version of such functions must be provided.  (This is
 normally the case anyway, but if you get lucky and the optimizer always
 expands the functions inline, you might have gotten away without
@@ -555,7 +574,7 @@ routines generate output or allocate memory).
 <dd><a name="index-finstrument_002dfunctions_002dexclude_002dfile_002dlist"></a>
 
 <p>Set the list of functions that are excluded from instrumentation (see
-the description of <code>-finstrument-functions</code>).  If the file that
+the description of <samp>-finstrument-functions</samp>).  If the file that
 contains a function definition matches with one of <var>file</var>, then
 that function is not instrumented.  The match is done on substrings:
 if the <var>file</var> parameter is a substring of the file name, it is
@@ -568,18 +587,18 @@ considered to be a match.
 </pre></div>
 
 <p>excludes any inline function defined in files whose pathnames
-contain <code>/bits/stl</code> or <code>include/sys</code>.
+contain <samp>/bits/stl</samp> or <samp>include/sys</samp>.
 </p>
-<p>If, for some reason, you want to include letter <code>','</code> in one of
-<var>sym</var>, write <code>'\,'</code>. For example,
-<code>-finstrument-functions-exclude-file-list='\,\,tmp'</code>
+<p>If, for some reason, you want to include letter &lsquo;<samp>,</samp>&rsquo; in one of
+<var>sym</var>, write &lsquo;<samp>\,</samp>&rsquo;. For example,
+<samp>-finstrument-functions-exclude-file-list='\,\,tmp'</samp>
 (note the single quote surrounding the option).
 </p>
 </dd>
 <dt><code>-finstrument-functions-exclude-function-list=<var>sym</var>,<var>sym</var>,&hellip;</code></dt>
 <dd><a name="index-finstrument_002dfunctions_002dexclude_002dfunction_002dlist"></a>
 
-<p>This is similar to <code>-finstrument-functions-exclude-file-list</code>,
+<p>This is similar to <samp>-finstrument-functions-exclude-file-list</samp>,
 but this option sets the list of function names to be excluded from
 instrumentation.  The function name to be matched is its user-visible
 name, such as <code>vector&lt;int&gt; blah(const vector&lt;int&gt; &amp;)</code>, not the
@@ -602,9 +621,9 @@ detected on nearly all systems if there is only one stack.
 operating system or the language runtime must do that.  The switch causes
 generation of code to ensure that they see the stack being extended.
 </p>
-<p>You can additionally specify a string parameter: <code>no</code> means no
-checking, <code>generic</code> means force the use of old-style checking,
-<code>specific</code> means use the best checking method and is equivalent
+<p>You can additionally specify a string parameter: &lsquo;<samp>no</samp>&rsquo; means no
+checking, &lsquo;<samp>generic</samp>&rsquo; means force the use of old-style checking,
+&lsquo;<samp>specific</samp>&rsquo; means use the best checking method and is equivalent
 to bare <samp>-fstack-check</samp>.
 </p>
 <p>Old-style checking is a generic mechanism that requires no specific
@@ -623,7 +642,7 @@ generic implementation, code performance is hampered.
 </li></ol>
 
 <p>Note that old-style stack checking is also the fallback method for
-<code>specific</code> if no target support has been added in the compiler.
+&lsquo;<samp>specific</samp>&rsquo; if no target support has been added in the compiler.
 </p>
 </dd>
 <dt><code>-fstack-limit-register=<var>reg</var></code></dt>
@@ -652,7 +671,7 @@ The resulting program has a discontiguous stack which can only
 overflow if the program is unable to allocate any more memory.  This
 is most useful when running threaded programs, as it is no longer
 necessary to calculate a good stack size to use for each thread.  This
-is currently only implemented for the i386 and x86_64 back ends running
+is currently only implemented for the x86 targets running
 GNU/Linux.
 </p>
 <p>When code compiled with <samp>-fsplit-stack</samp> calls code compiled
@@ -680,17 +699,17 @@ Not all targets provide complete support for this switch.
 <dt><code>-ftls-model=<var>model</var></code></dt>
 <dd><a name="index-ftls_002dmodel"></a>
 <p>Alter the thread-local storage model to be used (see <a href="Thread_002dLocal.html#Thread_002dLocal">Thread-Local</a>).
-The <var>model</var> argument should be one of <code>global-dynamic</code>,
-<code>local-dynamic</code>, <code>initial-exec</code> or <code>local-exec</code>.
+The <var>model</var> argument should be one of &lsquo;<samp>global-dynamic</samp>&rsquo;,
+&lsquo;<samp>local-dynamic</samp>&rsquo;, &lsquo;<samp>initial-exec</samp>&rsquo; or &lsquo;<samp>local-exec</samp>&rsquo;.
 Note that the choice is subject to optimization: the compiler may use
 a more efficient model for symbols not visible outside of the translation
 unit, or if <samp>-fpic</samp> is not given on the command line.
 </p>
-<p>The default without <samp>-fpic</samp> is <code>initial-exec</code>; with
-<samp>-fpic</samp> the default is <code>global-dynamic</code>.
+<p>The default without <samp>-fpic</samp> is &lsquo;<samp>initial-exec</samp>&rsquo;; with
+<samp>-fpic</samp> the default is &lsquo;<samp>global-dynamic</samp>&rsquo;.
 </p>
 </dd>
-<dt><code>-fvisibility=<var>default|internal|hidden|protected</var></code></dt>
+<dt><code>-fvisibility=<span class="roman">[</span>default<span class="roman">|</span>internal<span class="roman">|</span>hidden<span class="roman">|</span>protected<span class="roman">]</span></code></dt>
 <dd><a name="index-fvisibility"></a>
 <p>Set the default ELF image symbol visibility to the specified option&mdash;all
 symbols are marked with this unless overridden within the code.
@@ -700,19 +719,17 @@ code, provide near-perfect API export and prevent symbol clashes.
 It is <strong>strongly</strong> recommended that you use this in any shared objects
 you distribute.
 </p>
-<p>Despite the nomenclature, <code>default</code> always means public; i.e.,
+<p>Despite the nomenclature, &lsquo;<samp>default</samp>&rsquo; always means public; i.e.,
 available to be linked against from outside the shared object.
-<code>protected</code> and <code>internal</code> are pretty useless in real-world
-usage so the only other commonly used option is <code>hidden</code>.
+&lsquo;<samp>protected</samp>&rsquo; and &lsquo;<samp>internal</samp>&rsquo; are pretty useless in real-world
+usage so the only other commonly used option is &lsquo;<samp>hidden</samp>&rsquo;.
 The default if <samp>-fvisibility</samp> isn&rsquo;t specified is
-<code>default</code>, i.e., make every
-symbol public&mdash;this causes the same behavior as previous versions of
-GCC.
+&lsquo;<samp>default</samp>&rsquo;, i.e., make every symbol public.
 </p>
 <p>A good explanation of the benefits offered by ensuring ELF
 symbols have the correct visibility is given by &ldquo;How To Write
 Shared Libraries&rdquo; by Ulrich Drepper (which can be found at
-<a href="http://people.redhat.com/~drepper/">http://people.redhat.com/~drepper/</a><!-- /@w -->)&mdash;however a superior
+<a href="http://www.akkadia.org/drepper/">http://www.akkadia.org/drepper/</a><!-- /@w -->)&mdash;however a superior
 solution made possible by this option to marking things hidden when
 the default is public is to make the default hidden and mark things
 public.  This is the norm with DLLs on Windows and with <samp>-fvisibility=hidden</samp>
@@ -722,10 +739,10 @@ identical syntax.  This is a great boon to those working with
 cross-platform projects.
 </p>
 <p>For those adding visibility support to existing code, you may find
-&lsquo;<samp>#pragma GCC visibility</samp>&rsquo; of use.  This works by you enclosing
+<code>#pragma GCC visibility</code> of use.  This works by you enclosing
 the declarations you wish to set visibility for with (for example)
-&lsquo;<samp>#pragma GCC visibility push(hidden)</samp>&rsquo; and
-&lsquo;<samp>#pragma GCC visibility pop</samp>&rsquo;.
+<code>#pragma GCC visibility push(hidden)</code> and
+<code>#pragma GCC visibility pop</code>.
 Bear in mind that symbol visibility should be viewed <strong>as
 part of the API interface contract</strong> and thus all new code should
 always specify visibility when it is not the default; i.e., declarations
@@ -738,10 +755,10 @@ Note that due to ISO C++ specification requirements, <code>operator new</code> a
 <p>Be aware that headers from outside your project, in particular system
 headers and headers from any other library you use, may not be
 expecting to be compiled with visibility other than the default.  You
-may need to explicitly say &lsquo;<samp>#pragma GCC visibility push(default)</samp>&rsquo;
+may need to explicitly say <code>#pragma GCC visibility push(default)</code>
 before including any such headers.
 </p>
-<p>&lsquo;<samp>extern</samp>&rsquo; declarations are not affected by <samp>-fvisibility</samp>, so
+<p><code>extern</code> declarations are not affected by <samp>-fvisibility</samp>, so
 a lot of code can be recompiled with <samp>-fvisibility=hidden</samp> with
 no modifications.  However, this means that calls to <code>extern</code>
 functions with no explicit visibility use the PLT, so it is more

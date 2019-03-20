@@ -1,6 +1,5 @@
 # Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001
-# 2002, 2003, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014
-# Free Software Foundation, Inc.
+# 2002, 2003, 2005, 2006, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
 #
 # This file is part of DejaGnu.
 #
@@ -18,16 +17,14 @@
 # along with DejaGnu; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street - Fifth Floor, Boston, MA 02110-1301, USA.
 
+# This file was written by Rob Savoye <rob@welcomehome.org>.
+
 if {![info exists board]} {
     error "must set $board before loading unix.exp"
 }
 
 # For rcp_download, rsh_exec.
 load_lib remote.exp
-
-proc make_absolute {pathname} {
-    file join [pwd] $pathname
-}
 
 #
 # unix_load -- load the program and execute it
@@ -82,6 +79,11 @@ proc unix_load { dest prog args } {
 	verbose -log "Setting LD_LIBRARY_PATH to $ld_library_path:$orig_ld_library_path" 2
 	verbose -log "Execution timeout is: $test_timeout" 2
 
+	# Prepend shell name (e.g., qemu emulator) to the command.
+	if {[board_info $dest exists exec_shell]} {
+	    set command "[board_info $dest exec_shell] $command"
+	}
+
 	set id [remote_spawn $dest "$command" "readonly"]
 	if { $id < 0 } {
 	    set output "remote_spawn failed"
@@ -91,13 +93,6 @@ proc unix_load { dest prog args } {
 	    set output [lindex $status 1]
 	    set status [lindex $status 0]
 	}
-
-	# Don't try to execute a data file, which is used by some tests
-	# to compare output.
-	if {[regexp "^\.txt$" $prog]} {
-	    return ""
-	}
-
 	# Unset them so we don't potentially get hosed when we try to run a
 	# non-testcase executable. (Setting LD_LIBRARY_PATH is the wrong
 	# fix in the first place; this just tries to minimize the resulting
@@ -106,32 +101,39 @@ proc unix_load { dest prog args } {
 	    setenv LD_LIBRARY_PATH $orig_ld_library_path
 	    setenv SHLIB_PATH $orig_ld_library_path
 	}
-    } elseif {[board_info $dest exists shared_dir]
-	      && [string match "[board_info $dest shared_dir]/*" "[make_absolute $prog]"]} {
-	if {[board_info $dest exists remote_sim]} {
-	    set status [remote_exec $dest "[board_info $dest remote_sim] [make_absolute $prog]" $parg $inp]
-	} else {
-	    set status [remote_exec $dest "[make_absolute $prog]" $parg $inp]
-	}
-	if { [lindex $status 0] < 0 } {
-	    verbose -log "Couldn't execute [make_absolute $prog], [lindex $status 1]" 3
-	    return [list "unresolved" ""]
-	}
-	set output [lindex $status 1]
-	set status [lindex $status 0]
     } else {
-	set remotefile "/tmp/[file tail $prog].[pid]"
+	set remotefile [file tail $prog]
 	set remotefile [remote_download $dest $prog $remotefile]
 	if { $remotefile == "" } {
 	    verbose -log "Download of $prog to [board_info $dest name] failed." 3
 	    return [list "unresolved" ""]
 	}
+	if {[board_info $dest exists remote_link]} {
+	    if {[[board_info $dest remote_link] $remotefile]} {
+		verbose -log "Couldn't do remote link"
+		remote_exec $dest "\\rm -f $remotefile"
+		return [list "unresolved" ""]
+	    }
 
-	if {[board_info $dest exists remote_sim]} {
-	    set status [remote_exec $dest "[board_info $dest remote_sim] $remotefile" $parg $inp]
+	    verbose "$prog linked ok" 3
 	} else {
-	    set status [remote_exec $dest "$remotefile" $parg $inp]
+	    # rcp's to lynx seem not to get marked executable
+	    set status [remote_exec $dest "chmod +x $remotefile"]
+	    if { [lindex $status 0] != 0 } {
+		remote_file $dest delete ${remotefile}.o $remotefile
+		verbose -log "chmod +x of $prog on $dest failed." 3
+		return [list "unresolved" ""]
+	    }
 	}
+
+	# Prepend shell name (e.g., qemu emulator) to the command.
+	if {[board_info $dest exists exec_shell]} {
+	    set remotecmd "[board_info $dest exec_shell] $remotefile"
+	} else {
+	    set remotecmd "$remotefile"
+	}
+
+	set status [remote_exec $dest "$remotecmd" $parg $inp]
 	remote_file $dest delete $remotefile.o $remotefile
 	if { [lindex $status 0] < 0 } {
 	    verbose -log "Couldn't execute $prog, [lindex $status 1]" 3
@@ -156,4 +158,5 @@ proc unix_load { dest prog args } {
     return [list $result $output]
 }
 
+set_board_info remotedir "/tmp/runtest.[pid]"
 set_board_info protocol  "unix"

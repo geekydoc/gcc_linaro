@@ -33,7 +33,7 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
 <link href="Explicit-Reg-Vars.html#Explicit-Reg-Vars" rel="up" title="Explicit Reg Vars">
-<link href="Alternate-Keywords.html#Alternate-Keywords" rel="next" title="Alternate Keywords">
+<link href="Size-of-an-asm.html#Size-of-an-asm" rel="next" title="Size of an asm">
 <link href="Global-Reg-Vars.html#Global-Reg-Vars" rel="prev" title="Global Reg Vars">
 <style type="text/css">
 <!--
@@ -75,7 +75,7 @@ Previous: <a href="Global-Reg-Vars.html#Global-Reg-Vars" accesskey="p" rel="prev
 </div>
 <hr>
 <a name="Specifying-Registers-for-Local-Variables"></a>
-<h4 class="subsection">6.44.2 Specifying Registers for Local Variables</h4>
+<h4 class="subsubsection">6.43.5.2 Specifying Registers for Local Variables</h4>
 <a name="index-local-variables_002c-specifying-registers"></a>
 <a name="index-specifying-registers-for-local-variables"></a>
 <a name="index-registers-for-local-variables"></a>
@@ -91,13 +91,13 @@ like this:
 that this is the same syntax used for defining global register
 variables, but for a local variable it appears within a function.
 </p>
-<p>Naturally the register name is cpu-dependent, but this is not a
+<p>Naturally the register name is CPU-dependent, but this is not a
 problem, since specific registers are most often useful with explicit
 assembler instructions (see <a href="Extended-Asm.html#Extended-Asm">Extended Asm</a>).  Both of these things
 generally require that you conditionalize your program according to
-cpu type.
+CPU type.
 </p>
-<p>In addition, operating systems on one type of cpu may differ in how they
+<p>In addition, operating systems on one type of CPU may differ in how they
 name the registers; then you need additional conditionals.  For
 example, some 68000 operating systems call this register <code>%a5</code>.
 </p>
@@ -107,31 +107,49 @@ the variable&rsquo;s value is not live.
 </p>
 <p>This option does not guarantee that GCC generates code that has
 this variable in the register you specify at all times.  You may not
-code an explicit reference to this register in the <em>assembler
-instruction template</em> part of an <code>asm</code> statement and assume it
-always refers to this variable.  However, using the variable as an
-<code>asm</code> <em>operand</em> guarantees that the specified register is used
-for the operand.
+code an explicit reference to this register in the assembler
+instruction template part of an <code>asm</code> statement and assume it
+always refers to this variable.
+However, using the variable as an input or output operand to the <code>asm</code>
+guarantees that the specified register is used for that operand.  
+See <a href="Extended-Asm.html#Extended-Asm">Extended Asm</a>, for more information.
 </p>
 <p>Stores into local register variables may be deleted when they appear to be dead
 according to dataflow analysis.  References to local register variables may
 be deleted or moved or simplified.
 </p>
-<p>As for global register variables, it&rsquo;s recommended that you choose a
+<p>As with global register variables, it is recommended that you choose a
 register that is normally saved and restored by function calls on
-your machine, so that library routines will not clobber it.  A common
-pitfall is to initialize multiple call-clobbered registers with
-arbitrary expressions, where a function call or library call for an
-arithmetic operator overwrites a register value from a previous
-assignment, for example <code>r0</code> below:
-</p><div class="smallexample">
+your machine, so that library routines will not clobber it.  
+</p>
+<p>Sometimes when writing inline <code>asm</code> code, you need to make an operand be a 
+specific register, but there&rsquo;s no matching constraint letter for that 
+register. To force the operand into that register, create a local variable 
+and specify the register in the variable&rsquo;s declaration. Then use the local 
+variable for the asm operand and specify any constraint letter that matches 
+the register:
+</p>
+<div class="smallexample">
 <pre class="smallexample">register int *p1 asm (&quot;r0&quot;) = &hellip;;
 register int *p2 asm (&quot;r1&quot;) = &hellip;;
+register int *result asm (&quot;r0&quot;);
+asm (&quot;sysint&quot; : &quot;=r&quot; (result) : &quot;0&quot; (p1), &quot;r&quot; (p2));
 </pre></div>
 
-<p>In those cases, a solution is to use a temporary variable for
-each arbitrary expression.   See <a href="Extended-Asm.html#Example-of-asm-with-clobbered-asm-reg">Example of asm with clobbered asm reg</a>.
+<p><em>Warning:</em> In the above example, be aware that a register (for example r0) can be 
+call-clobbered by subsequent code, including function calls and library calls 
+for arithmetic operators on other variables (for example the initialization 
+of p2). In this case, use temporary variables for expressions between the 
+register assignments:
 </p>
+<div class="smallexample">
+<pre class="smallexample">int t1 = &hellip;;
+register int *p1 asm (&quot;r0&quot;) = &hellip;;
+register int *p2 asm (&quot;r1&quot;) = t1;
+register int *result asm (&quot;r0&quot;);
+asm (&quot;sysint&quot; : &quot;=r&quot; (result) : &quot;0&quot; (p1), &quot;r&quot; (p2));
+</pre></div>
+
 <hr>
 <div class="header">
 <p>

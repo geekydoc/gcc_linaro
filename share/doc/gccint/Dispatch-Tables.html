@@ -75,7 +75,7 @@ Next: <a href="Exception-Region-Output.html#Exception-Region-Output" accesskey="
 </div>
 <hr>
 <a name="Output-of-Dispatch-Tables"></a>
-<h4 class="subsection">17.21.8 Output of Dispatch Tables</h4>
+<h4 class="subsection">17.20.8 Output of Dispatch Tables</h4>
 
 <p>This concerns dispatch tables.
 </p>
@@ -173,7 +173,7 @@ to be broken up according to function.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fASM_005fUNWIND_005fEMIT"></a>Target Hook: <em>void</em> <strong>TARGET_ASM_UNWIND_EMIT</strong> <em>(FILE *<var>stream</var>, rtx <var>insn</var>)</em></dt>
+<dt><a name="index-TARGET_005fASM_005fUNWIND_005fEMIT"></a>Target Hook: <em>void</em> <strong>TARGET_ASM_UNWIND_EMIT</strong> <em>(FILE *<var>stream</var>, rtx_insn *<var>insn</var>)</em></dt>
 <dd><p>This target hook emits assembly directives required to unwind the
 given instruction.  This is only used when <code>TARGET_EXCEPT_UNWIND_INFO</code>
 returns <code>UI_TARGET</code>.

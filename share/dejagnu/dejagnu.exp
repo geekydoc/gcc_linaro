@@ -20,7 +20,7 @@
 # This file was written by Rob Savoye <rob@welcomehome.org>.
 
 # A hairy pattern to recognize text.
-set text "\[- A-Za-z0-9\.\;\"\_\:\'\`\(\)\!\#\=\+\?\&\*]"
+set text "\[- A-Za-z0-9\.\;\"\_\:\'\`\(\)\!\#\=\+\?\&\*<>]"
 
 set SIZE size
 if { [which $SIZE] == 0 } {
@@ -83,7 +83,7 @@ proc host_compile {compline} {
     # prune common warnings and other stuff we can safely ignore
     set comp_output [prune_warnings $comp_output]
 
-    # Trim multiple CR/LF pairs out to keep things consistant
+    # Trim multiple CR/LF pairs out to keep things consistent
     regsub "^\[\r\n\]+" $comp_output "" comp_output
 
     # if we got a compiler error, log it
@@ -98,8 +98,8 @@ proc host_compile {compline} {
     return ${comp_output}
 }
 
-# Execute the executable file, and anaylyse the output for the
-# test state keywords.
+# Execute the executable file, and analyse the output for the test
+# state keywords.
 #    Returns:
 #	A "" (empty) string if everything worked, or an error message
 #	if there was a problem.

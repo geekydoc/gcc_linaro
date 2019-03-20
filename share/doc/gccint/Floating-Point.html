@@ -75,7 +75,7 @@ Next: <a href="Mode-Switching.html#Mode-Switching" accesskey="n" rel="next">Mode
 </div>
 <hr>
 <a name="Cross-Compilation-and-Floating-Point"></a>
-<h3 class="section">17.23 Cross Compilation and Floating Point</h3>
+<h3 class="section">17.22 Cross Compilation and Floating Point</h3>
 <a name="index-cross-compilation-and-floating-point"></a>
 <a name="index-floating-point-and-cross-compilation"></a>
 
@@ -131,7 +131,7 @@ floating point format supports negative zeroes and/or NaNs,
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-REAL_005fVALUE_005fATOF"></a>Macro: <em>REAL_VALUE_TYPE</em> <strong>REAL_VALUE_ATOF</strong> <em>(const char *<var>string</var>, enum machine_mode <var>mode</var>)</em></dt>
+<dt><a name="index-REAL_005fVALUE_005fATOF"></a>Macro: <em>REAL_VALUE_TYPE</em> <strong>REAL_VALUE_ATOF</strong> <em>(const char *<var>string</var>, machine_mode <var>mode</var>)</em></dt>
 <dd><p>Converts <var>string</var> into a floating point number in the target machine&rsquo;s
 representation for mode <var>mode</var>.  This routine can handle both
 decimal and hexadecimal floating point constants, using the syntax
@@ -177,20 +177,6 @@ target&rsquo;s floating point format cannot represent infinity, it will call
 <dl>
 <dt><a name="index-REAL_005fVALUE_005fABS"></a>Macro: <em>REAL_VALUE_TYPE</em> <strong>REAL_VALUE_ABS</strong> <em>(REAL_VALUE_TYPE <var>x</var>)</em></dt>
 <dd><p>Returns the absolute value of <var>x</var>.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-REAL_005fVALUE_005fTO_005fINT"></a>Macro: <em>void</em> <strong>REAL_VALUE_TO_INT</strong> <em>(HOST_WIDE_INT <var>low</var>, HOST_WIDE_INT <var>high</var>, REAL_VALUE_TYPE <var>x</var>)</em></dt>
-<dd><p>Converts a floating point value <var>x</var> into a double-precision integer
-which is then stored into <var>low</var> and <var>high</var>.  If the value is not
-integral, it is truncated.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-REAL_005fVALUE_005fFROM_005fINT"></a>Macro: <em>void</em> <strong>REAL_VALUE_FROM_INT</strong> <em>(REAL_VALUE_TYPE <var>x</var>, HOST_WIDE_INT <var>low</var>, HOST_WIDE_INT <var>high</var>, enum machine_mode <var>mode</var>)</em></dt>
-<dd><p>Converts a double-precision integer found in <var>low</var> and <var>high</var>,
-into a floating point value which is then stored into <var>x</var>.  The
-value is truncated to fit in mode <var>mode</var>.
 </p></dd></dl>
 
 <hr>

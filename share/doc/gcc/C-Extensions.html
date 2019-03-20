@@ -140,6 +140,8 @@ extensions, accepted by GCC in C90 mode and in C++.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Pointer-Arith.html#Pointer-Arith">Pointer Arith</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Arithmetic on <code>void</code>-pointers and function pointers.
 </td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Pointers-to-Arrays.html#Pointers-to-Arrays">Pointers to Arrays</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Pointers to arrays with qualifiers work as expected.
+</td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Initializers.html#Initializers">Initializers</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Non-constant initializers.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Compound-Literals.html#Compound-Literals">Compound Literals</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Compound literals give structures, unions
@@ -155,6 +157,8 @@ extensions, accepted by GCC in C90 mode and in C++.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Function-Attributes.html#Function-Attributes">Function Attributes</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Declaring that functions have no side effects,
                         or that they can never return.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Label-Attributes.html#Label-Attributes">Label Attributes</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Specifying attributes on labels.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Attribute-Syntax.html#Attribute-Syntax">Attribute Syntax</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Formal syntax for attributes.
 </td></tr>
@@ -176,14 +180,7 @@ extensions, accepted by GCC in C90 mode and in C++.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Volatiles.html#Volatiles">Volatiles</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">What constitutes an access to a volatile object.
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="Extended-Asm.html#Extended-Asm">Extended Asm</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Assembler instructions with C expressions as operands.
-                        (With them you can define &ldquo;built-in&rdquo; functions.)
-</td></tr>
-<tr><td align="left" valign="top">&bull; <a href="Constraints.html#Constraints">Constraints</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Constraints for asm operands
-</td></tr>
-<tr><td align="left" valign="top">&bull; <a href="Asm-Labels.html#Asm-Labels">Asm Labels</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Specifying the assembler name to use for a C symbol.
-</td></tr>
-<tr><td align="left" valign="top">&bull; <a href="Explicit-Reg-Vars.html#Explicit-Reg-Vars">Explicit Reg Vars</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Defining variables residing in specified registers.
+<tr><td align="left" valign="top">&bull; <a href="Using-Assembly-Language-with-C.html#Using-Assembly-Language-with-C">Using Assembly Language with C</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Instructions and extensions for interfacing C with assembler.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Alternate-Keywords.html#Alternate-Keywords">Alternate Keywords</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top"><code>__const__</code>, <code>__asm__</code>, etc., for header files.
 </td></tr>
@@ -202,10 +199,15 @@ extensions, accepted by GCC in C90 mode and in C++.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="_005f_005fatomic-Builtins.html#g_t_005f_005fatomic-Builtins">__atomic Builtins</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Atomic built-in functions with memory model.
 </td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Integer-Overflow-Builtins.html#Integer-Overflow-Builtins">Integer Overflow Builtins</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Built-in functions to perform arithmetics and
+                        arithmetic overflow checking.
+</td></tr>
 <tr><td align="left" valign="top">&bull; <a href="x86-specific-memory-model-extensions-for-transactional-memory.html#x86-specific-memory-model-extensions-for-transactional-memory">x86 specific memory model extensions for transactional memory</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">x86 memory models.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Object-Size-Checking.html#Object-Size-Checking">Object Size Checking</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Built-in functions for limited buffer overflow
                         checking.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Pointer-Bounds-Checker-builtins.html#Pointer-Bounds-Checker-builtins">Pointer Bounds Checker builtins</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Built-in functions for Pointer Bounds Checker.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Cilk-Plus-Builtins.html#Cilk-Plus-Builtins">Cilk Plus Builtins</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Built-in functions for the Cilk Plus language extension.
 </td></tr>

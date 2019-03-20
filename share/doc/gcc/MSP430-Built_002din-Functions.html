@@ -75,7 +75,7 @@ Next: <a href="NDS32-Built_002din-Functions.html#NDS32-Built_002din-Functions" a
 </div>
 <hr>
 <a name="MSP430-Built_002din-Functions-1"></a>
-<h4 class="subsection">6.57.18 MSP430 Built-in Functions</h4>
+<h4 class="subsection">6.58.16 MSP430 Built-in Functions</h4>
 
 <p>GCC provides a couple of special builtin functions to aid in the
 writing of interrupt handlers in C.
@@ -93,6 +93,16 @@ once the handler returns.
 currently residing on the stack.  This only works inside interrupt
 handlers and the changes to the status register will only take affect
 once the handler returns.
+</p>
+</dd>
+<dt><code>__delay_cycles (long long <var>cycles</var>)</code></dt>
+<dd><p>This inserts an instruction sequence that takes exactly <var>cycles</var>
+cycles (between 0 and about 17E9) to complete.  The inserted sequence
+may use jumps, loops, or no-ops, and does not interfere with any other
+instructions.  Note that <var>cycles</var> must be a compile-time constant
+integer - that is, you must pass a number, not a variable that may be
+optimized to a constant later.  The number of cycles delayed by this
+builtin is exact.
 </p></dd>
 </dl>
 

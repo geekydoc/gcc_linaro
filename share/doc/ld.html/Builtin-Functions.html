@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <!-- This file documents the GNU linker LD
-(Linaro_Binutils-2016.02)
-version 2.24.0.
+(GNU Binutils)
+version 2.25.1.
 
-Copyright (C) 1991-2013 Free Software Foundation, Inc.
+Copyright (C) 1991-2014 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -210,13 +210,15 @@ evaluation purposes.
 <dt><code>DATA_SEGMENT_RELRO_END(<var>offset</var>, <var>exp</var>)</code></dt>
 <dd><a name="index-DATA_005fSEGMENT_005fRELRO_005fEND_0028offset_002c-exp_0029"></a>
 <p>This defines the end of the <code>PT_GNU_RELRO</code> segment when
-&lsquo;<samp>-z relro</samp>&rsquo; option is used.  Second argument is returned.
+&lsquo;<samp>-z relro</samp>&rsquo; option is used.
 When &lsquo;<samp>-z relro</samp>&rsquo; option is not present, <code>DATA_SEGMENT_RELRO_END</code>
 does nothing, otherwise <code>DATA_SEGMENT_ALIGN</code> is padded so that
 <var>exp</var> + <var>offset</var> is aligned to the most commonly used page
 boundary for particular target.  If present in the linker script,
 it must always come in between <code>DATA_SEGMENT_ALIGN</code> and
-<code>DATA_SEGMENT_END</code>.
+<code>DATA_SEGMENT_END</code>.  Evaluates to the second argument plus any
+padding needed at the end of the <code>PT_GNU_RELRO</code> segment due to
+section alignment.
 </p>
 <div class="smallexample">
 <pre class="smallexample">  . = DATA_SEGMENT_RELRO_END(24, .);

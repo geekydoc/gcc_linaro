@@ -75,7 +75,7 @@ Next: <a href="Elimination.html#Elimination" accesskey="n" rel="next">Eliminatio
 </div>
 <hr>
 <a name="Registers-That-Address-the-Stack-Frame"></a>
-<h4 class="subsection">17.10.4 Registers That Address the Stack Frame</h4>
+<h4 class="subsection">17.9.4 Registers That Address the Stack Frame</h4>
 
 <p>This discusses registers that address the stack frame.
 </p>
@@ -177,7 +177,7 @@ defined; instead, the <code>TARGET_STATIC_CHAIN</code> hook should be used.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fSTATIC_005fCHAIN"></a>Target Hook: <em>rtx</em> <strong>TARGET_STATIC_CHAIN</strong> <em>(const_tree <var>fndecl</var>, bool <var>incoming_p</var>)</em></dt>
+<dt><a name="index-TARGET_005fSTATIC_005fCHAIN"></a>Target Hook: <em>rtx</em> <strong>TARGET_STATIC_CHAIN</strong> <em>(const_tree <var>fndecl_or_type</var>, bool <var>incoming_p</var>)</em></dt>
 <dd><p>This hook replaces the use of <code>STATIC_CHAIN_REGNUM</code> et al for
 targets that may use different static chain locations for different
 nested functions.  This may be required if the target has function

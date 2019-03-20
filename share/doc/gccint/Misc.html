@@ -75,7 +75,7 @@ Previous: <a href="Named-Address-Spaces.html#Named-Address-Spaces" accesskey="p"
 </div>
 <hr>
 <a name="Miscellaneous-Parameters"></a>
-<h3 class="section">17.31 Miscellaneous Parameters</h3>
+<h3 class="section">17.30 Miscellaneous Parameters</h3>
 <a name="index-parameters_002c-miscellaneous"></a>
 
 <p>Here are several miscellaneous parameters.
@@ -176,7 +176,7 @@ extends.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fMIN_005fDIVISIONS_005fFOR_005fRECIP_005fMUL"></a>Target Hook: <em>unsigned int</em> <strong>TARGET_MIN_DIVISIONS_FOR_RECIP_MUL</strong> <em>(enum machine_mode <var>mode</var>)</em></dt>
+<dt><a name="index-TARGET_005fMIN_005fDIVISIONS_005fFOR_005fRECIP_005fMUL"></a>Target Hook: <em>unsigned int</em> <strong>TARGET_MIN_DIVISIONS_FOR_RECIP_MUL</strong> <em>(machine_mode <var>mode</var>)</em></dt>
 <dd><p>When <samp>-ffast-math</samp> is in effect, GCC tries to optimize
 divisions by the same divisor, by turning them into multiplications by
 the reciprocal.  This target hook specifies the minimum number of divisions
@@ -227,7 +227,7 @@ the implied truncation of the shift instructions.
 </p></dd></dl>
 
 <a name="TARGET_005fSHIFT_005fTRUNCATION_005fMASK"></a><dl>
-<dt><a name="index-TARGET_005fSHIFT_005fTRUNCATION_005fMASK"></a>Target Hook: <em>unsigned HOST_WIDE_INT</em> <strong>TARGET_SHIFT_TRUNCATION_MASK</strong> <em>(enum machine_mode <var>mode</var>)</em></dt>
+<dt><a name="index-TARGET_005fSHIFT_005fTRUNCATION_005fMASK"></a>Target Hook: <em>unsigned HOST_WIDE_INT</em> <strong>TARGET_SHIFT_TRUNCATION_MASK</strong> <em>(machine_mode <var>mode</var>)</em></dt>
 <dd><p>This function describes how the standard shift patterns for <var>mode</var>
 deal with shifts by negative amounts or by more than the width of the mode.
 See <a href="Standard-Names.html#shift-patterns">shift patterns</a>.
@@ -267,7 +267,7 @@ such cases may improve things.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fMODE_005fREP_005fEXTENDED"></a>Target Hook: <em>int</em> <strong>TARGET_MODE_REP_EXTENDED</strong> <em>(enum machine_mode <var>mode</var>, enum machine_mode <var>rep_mode</var>)</em></dt>
+<dt><a name="index-TARGET_005fMODE_005fREP_005fEXTENDED"></a>Target Hook: <em>int</em> <strong>TARGET_MODE_REP_EXTENDED</strong> <em>(machine_mode <var>mode</var>, machine_mode <var>rep_mode</var>)</em></dt>
 <dd><p>The representation of an integral mode can be such that the values
 are always extended to a wider integral mode.  Return
 <code>SIGN_EXTEND</code> if values of <var>mode</var> are represented in
@@ -761,7 +761,7 @@ If <var>code</var> is out of range the function should return
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fEXPAND_005fBUILTIN"></a>Target Hook: <em>rtx</em> <strong>TARGET_EXPAND_BUILTIN</strong> <em>(tree <var>exp</var>, rtx <var>target</var>, rtx <var>subtarget</var>, enum machine_mode <var>mode</var>, int <var>ignore</var>)</em></dt>
+<dt><a name="index-TARGET_005fEXPAND_005fBUILTIN"></a>Target Hook: <em>rtx</em> <strong>TARGET_EXPAND_BUILTIN</strong> <em>(tree <var>exp</var>, rtx <var>target</var>, rtx <var>subtarget</var>, machine_mode <var>mode</var>, int <var>ignore</var>)</em></dt>
 <dd>
 <p>Expand a call to a machine specific built-in function that was set up by
 &lsquo;<samp>TARGET_INIT_BUILTINS</samp>&rsquo;.  <var>exp</var> is the expression for the
@@ -771,6 +771,109 @@ convenient, and have mode <var>mode</var> if that is convenient.
 <var>exp</var>&rsquo;s operands.  <var>ignore</var> is nonzero if the value is to be
 ignored.  This function should return the result of the call to the
 built-in function.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fBUILTIN_005fCHKP_005fFUNCTION"></a>Target Hook: <em>tree</em> <strong>TARGET_BUILTIN_CHKP_FUNCTION</strong> <em>(unsigned <var>fcode</var>)</em></dt>
+<dd><p>This hook allows target to redefine built-in functions used by
+Pointer Bounds Checker for code instrumentation.  Hook should return
+fndecl of function implementing generic builtin whose code is
+passed in <var>fcode</var>.  Currently following built-in functions are
+obtained using this hook:
+</p><dl>
+<dt><a name="index-_005f_005fchkp_005fbndmk"></a>Built-in Function: <em>__bounds_type</em> <strong>__chkp_bndmk</strong> <em>(const void *<var>lb</var>, size_t <var>size</var>)</em></dt>
+<dd><p>Function code - BUILT_IN_CHKP_BNDMK.  This built-in function is used
+by Pointer Bounds Checker to create bound values.  <var>lb</var> holds low
+bound of the resulting bounds.  <var>size</var> holds size of created bounds.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fchkp_005fbndstx"></a>Built-in Function: <em>void</em> <strong>__chkp_bndstx</strong> <em>(const void *<var>ptr</var>, __bounds_type <var>b</var>, const void **<var>loc</var>)</em></dt>
+<dd><p>Function code - <code>BUILT_IN_CHKP_BNDSTX</code>.  This built-in function is used
+by Pointer Bounds Checker to store bounds <var>b</var> for pointer <var>ptr</var>
+when <var>ptr</var> is stored by address <var>loc</var>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fchkp_005fbndldx"></a>Built-in Function: <em>__bounds_type</em> <strong>__chkp_bndldx</strong> <em>(const void **<var>loc</var>, const void *<var>ptr</var>)</em></dt>
+<dd><p>Function code - <code>BUILT_IN_CHKP_BNDLDX</code>.  This built-in function is used
+by Pointer Bounds Checker to get bounds of pointer <var>ptr</var> loaded by
+address <var>loc</var>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fchkp_005fbndcl"></a>Built-in Function: <em>void</em> <strong>__chkp_bndcl</strong> <em>(const void *<var>ptr</var>, __bounds_type <var>b</var>)</em></dt>
+<dd><p>Function code - <code>BUILT_IN_CHKP_BNDCL</code>.  This built-in function is used
+by Pointer Bounds Checker to perform check for pointer <var>ptr</var> against
+lower bound of bounds <var>b</var>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fchkp_005fbndcu"></a>Built-in Function: <em>void</em> <strong>__chkp_bndcu</strong> <em>(const void *<var>ptr</var>, __bounds_type <var>b</var>)</em></dt>
+<dd><p>Function code - <code>BUILT_IN_CHKP_BNDCU</code>.  This built-in function is used
+by Pointer Bounds Checker to perform check for pointer <var>ptr</var> against
+upper bound of bounds <var>b</var>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fchkp_005fbndret"></a>Built-in Function: <em>__bounds_type</em> <strong>__chkp_bndret</strong> <em>(void *<var>ptr</var>)</em></dt>
+<dd><p>Function code - <code>BUILT_IN_CHKP_BNDRET</code>.  This built-in function is used
+by Pointer Bounds Checker to obtain bounds returned by a call statement.
+<var>ptr</var> passed to built-in is <code>SSA_NAME</code> returned by the call.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fchkp_005fintersect"></a>Built-in Function: <em>__bounds_type</em> <strong>__chkp_intersect</strong> <em>(__bounds_type <var>b1</var>, __bounds_type <var>b2</var>)</em></dt>
+<dd><p>Function code - <code>BUILT_IN_CHKP_INTERSECT</code>.  This built-in function
+returns intersection of bounds <var>b1</var> and <var>b2</var>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fchkp_005fnarrow"></a>Built-in Function: <em>__bounds_type</em> <strong>__chkp_narrow</strong> <em>(const void *<var>ptr</var>, __bounds_type <var>b</var>, size_t <var>s</var>)</em></dt>
+<dd><p>Function code - <code>BUILT_IN_CHKP_NARROW</code>.  This built-in function
+returns intersection of bounds <var>b</var> and
+[<var>ptr</var>, <var>ptr</var> + <var>s</var> - <code>1</code>].
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fchkp_005fsizeof"></a>Built-in Function: <em>size_t</em> <strong>__chkp_sizeof</strong> <em>(const void *<var>ptr</var>)</em></dt>
+<dd><p>Function code - <code>BUILT_IN_CHKP_SIZEOF</code>.  This built-in function
+returns size of object referenced by <var>ptr</var>. <var>ptr</var> is always
+<code>ADDR_EXPR</code> of <code>VAR_DECL</code>.  This built-in is used by
+Pointer Bounds Checker when bounds of object cannot be computed statically
+(e.g. object has incomplete type).
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-void"></a>Built-in Function: <em>const</em> <strong>void</strong> <em>*__chkp_extract_lower (__bounds_type <var>b</var>)</em></dt>
+<dd><p>Function code - <code>BUILT_IN_CHKP_EXTRACT_LOWER</code>.  This built-in function
+returns lower bound of bounds <var>b</var>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-void-1"></a>Built-in Function: <em>const</em> <strong>void</strong> <em>*__chkp_extract_upper (__bounds_type <var>b</var>)</em></dt>
+<dd><p>Function code - <code>BUILT_IN_CHKP_EXTRACT_UPPER</code>.  This built-in function
+returns upper bound of bounds <var>b</var>.
+</p></dd></dl>
+</dd></dl>
+<dl>
+<dt><a name="index-TARGET_005fCHKP_005fBOUND_005fTYPE"></a>Target Hook: <em>tree</em> <strong>TARGET_CHKP_BOUND_TYPE</strong> <em>(void)</em></dt>
+<dd><p>Return type to be used for bounds
+</p></dd></dl>
+<dl>
+<dt><a name="index-TARGET_005fCHKP_005fBOUND_005fMODE"></a>Target Hook: <em>enum machine_mode</em> <strong>TARGET_CHKP_BOUND_MODE</strong> <em>(void)</em></dt>
+<dd><p>Return mode to be used for bounds.
+</p></dd></dl>
+<dl>
+<dt><a name="index-TARGET_005fCHKP_005fMAKE_005fBOUNDS_005fCONSTANT"></a>Target Hook: <em>tree</em> <strong>TARGET_CHKP_MAKE_BOUNDS_CONSTANT</strong> <em>(HOST_WIDE_INT <var>lb</var>, HOST_WIDE_INT <var>ub</var>)</em></dt>
+<dd><p>Return constant used to statically initialize constant bounds
+with specified lower bound <var>lb</var> and upper bounds <var>ub</var>.
+</p></dd></dl>
+<dl>
+<dt><a name="index-TARGET_005fCHKP_005fINITIALIZE_005fBOUNDS"></a>Target Hook: <em>int</em> <strong>TARGET_CHKP_INITIALIZE_BOUNDS</strong> <em>(tree <var>var</var>, tree <var>lb</var>, tree <var>ub</var>, tree *<var>stmts</var>)</em></dt>
+<dd><p>Generate a list of statements <var>stmts</var> to initialize pointer
+bounds variable <var>var</var> with bounds <var>lb</var> and <var>ub</var>.  Return
+the number of generated statements.
 </p></dd></dl>
 
 <dl>
@@ -832,7 +935,7 @@ body must be generated.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fCAN_005fUSE_005fDOLOOP_005fP"></a>Target Hook: <em>bool</em> <strong>TARGET_CAN_USE_DOLOOP_P</strong> <em>(double_int <var>iterations</var>, double_int <var>iterations_max</var>, unsigned int <var>loop_depth</var>, bool <var>entered_at_top</var>)</em></dt>
+<dt><a name="index-TARGET_005fCAN_005fUSE_005fDOLOOP_005fP"></a>Target Hook: <em>bool</em> <strong>TARGET_CAN_USE_DOLOOP_P</strong> <em>(const widest_int <var>&amp;iterations</var>, const widest_int <var>&amp;iterations_max</var>, unsigned int <var>loop_depth</var>, bool <var>entered_at_top</var>)</em></dt>
 <dd><p>Return true if it is possible to use low-overhead loops (<code>doloop_end</code>
 and <code>doloop_begin</code>) for a particular loop.  <var>iterations</var> gives the
 exact number of iterations, or 0 if not known.  <var>iterations_max</var> gives
@@ -847,7 +950,7 @@ if the loop must be the innermost, and if there are no other restrictions.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fINVALID_005fWITHIN_005fDOLOOP"></a>Target Hook: <em>const char *</em> <strong>TARGET_INVALID_WITHIN_DOLOOP</strong> <em>(const_rtx <var>insn</var>)</em></dt>
+<dt><a name="index-TARGET_005fINVALID_005fWITHIN_005fDOLOOP"></a>Target Hook: <em>const char *</em> <strong>TARGET_INVALID_WITHIN_DOLOOP</strong> <em>(const rtx_insn *<var>insn</var>)</em></dt>
 <dd>
 <p>Take an instruction in <var>insn</var> and return NULL if it is valid within a
 low-overhead loop, otherwise return a string explaining why doloop
@@ -861,24 +964,12 @@ loops containing function calls or branch on table instructions.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fLEGITIMATE_005fCOMBINED_005fINSN"></a>Target Hook: <em>bool</em> <strong>TARGET_LEGITIMATE_COMBINED_INSN</strong> <em>(rtx <var>insn</var>)</em></dt>
+<dt><a name="index-TARGET_005fLEGITIMATE_005fCOMBINED_005fINSN"></a>Target Hook: <em>bool</em> <strong>TARGET_LEGITIMATE_COMBINED_INSN</strong> <em>(rtx_insn *<var>insn</var>)</em></dt>
 <dd><p>Take an instruction in <var>insn</var> and return <code>false</code> if the instruction is not appropriate as a combination of two or more instructions.  The default is to accept all instructions.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-MD_005fCAN_005fREDIRECT_005fBRANCH"></a>Macro: <strong>MD_CAN_REDIRECT_BRANCH</strong> <em>(<var>branch1</var>, <var>branch2</var>)</em></dt>
-<dd>
-<p>Take a branch insn in <var>branch1</var> and another in <var>branch2</var>.
-Return true if redirecting <var>branch1</var> to the destination of
-<var>branch2</var> is possible.
-</p>
-<p>On some targets, branches may have a limited range.  Optimizing the
-filling of delay slots can result in branches being redirected, and this
-may in turn cause a branch offset to overflow.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-TARGET_005fCAN_005fFOLLOW_005fJUMP"></a>Target Hook: <em>bool</em> <strong>TARGET_CAN_FOLLOW_JUMP</strong> <em>(const_rtx <var>follower</var>, const_rtx <var>followee</var>)</em></dt>
+<dt><a name="index-TARGET_005fCAN_005fFOLLOW_005fJUMP"></a>Target Hook: <em>bool</em> <strong>TARGET_CAN_FOLLOW_JUMP</strong> <em>(const rtx_insn *<var>follower</var>, const rtx_insn *<var>followee</var>)</em></dt>
 <dd><p>FOLLOWER and FOLLOWEE are JUMP_INSN instructions;  return true if FOLLOWER may be modified to follow FOLLOWEE;  false, if it can&rsquo;t.  For example, on some targets, certain kinds of branches can&rsquo;t be made to  follow through a hot/cold partitioning.
 </p></dd></dl>
 
@@ -1029,6 +1120,33 @@ to reserve space for caller-saved target registers.
 <dd><p>This target hook returns true if the target supports conditional execution.
 This target hook is required only when the target has several different
 modes and they have different conditional execution capability, such as ARM.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fGEN_005fCCMP_005fFIRST"></a>Target Hook: <em>rtx</em> <strong>TARGET_GEN_CCMP_FIRST</strong> <em>(rtx *<var>prep_seq</var>, rtx *<var>gen_seq</var>, int <var>code</var>, tree <var>op0</var>, tree <var>op1</var>)</em></dt>
+<dd><p>This function prepares to emit a comparison insn for the first compare in a
+ sequence of conditional comparisions.  It returns a appropriate <code>CC</code>
+ for passing to <code>gen_ccmp_next</code> or <code>cbranch_optab</code>.  The insns to
+ prepare the compare are saved in <var>prep_seq</var> and the compare insns are
+ saved in <var>gen_seq</var>.  They will be emitted when all the compares in the
+ the conditional comparision are generated without error.  <var>code</var> is
+ the <code>rtx_code</code> of the compare for <var>op0</var> and <var>op1</var>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fGEN_005fCCMP_005fNEXT"></a>Target Hook: <em>rtx</em> <strong>TARGET_GEN_CCMP_NEXT</strong> <em>(rtx *<var>prep_seq</var>, rtx *<var>gen_seq</var>, rtx <var>prev</var>, int <var>cmp_code</var>, tree <var>op0</var>, tree <var>op1</var>, int <var>bit_code</var>)</em></dt>
+<dd><p>This function prepare to emit a conditional comparison within a sequence of
+ conditional comparisons.  It returns a appropriate <code>CC</code> for passing to
+ <code>gen_ccmp_next</code> or <code>cbranch_optab</code>.  The insns to prepare the
+ compare are saved in <var>prep_seq</var> and the compare insns are saved in
+ <var>gen_seq</var>.  They will be emitted when all the compares in the conditional
+ comparision are generated without error.  The <var>prev</var> expression is the
+ result of a prior call to <code>gen_ccmp_first</code> or <code>gen_ccmp_next</code>.  It
+ may return <code>NULL</code> if the combination of <var>prev</var> and this comparison is
+ not supported, otherwise the result must be appropriate for passing to
+ <code>gen_ccmp_next</code> or <code>cbranch_optab</code>.  <var>code</var> is the
+ <code>rtx_code</code> of the compare for <var>op0</var> and <var>op1</var>.  <var>bit_code</var>
+ is <code>AND</code> or <code>IOR</code>, which is the op on the two compares.
 </p></dd></dl>
 
 <dl>
@@ -1289,7 +1407,7 @@ The default value of this hook is based on target&rsquo;s libc.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fATOMIC_005fALIGN_005fFOR_005fMODE"></a>Target Hook: <em>unsigned int</em> <strong>TARGET_ATOMIC_ALIGN_FOR_MODE</strong> <em>(enum machine_mode <var>mode</var>)</em></dt>
+<dt><a name="index-TARGET_005fATOMIC_005fALIGN_005fFOR_005fMODE"></a>Target Hook: <em>unsigned int</em> <strong>TARGET_ATOMIC_ALIGN_FOR_MODE</strong> <em>(machine_mode <var>mode</var>)</em></dt>
 <dd><p>If defined, this function returns an appropriate alignment in bits for an atomic object of machine_mode <var>mode</var>.  If 0 is returned then the default alignment for the specified mode is used. 
 </p></dd></dl>
 
@@ -1297,6 +1415,67 @@ The default value of this hook is based on target&rsquo;s libc.
 <dt><a name="index-TARGET_005fATOMIC_005fASSIGN_005fEXPAND_005fFENV"></a>Target Hook: <em>void</em> <strong>TARGET_ATOMIC_ASSIGN_EXPAND_FENV</strong> <em>(tree *<var>hold</var>, tree *<var>clear</var>, tree *<var>update</var>)</em></dt>
 <dd><p>ISO C11 requires atomic compound assignments that may raise floating-point exceptions to raise exceptions corresponding to the arithmetic operation whose result was successfully stored in a compare-and-exchange sequence.  This requires code equivalent to calls to <code>feholdexcept</code>, <code>feclearexcept</code> and <code>feupdateenv</code> to be generated at appropriate points in the compare-and-exchange sequence.  This hook should set <code>*<var>hold</var></code> to an expression equivalent to the call to <code>feholdexcept</code>, <code>*<var>clear</var></code> to an expression equivalent to the call to <code>feclearexcept</code> and <code>*<var>update</var></code> to an expression equivalent to the call to <code>feupdateenv</code>.  The three expressions are <code>NULL_TREE</code> on entry to the hook and may be left as <code>NULL_TREE</code> if no code is required in a particular place.  The default implementation leaves all three expressions as <code>NULL_TREE</code>.  The <code>__atomic_feraiseexcept</code> function from <code>libatomic</code> may be of use as part of the code generated in <code>*<var>update</var></code>.
 </p></dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fRECORD_005fOFFLOAD_005fSYMBOL"></a>Target Hook: <em>void</em> <strong>TARGET_RECORD_OFFLOAD_SYMBOL</strong> <em>(tree)</em></dt>
+<dd><p>Used when offloaded functions are seen in the compilation unit and no named
+sections are available.  It is called once for each symbol that must be
+recorded in the offload function and variable table.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fOFFLOAD_005fOPTIONS"></a>Target Hook: <em>char *</em> <strong>TARGET_OFFLOAD_OPTIONS</strong> <em>(void)</em></dt>
+<dd><p>Used when writing out the list of options into an LTO file.  It should
+translate any relevant target-specific options (such as the ABI in use)
+into one of the <samp>-foffload</samp> options that exist as a common interface
+to express such options.  It should return a string containing these options,
+separated by spaces, which the caller will free.
+</p>
+</dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fSUPPORTS_005fWIDE_005fINT"></a>Macro: <strong>TARGET_SUPPORTS_WIDE_INT</strong></dt>
+<dd>
+<p>On older ports, large integers are stored in <code>CONST_DOUBLE</code> rtl
+objects.  Newer ports define <code>TARGET_SUPPORTS_WIDE_INT</code> to be nonzero
+to indicate that large integers are stored in
+<code>CONST_WIDE_INT</code> rtl objects.  The <code>CONST_WIDE_INT</code> allows
+very large integer constants to be represented.  <code>CONST_DOUBLE</code>
+is limited to twice the size of the host&rsquo;s <code>HOST_WIDE_INT</code>
+representation.
+</p>
+<p>Converting a port mostly requires looking for the places where
+<code>CONST_DOUBLE</code>s are used with <code>VOIDmode</code> and replacing that
+code with code that accesses <code>CONST_WIDE_INT</code>s.  &lsquo;<samp>&quot;grep -i
+const_double&quot;</samp>&rsquo; at the port level gets you to 95% of the changes that
+need to be made.  There are a few places that require a deeper look.
+</p>
+<ul>
+<li> There is no equivalent to <code>hval</code> and <code>lval</code> for
+<code>CONST_WIDE_INT</code>s.  This would be difficult to express in the md
+language since there are a variable number of elements.
+
+<p>Most ports only check that <code>hval</code> is either 0 or -1 to see if the
+value is small.  As mentioned above, this will no longer be necessary
+since small constants are always <code>CONST_INT</code>.  Of course there
+are still a few exceptions, the alpha&rsquo;s constraint used by the zap
+instruction certainly requires careful examination by C code.
+However, all the current code does is pass the hval and lval to C
+code, so evolving the c code to look at the <code>CONST_WIDE_INT</code> is
+not really a large change.
+</p>
+</li><li> Because there is no standard template that ports use to materialize
+constants, there is likely to be some futzing that is unique to each
+port in this code.
+
+</li><li> The rtx costs may have to be adjusted to properly account for larger
+constants that are represented as <code>CONST_WIDE_INT</code>.
+</li></ul>
+
+<p>All and all it does not take long to convert ports that the
+maintainer is familiar with.
+</p>
+</dd></dl>
 
 <hr>
 <div class="header">

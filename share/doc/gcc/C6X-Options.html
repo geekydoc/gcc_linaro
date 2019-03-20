@@ -104,12 +104,12 @@ assembly code.  Permissible names are: &lsquo;<samp>c62x</samp>&rsquo;,
 </dd>
 <dt><code>-msdata=default</code></dt>
 <dd><a name="index-msdata_003ddefault"></a>
-<p>Put small global and static data in the &lsquo;<samp>.neardata</samp>&rsquo; section,
+<p>Put small global and static data in the <code>.neardata</code> section,
 which is pointed to by register <code>B14</code>.  Put small uninitialized
-global and static data in the &lsquo;<samp>.bss</samp>&rsquo; section, which is adjacent
-to the &lsquo;<samp>.neardata</samp>&rsquo; section.  Put small read-only data into the
-&lsquo;<samp>.rodata</samp>&rsquo; section.  The corresponding sections used for large
-pieces of data are &lsquo;<samp>.fardata</samp>&rsquo;, &lsquo;<samp>.far</samp>&rsquo; and &lsquo;<samp>.const</samp>&rsquo;.
+global and static data in the <code>.bss</code> section, which is adjacent
+to the <code>.neardata</code> section.  Put small read-only data into the
+<code>.rodata</code> section.  The corresponding sections used for large
+pieces of data are <code>.fardata</code>, <code>.far</code> and <code>.const</code>.
 </p>
 </dd>
 <dt><code>-msdata=all</code></dt>
@@ -123,8 +123,8 @@ access them.
 <dd><a name="index-msdata_003dnone"></a>
 <p>Make no use of the sections reserved for small data, and use absolute
 addresses to access all data.  Put all initialized global and static
-data in the &lsquo;<samp>.fardata</samp>&rsquo; section, and all uninitialized data in the
-&lsquo;<samp>.far</samp>&rsquo; section.  Put all constant data into the &lsquo;<samp>.const</samp>&rsquo;
+data in the <code>.fardata</code> section, and all uninitialized data in the
+<code>.far</code> section.  Put all constant data into the <code>.const</code>
 section.
 </p></dd>
 </dl>

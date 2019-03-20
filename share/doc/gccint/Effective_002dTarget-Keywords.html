@@ -418,6 +418,10 @@ Some multilibs may be incompatible with this option.
 <dd><p>ARM target supports generating NEON instructions.
 </p>
 </dd>
+<dt><code>arm_tune_string_ops_prefer_neon</code></dt>
+<dd><p>Test CPU tune supports inlining string operations with NEON instructions.
+</p>
+</dd>
 <dt><code>arm_neon_hw</code></dt>
 <dd><p>Test system supports executing NEON instructions.
 </p>
@@ -438,7 +442,13 @@ options.  Some multilibs may be incompatible with these options.
 </dd>
 <dt><code>arm_neon_fp16_ok</code></dt>
 <dd><a name="arm_005fneon_005ffp16_005fok"></a><p>ARM Target supports <code>-mfpu=neon-fp16 -mfloat-abi=softfp</code> or compatible
-options.  Some multilibs may be incompatible with these options.
+options, including <code>-mfp16-format=ieee</code> if necessary to obtain the
+<code>__fp16</code> type.  Some multilibs may be incompatible with these options.
+</p>
+</dd>
+<dt><code>arm_neon_fp16_hw</code></dt>
+<dd><p>Test system supports executing Neon half-precision float instructions.
+(Implies previous.)
 </p>
 </dd>
 <dt><code>arm_thumb1_ok</code></dt>
@@ -469,6 +479,17 @@ Some multilibs may be incompatible with these options.
 Some multilibs may be incompatible with these options.
 </p>
 </dd>
+<dt><code>arm_v8_1a_neon_ok</code></dt>
+<dd><p>ARM target supports options to generate ARMv8.1 Adv.SIMD instructions.
+Some multilibs may be incompatible with these options.
+</p>
+</dd>
+<dt><code>arm_v8_1a_neon_hw</code></dt>
+<dd><p>ARM target supports executing ARMv8.1 Adv.SIMD instructions.  Some
+multilibs may be incompatible with the options needed.  Implies
+arm_v8_1a_neon_ok.
+</p>
+</dd>
 <dt><code>arm_prefer_ldrd_strd</code></dt>
 <dd><p>ARM target prefers <code>LDRD</code> and <code>STRD</code> instructions over
 <code>LDM</code> and <code>STM</code> instructions.
@@ -476,8 +497,38 @@ Some multilibs may be incompatible with these options.
 </dd>
 </dl>
 
+<a name="AArch64_002dspecific-attributes"></a>
+<h4 class="subsubsection">7.2.3.7 AArch64-specific attributes</h4>
+
+<dl compact="compact">
+<dt><code>aarch64_asm_&lt;ext&gt;_ok</code></dt>
+<dd><p>AArch64 assembler supports the architecture extension <code>ext</code> via the
+<code>.arch_extension</code> pseudo-op.
+</p></dd>
+<dt><code>aarch64_tiny</code></dt>
+<dd><p>AArch64 target which generates instruction sequences for tiny memory model.
+</p></dd>
+<dt><code>aarch64_small</code></dt>
+<dd><p>AArch64 target which generates instruction sequences for small memory model.
+</p></dd>
+<dt><code>aarch64_large</code></dt>
+<dd><p>AArch64 target which generates instruction sequences for large memory model.
+</p></dd>
+<dt><code>aarch64_little_endian</code></dt>
+<dd><p>AArch64 target which generates instruction sequences for little endian.
+</p></dd>
+<dt><code>aarch64_big_endian</code></dt>
+<dd><p>AArch64 target which generates instruction sequences for big endian.
+</p></dd>
+<dt><code>aarch64_small_fpic</code></dt>
+<dd><p>Binutils installed on test system supports relocation types required by -fpic
+for AArch64 small memory model.
+</p>
+</dd>
+</dl>
+
 <a name="MIPS_002dspecific-attributes"></a>
-<h4 class="subsubsection">7.2.3.7 MIPS-specific attributes</h4>
+<h4 class="subsubsection">7.2.3.8 MIPS-specific attributes</h4>
 
 <dl compact="compact">
 <dt><code>mips64</code></dt>
@@ -508,7 +559,7 @@ when using the new ABI.
 </dl>
 
 <a name="PowerPC_002dspecific-attributes"></a>
-<h4 class="subsubsection">7.2.3.8 PowerPC-specific attributes</h4>
+<h4 class="subsubsection">7.2.3.9 PowerPC-specific attributes</h4>
 
 <dl compact="compact">
 <dt><code>dfp_hw</code></dt>
@@ -599,7 +650,7 @@ PowerPC target supports PowerPC 405.
 </dl>
 
 <a name="Other-hardware-attributes"></a>
-<h4 class="subsubsection">7.2.3.9 Other hardware attributes</h4>
+<h4 class="subsubsection">7.2.3.10 Other hardware attributes</h4>
 
 <dl compact="compact">
 <dt><code>avx</code></dt>
@@ -620,6 +671,14 @@ PowerPC target supports PowerPC 405.
 </dd>
 <dt><code>hard_float</code></dt>
 <dd><p>Target supports FPU instructions.
+</p>
+</dd>
+<dt><code>non_strict_align</code></dt>
+<dd><p>Target does not require strict alignment.
+</p>
+</dd>
+<dt><code>sqrt_insn</code></dt>
+<dd><p>Target has a square root instruction that the compiler can generate.
 </p>
 </dd>
 <dt><code>sse</code></dt>
@@ -654,11 +713,15 @@ or <code>EM_SPARCV9</code> executables.
 </dd>
 <dt><code>vect_cmdline_needed</code></dt>
 <dd><p>Target requires a command line argument to enable a SIMD instruction set.
+</p>
+</dd>
+<dt><code>pie_copyreloc</code></dt>
+<dd><p>The x86-64 target linker supports PIE with copy reloc.
 </p></dd>
 </dl>
 
 <a name="Environment-attributes"></a>
-<h4 class="subsubsection">7.2.3.10 Environment attributes</h4>
+<h4 class="subsubsection">7.2.3.11 Environment attributes</h4>
 
 <dl compact="compact">
 <dt><code>c</code></dt>
@@ -710,6 +773,10 @@ conversion functions and overflow is not always detected correctly by
 those functions.
 </p>
 </dd>
+<dt><code>mempcpy</code></dt>
+<dd><p>Target provides <code>mempcpy</code> function.
+</p>
+</dd>
 <dt><code>mmap</code></dt>
 <dd><p>Target supports <code>mmap</code>.
 </p>
@@ -741,10 +808,18 @@ time) should be run on this target.  This can be enabled by setting the
 hardware (i.e. fast).
 </p>
 </dd>
+<dt><code>stabs</code></dt>
+<dd><p>Target supports the stabs debugging format.
+</p>
+</dd>
 <dt><code>stdint_types</code></dt>
 <dd><p>Target has the basic signed and unsigned C types in <code>stdint.h</code>.
 This will be obsolete when GCC ensures a working <code>stdint.h</code> for
 all targets.
+</p>
+</dd>
+<dt><code>stpcpy</code></dt>
+<dd><p>Target provides <code>stpcpy</code> function.
 </p>
 </dd>
 <dt><code>trampolines</code></dt>
@@ -773,7 +848,7 @@ all targets.
 </dl>
 
 <a name="Other-attributes"></a>
-<h4 class="subsubsection">7.2.3.11 Other attributes</h4>
+<h4 class="subsubsection">7.2.3.12 Other attributes</h4>
 
 <dl compact="compact">
 <dt><code>automatic_stack_alignment</code></dt>
@@ -794,6 +869,10 @@ all targets.
 </dd>
 <dt><code>fixed_point</code></dt>
 <dd><p>Target supports fixed-point extension to C.
+</p>
+</dd>
+<dt><code>fopenacc</code></dt>
+<dd><p>Target supports OpenACC via <samp>-fopenacc</samp>.
 </p>
 </dd>
 <dt><code>fopenmp</code></dt>
@@ -853,6 +932,10 @@ all targets.
 </dd>
 <dt><code>nonpic</code></dt>
 <dd><p>Target does not generate PIC by default.
+</p>
+</dd>
+<dt><code>pie_enabled</code></dt>
+<dd><p>Target generates PIE by default.
 </p>
 </dd>
 <dt><code>pcc_bitfield_type_matters</code></dt>
@@ -915,11 +998,15 @@ or equal to the required vector alignment.
 </dd>
 <dt><code>wchar_t_char32_t_compatible</code></dt>
 <dd><p>Target supports <code>wchar_t</code> that is compatible with <code>char32_t</code>.
+</p>
+</dd>
+<dt><code>comdat_group</code></dt>
+<dd><p>Target uses comdat groups.
 </p></dd>
 </dl>
 
 <a name="Local-to-tests-in-gcc_002etarget_002fi386"></a>
-<h4 class="subsubsection">7.2.3.12 Local to tests in <code>gcc.target/i386</code></h4>
+<h4 class="subsubsection">7.2.3.13 Local to tests in <code>gcc.target/i386</code></h4>
 
 <dl compact="compact">
 <dt><code>3dnow</code></dt>
@@ -972,7 +1059,7 @@ or equal to the required vector alignment.
 </dl>
 
 <a name="Local-to-tests-in-gcc_002etarget_002fspu_002fea"></a>
-<h4 class="subsubsection">7.2.3.13 Local to tests in <code>gcc.target/spu/ea</code></h4>
+<h4 class="subsubsection">7.2.3.14 Local to tests in <code>gcc.target/spu/ea</code></h4>
 
 <dl compact="compact">
 <dt><code>ealib</code></dt>
@@ -981,7 +1068,7 @@ or equal to the required vector alignment.
 </dl>
 
 <a name="Local-to-tests-in-gcc_002etest_002dframework"></a>
-<h4 class="subsubsection">7.2.3.14 Local to tests in <code>gcc.test-framework</code></h4>
+<h4 class="subsubsection">7.2.3.15 Local to tests in <code>gcc.test-framework</code></h4>
 
 <dl compact="compact">
 <dt><code>no</code></dt>

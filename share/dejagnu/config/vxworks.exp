@@ -179,7 +179,7 @@ proc vxworks_file { dest op args } {
     set file [lindex $args 0]
     if {[board_info $dest exists vxworks_homedir]} {
 	set dir "[board_info $dest vxworks_homedir]"
-	switch $op {
+	switch -- $op {
 	    exists {
 		set file "${dir}/[file tail $file]"
 		return [file exists $file]
@@ -191,7 +191,7 @@ proc vxworks_file { dest op args } {
 			file delete -force -- $x
 		    }
 		}
-		return
+		return {}
 	    }
 	}
     }
@@ -231,9 +231,6 @@ proc vxworks_open { dest args } {
 		verbose "Set default user." 2
 	    }
 	    timeout {
-		# ??? This is really an error.  It's not clear whether `perror'
-		# or `warning' should be used here.  There are *lots* of other
-		# cases like this.
 		perror "Couldn't set default user."
 		return -1
 	    }

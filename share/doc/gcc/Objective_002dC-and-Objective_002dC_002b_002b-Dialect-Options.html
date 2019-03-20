@@ -87,7 +87,7 @@ Supported by GCC</a>, for references.)
 <p>This section describes the command-line options that are only meaningful
 for Objective-C and Objective-C++ programs.  You can also use most of
 the language-independent GNU compiler options.
-For example, you might compile a file <code>some_class.m</code> like this:
+For example, you might compile a file <samp>some_class.m</samp> like this:
 </p>
 <div class="smallexample">
 <pre class="smallexample">gcc -g -fgnu-runtime -O -c some_class.m
@@ -249,6 +249,24 @@ to be retained.  This is useful in Zero-Link debugging mode, since it allows
 for individual class implementations to be modified during program execution.
 The GNU runtime currently always retains calls to <code>objc_get_class(&quot;&hellip;&quot;)</code>
 regardless of command-line options.
+</p>
+</dd>
+<dt><code>-fno-local-ivars</code></dt>
+<dd><a name="index-fno_002dlocal_002divars"></a>
+<a name="index-flocal_002divars"></a>
+<p>By default instance variables in Objective-C can be accessed as if
+they were local variables from within the methods of the class they&rsquo;re
+declared in.  This can lead to shadowing between instance variables
+and other variables declared either locally inside a class method or
+globally with the same name.  Specifying the <samp>-fno-local-ivars</samp>
+flag disables this behavior thus avoiding variable shadowing issues.
+</p>
+</dd>
+<dt><code>-fivar-visibility=<span class="roman">[</span>public<span class="roman">|</span>protected<span class="roman">|</span>private<span class="roman">|</span>package<span class="roman">]</span></code></dt>
+<dd><a name="index-fivar_002dvisibility"></a>
+<p>Set the default instance variable visibility to the specified option
+so that instance variables declared outside the scope of any access
+modifier directives default to the specified visibility.
 </p>
 </dd>
 <dt><code>-gen-decls</code></dt>

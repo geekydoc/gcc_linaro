@@ -75,7 +75,7 @@ Next: <a href="Score-Options.html#Score-Options" accesskey="n" rel="next">Score 
 </div>
 <hr>
 <a name="S_002f390-and-zSeries-Options-1"></a>
-<h4 class="subsection">3.17.40 S/390 and zSeries Options</h4>
+<h4 class="subsection">3.17.39 S/390 and zSeries Options</h4>
 <a name="index-S_002f390-and-zSeries-Options"></a>
 
 <p>These are the &lsquo;<samp>-m</samp>&rsquo; options defined for the S/390 and zSeries architecture.
@@ -84,7 +84,7 @@ Next: <a href="Score-Options.html#Score-Options" accesskey="n" rel="next">Score 
 <dt><code>-mhard-float</code></dt>
 <dt><code>-msoft-float</code></dt>
 <dd><a name="index-mhard_002dfloat-5"></a>
-<a name="index-msoft_002dfloat-10"></a>
+<a name="index-msoft_002dfloat-9"></a>
 <p>Use (do not use) the hardware floating-point instructions and registers
 for floating-point operations.  When <samp>-msoft-float</samp> is specified,
 functions in <samp>libgcc.a</samp> are used to perform floating-point
@@ -106,8 +106,8 @@ instructions.  This is the default for <samp>-march=z9-ec</samp> or higher.
 </dd>
 <dt><code>-mlong-double-64</code></dt>
 <dt><code>-mlong-double-128</code></dt>
-<dd><a name="index-mlong_002ddouble_002d64-1"></a>
-<a name="index-mlong_002ddouble_002d128-1"></a>
+<dd><a name="index-mlong_002ddouble_002d64"></a>
+<a name="index-mlong_002ddouble_002d128"></a>
 <p>These switches control the size of <code>long double</code> type. A size
 of 64 bits makes the <code>long double</code> type equivalent to the <code>double</code>
 type. This is the default.
@@ -219,18 +219,19 @@ The default is to not print debug information.
 </p>
 </dd>
 <dt><code>-march=<var>cpu-type</var></code></dt>
-<dd><a name="index-march-10"></a>
-<p>Generate code that runs on <var>cpu-type</var>, which is the name of a
-system representing a certain processor type.  Possible values for
+<dd><a name="index-march-9"></a>
+<p>Generate code that runs on <var>cpu-type</var>, which is the name of a system
+representing a certain processor type.  Possible values for
 <var>cpu-type</var> are &lsquo;<samp>g5</samp>&rsquo;, &lsquo;<samp>g6</samp>&rsquo;, &lsquo;<samp>z900</samp>&rsquo;, &lsquo;<samp>z990</samp>&rsquo;,
-&lsquo;<samp>z9-109</samp>&rsquo;, &lsquo;<samp>z9-ec</samp>&rsquo;, &lsquo;<samp>z10</samp>&rsquo;, &lsquo;<samp>z196</samp>&rsquo;, and
-&lsquo;<samp>zEC12</samp>&rsquo;.  When generating code using the instructions available
-on z/Architecture, the default is <samp>-march=z900</samp>.  Otherwise,
-the default is <samp>-march=g5</samp>.
+&lsquo;<samp>z9-109</samp>&rsquo;, &lsquo;<samp>z9-ec</samp>&rsquo;, &lsquo;<samp>z10</samp>&rsquo;,  &lsquo;<samp>z196</samp>&rsquo;, &lsquo;<samp>zEC12</samp>&rsquo;,
+and &lsquo;<samp>z13</samp>&rsquo;.
+When generating code using the instructions available on z/Architecture,
+the default is <samp>-march=z900</samp>.  Otherwise, the default is
+<samp>-march=g5</samp>.
 </p>
 </dd>
 <dt><code>-mtune=<var>cpu-type</var></code></dt>
-<dd><a name="index-mtune-12"></a>
+<dd><a name="index-mtune-11"></a>
 <p>Tune to <var>cpu-type</var> everything applicable about the generated code,
 except for the ABI and the set of available instructions.
 The list of <var>cpu-type</var> values is the same as for <samp>-march</samp>.

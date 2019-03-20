@@ -74,8 +74,8 @@ ul.no-bullet {list-style: none}
 Next: <a href="Target-Options.html#Target-Options" accesskey="n" rel="next">Target Options</a>, Previous: <a href="Directory-Options.html#Directory-Options" accesskey="p" rel="prev">Directory Options</a>, Up: <a href="Invoking-GCC.html#Invoking-GCC" accesskey="u" rel="up">Invoking GCC</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<a name="Specifying-subprocesses-and-the-switches-to-pass-to-them"></a>
-<h3 class="section">3.15 Specifying subprocesses and the switches to pass to them</h3>
+<a name="Specifying-Subprocesses-and-the-Switches-to-Pass-to-Them"></a>
+<h3 class="section">3.15 Specifying Subprocesses and the Switches to Pass to Them</h3>
 <a name="index-Spec-Files"></a>
 
 <p><code>gcc</code> is a driver program.  It performs its job by invoking a
@@ -449,12 +449,12 @@ to be passed to the C preprocessor.
 </dd>
 <dt><code>%1</code></dt>
 <dd><p>Process the <code>cc1</code> spec.  This is used to construct the options to be
-passed to the actual C compiler (&lsquo;<samp>cc1</samp>&rsquo;).
+passed to the actual C compiler (<code>cc1</code>).
 </p>
 </dd>
 <dt><code>%2</code></dt>
 <dd><p>Process the <code>cc1plus</code> spec.  This is used to construct the options to be
-passed to the actual C++ compiler (&lsquo;<samp>cc1plus</samp>&rsquo;).
+passed to the actual C++ compiler (<code>cc1plus</code>).
 </p>
 </dd>
 <dt><code>%*</code></dt>
@@ -617,8 +617,8 @@ for each matching switch, with the <code>%*</code> replaced by the part of
 that switch matching the <code>*</code>.
 </p>
 <p>If <code>%*</code> appears as the last part of a spec sequence then a space
-will be added after the end of the last substitution.  If there is more
-text in the sequence however then a space will not be generated.  This
+is added after the end of the last substitution.  If there is more
+text in the sequence, however, then a space is not generated.  This
 allows the <code>%*</code> substitution to be used as part of a larger
 string.  For example, a spec string like this:
 </p>
@@ -626,7 +626,7 @@ string.  For example, a spec string like this:
 <pre class="smallexample">%{mcu=*:--script=%*/memory.ld}
 </pre></div>
 
-<p>when matching an option like <code>-mcu=newchip</code> will produce:
+<p>when matching an option like <samp>-mcu=newchip</samp> produces:
 </p>
 <div class="smallexample">
 <pre class="smallexample">--script=newchip/memory.ld

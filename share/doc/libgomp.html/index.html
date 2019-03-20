@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 2006-2014 Free Software Foundation, Inc.
+<!-- Copyright (C) 2006-2015 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -158,8 +158,9 @@ ul.no-bullet {list-style: none}
     <li><a name="toc-OMP_005fTHREAD_005fLIMIT-_002d_002d-Set-the-maximum-number-of-threads" href="OMP_005fTHREAD_005fLIMIT.html#OMP_005fTHREAD_005fLIMIT">3.12 <code>OMP_THREAD_LIMIT</code> &ndash; Set the maximum number of threads</a></li>
     <li><a name="toc-OMP_005fWAIT_005fPOLICY-_002d_002d-How-waiting-threads-are-handled" href="OMP_005fWAIT_005fPOLICY.html#OMP_005fWAIT_005fPOLICY">3.13 <code>OMP_WAIT_POLICY</code> &ndash; How waiting threads are handled</a></li>
     <li><a name="toc-GOMP_005fCPU_005fAFFINITY-_002d_002d-Bind-threads-to-specific-CPUs" href="GOMP_005fCPU_005fAFFINITY.html#GOMP_005fCPU_005fAFFINITY">3.14 <code>GOMP_CPU_AFFINITY</code> &ndash; Bind threads to specific CPUs</a></li>
-    <li><a name="toc-GOMP_005fSTACKSIZE-_002d_002d-Set-default-thread-stack-size" href="GOMP_005fSTACKSIZE.html#GOMP_005fSTACKSIZE">3.15 <code>GOMP_STACKSIZE</code> &ndash; Set default thread stack size</a></li>
-    <li><a name="toc-GOMP_005fSPINCOUNT-_002d_002d-Set-the-busy_002dwait-spin-count" href="GOMP_005fSPINCOUNT.html#GOMP_005fSPINCOUNT">3.16 <code>GOMP_SPINCOUNT</code> &ndash; Set the busy-wait spin count</a></li>
+    <li><a name="toc-GOMP_005fDEBUG-_002d_002d-Enable-debugging-output" href="GOMP_005fDEBUG.html#GOMP_005fDEBUG">3.15 <code>GOMP_DEBUG</code> &ndash; Enable debugging output</a></li>
+    <li><a name="toc-GOMP_005fSTACKSIZE-_002d_002d-Set-default-thread-stack-size" href="GOMP_005fSTACKSIZE.html#GOMP_005fSTACKSIZE">3.16 <code>GOMP_STACKSIZE</code> &ndash; Set default thread stack size</a></li>
+    <li><a name="toc-GOMP_005fSPINCOUNT-_002d_002d-Set-the-busy_002dwait-spin-count" href="GOMP_005fSPINCOUNT.html#GOMP_005fSPINCOUNT">3.17 <code>GOMP_SPINCOUNT</code> &ndash; Set the busy-wait spin count</a></li>
   </ul></li>
   <li><a name="toc-The-libgomp-ABI-1" href="The-libgomp-ABI.html#The-libgomp-ABI">4 The libgomp ABI</a>
   <ul class="no-bullet">
@@ -201,9 +202,19 @@ Next: <a href="Enabling-OpenMP.html#Enabling-OpenMP" accesskey="n" rel="next">En
 <h1 class="top">Introduction</h1>
 <a name="index-Introduction"></a>
 
-<p>This manual documents the usage of libgomp, the GNU implementation of the 
-<a href="http://www.openmp.org">OpenMP</a> Application Programming Interface (API)
-for multi-platform shared-memory parallel programming in C/C++ and Fortran.
+<p>This manual documents the usage of libgomp, the GNU Offloading and
+Multi Processing Runtime Library.  This includes the GNU
+implementation of the <a href="http://www.openmp.org">OpenMP</a> Application
+Programming Interface (API) for multi-platform shared-memory parallel
+programming in C/C++ and Fortran, and the GNU implementation of the
+<a href="http://www.openacc.org/">OpenACC</a> Application Programming
+Interface (API) for offloading of code to accelerator devices in C/C++
+and Fortran.
+</p>
+<p>Originally, libgomp implemented the GNU OpenMP Runtime Library.  Based
+on this, support for OpenACC and offloading (both OpenACC and OpenMP
+4&rsquo;s target construct) has been added later on, and the library&rsquo;s name
+changed to GNU Offloading and Multi Processing Runtime Library.
 </p>
 
 
@@ -218,7 +229,8 @@ for multi-platform shared-memory parallel programming in C/C++ and Fortran.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="The-libgomp-ABI.html#The-libgomp-ABI" accesskey="4">The libgomp ABI</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Notes on the external ABI presented by libgomp.
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="Reporting-Bugs.html#Reporting-Bugs" accesskey="5">Reporting Bugs</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">How to report bugs in GNU OpenMP.
+<tr><td align="left" valign="top">&bull; <a href="Reporting-Bugs.html#Reporting-Bugs" accesskey="5">Reporting Bugs</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">How to report bugs in the GNU Offloading and
+                               Multi Processing Runtime Library.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Copying.html#Copying" accesskey="6">Copying</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">GNU general public license says
                                how you can copy and share libgomp.

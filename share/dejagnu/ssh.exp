@@ -1,5 +1,4 @@
-# Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001
-# 2002, 2003, 2005, 2006, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
+# Copyright (C) 2016 Free Software Foundation, Inc.
 #
 # This file is part of DejaGnu.
 #
@@ -17,13 +16,12 @@
 # along with DejaGnu; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street - Fifth Floor, Boston, MA 02110-1301, USA.
 
-# Connect to HOSTNAME using ssh(1).
-#
+# Connect using ssh(1).
 
 set ssh_initialized "no"
 set ssh_useropts " -o ControlPersist=yes -o ControlMaster=auto -o ControlPath=\"/tmp/ssh-%r@%h:%p\""
 
-# Default to the ssh and scp in the users path.
+# Default to the ssh and scp in the user's path.
 set SSH ssh
 set SCP scp
 
@@ -37,10 +35,6 @@ proc ssh_download {desthost srcfile destfile} {
     set ssh_useropts ""
     set name ""
     set hostname ""
-
-#    if { $ssh_initialized == "no" } {
-#	ssh_close $desthost
-#    }
 
     if {[board_info $desthost exists scp_prog]} {
 	set SCP [board_info $desthost scp_prog]
@@ -134,7 +128,7 @@ proc ssh_exec { boardname program pargs inp outp } {
     set name ""
     set hostname ""
 
-    verbose "Executing $boardname:$program $pargs"
+    verbose "Executing on $boardname: $program $pargs"
 
     if {![board_info $boardname exists ssh_prog]} {
 	set SSH ssh
@@ -192,15 +186,14 @@ proc ssh_exec { boardname program pargs inp outp } {
 	regsub "XYZ(\[0-9\]*)ZYX\n?" $output "" output
 	return [list $status "$SSH to $boardname failed for $program, $output"]
     }
-    regexp "XYZ(\[0-9\]*)ZYX" $output junk status
+    if { [regexp "XYZ(\[0-9\]*)ZYX" $output junk status] == 0 } {
+	set status ""
+    }
     verbose "ssh_exec: status:$status text:$output" 4
     if { $status == "" } {
 	return [list -1 "Couldn't parse $SSH output, $output."]
     }
     regsub "XYZ(\[0-9\]*)ZYX\n?" $output "" output
-    # Delete one trailing \n because that is what `exec' will do and we want
-    # to behave identical to it.
-    regsub "\n$" $output "" output
     return [list [expr {$status != 0}] $output]
 }
 

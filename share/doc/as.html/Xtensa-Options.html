@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the GNU Assembler "as".
 
-Copyright (C) 1991-2013 Free Software Foundation, Inc.
+Copyright (C) 1991-2014 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -67,7 +67,7 @@ Next: <a href="Xtensa-Syntax.html#Xtensa-Syntax" accesskey="n" rel="next">Xtensa
 </div>
 <hr>
 <a name="Command-Line-Options"></a>
-<h4 class="subsection">9.52.1 Command Line Options</h4>
+<h4 class="subsection">9.53.1 Command Line Options</h4>
 
 <dl compact="compact">
 <dt><code>--text-section-literals | --no-text-section-literals</code></dt>
@@ -132,6 +132,16 @@ instruction operands to be errors.
 <dd><a name="index-_002d_002drename_002dsection"></a>
 <p>Rename the <var>oldname</var> section to <var>newname</var>.  This option can be used
 multiple times to rename multiple sections.
+</p>
+</dd>
+<dt><code>--trampolines | --no-trampolines</code></dt>
+<dd><a name="index-_002d_002dtrampolines"></a>
+<a name="index-_002d_002dno_002dtrampolines"></a>
+<p>Enable or disable transformation of jump instructions to allow jumps
+across a greater range of addresses.  See <a href="Xtensa-Jump-Relaxation.html#Xtensa-Jump-Relaxation">Jump Trampolines</a>.  This option should be used when jump targets can
+potentially be out of range.  In the absence of such jumps this option
+does not affect code size or performance.  The default is
+&lsquo;<samp>--trampolines</samp>&rsquo;.
 </p></dd>
 </dl>
 

@@ -75,7 +75,7 @@ Next: <a href="Anchored-Addresses.html#Anchored-Addresses" accesskey="n" rel="ne
 </div>
 <hr>
 <a name="Addressing-Modes-1"></a>
-<h3 class="section">17.14 Addressing Modes</h3>
+<h3 class="section">17.13 Addressing Modes</h3>
 <a name="index-addressing-modes"></a>
 
 <p>This is about addressing modes.
@@ -131,7 +131,7 @@ accept.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fLEGITIMATE_005fADDRESS_005fP"></a>Target Hook: <em>bool</em> <strong>TARGET_LEGITIMATE_ADDRESS_P</strong> <em>(enum machine_mode <var>mode</var>, rtx <var>x</var>, bool <var>strict</var>)</em></dt>
+<dt><a name="index-TARGET_005fLEGITIMATE_005fADDRESS_005fP"></a>Target Hook: <em>bool</em> <strong>TARGET_LEGITIMATE_ADDRESS_P</strong> <em>(machine_mode <var>mode</var>, rtx <var>x</var>, bool <var>strict</var>)</em></dt>
 <dd><p>A function that returns whether <var>x</var> (an RTX) is a legitimate memory
 address on the target machine for a memory operand of mode <var>mode</var>.
 </p>
@@ -221,7 +221,7 @@ a label_ref or symbol_ref within an UNSPEC.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fLEGITIMIZE_005fADDRESS"></a>Target Hook: <em>rtx</em> <strong>TARGET_LEGITIMIZE_ADDRESS</strong> <em>(rtx <var>x</var>, rtx <var>oldx</var>, enum machine_mode <var>mode</var>)</em></dt>
+<dt><a name="index-TARGET_005fLEGITIMIZE_005fADDRESS"></a>Target Hook: <em>rtx</em> <strong>TARGET_LEGITIMIZE_ADDRESS</strong> <em>(rtx <var>x</var>, rtx <var>oldx</var>, machine_mode <var>mode</var>)</em></dt>
 <dd><p>This hook is given an invalid memory address <var>x</var> for an
 operand of mode <var>mode</var> and should try to return a valid memory
 address.
@@ -313,7 +313,7 @@ addresses.  Many RISC machines have no mode-dependent addresses.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fLEGITIMATE_005fCONSTANT_005fP"></a>Target Hook: <em>bool</em> <strong>TARGET_LEGITIMATE_CONSTANT_P</strong> <em>(enum machine_mode <var>mode</var>, rtx <var>x</var>)</em></dt>
+<dt><a name="index-TARGET_005fLEGITIMATE_005fCONSTANT_005fP"></a>Target Hook: <em>bool</em> <strong>TARGET_LEGITIMATE_CONSTANT_P</strong> <em>(machine_mode <var>mode</var>, rtx <var>x</var>)</em></dt>
 <dd><p>This hook returns true if <var>x</var> is a legitimate constant for a
 <var>mode</var>-mode immediate operand on the target machine.  You can assume that
 <var>x</var> satisfies <code>CONSTANT_P</code>, so you need not check this.
@@ -339,7 +339,7 @@ debug sections.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fCANNOT_005fFORCE_005fCONST_005fMEM"></a>Target Hook: <em>bool</em> <strong>TARGET_CANNOT_FORCE_CONST_MEM</strong> <em>(enum machine_mode <var>mode</var>, rtx <var>x</var>)</em></dt>
+<dt><a name="index-TARGET_005fCANNOT_005fFORCE_005fCONST_005fMEM"></a>Target Hook: <em>bool</em> <strong>TARGET_CANNOT_FORCE_CONST_MEM</strong> <em>(machine_mode <var>mode</var>, rtx <var>x</var>)</em></dt>
 <dd><p>This hook should return true if <var>x</var> is of a form that cannot (or
 should not) be spilled to the constant pool.  <var>mode</var> is the mode
 of <var>x</var>.
@@ -354,7 +354,7 @@ of TLS symbols for various targets.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fUSE_005fBLOCKS_005fFOR_005fCONSTANT_005fP"></a>Target Hook: <em>bool</em> <strong>TARGET_USE_BLOCKS_FOR_CONSTANT_P</strong> <em>(enum machine_mode <var>mode</var>, const_rtx <var>x</var>)</em></dt>
+<dt><a name="index-TARGET_005fUSE_005fBLOCKS_005fFOR_005fCONSTANT_005fP"></a>Target Hook: <em>bool</em> <strong>TARGET_USE_BLOCKS_FOR_CONSTANT_P</strong> <em>(machine_mode <var>mode</var>, const_rtx <var>x</var>)</em></dt>
 <dd><p>This hook should return true if pool entries for constant <var>x</var> can
 be placed in an <code>object_block</code> structure.  <var>mode</var> is the mode
 of <var>x</var>.
@@ -424,7 +424,7 @@ misalignment value (<var>misalign</var>).
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fVECTORIZE_005fVEC_005fPERM_005fCONST_005fOK"></a>Target Hook: <em>bool</em> <strong>TARGET_VECTORIZE_VEC_PERM_CONST_OK</strong> <em>(enum <var>machine_mode</var>, const unsigned char *<var>sel</var>)</em></dt>
+<dt><a name="index-TARGET_005fVECTORIZE_005fVEC_005fPERM_005fCONST_005fOK"></a>Target Hook: <em>bool</em> <strong>TARGET_VECTORIZE_VEC_PERM_CONST_OK</strong> <em>(machine_mode, const unsigned char *<var>sel</var>)</em></dt>
 <dd><p>Return true if a vector created for <code>vec_perm_const</code> is valid.
 </p></dd></dl>
 
@@ -452,7 +452,7 @@ return type of the vectorized function shall be of vector type
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fVECTORIZE_005fSUPPORT_005fVECTOR_005fMISALIGNMENT"></a>Target Hook: <em>bool</em> <strong>TARGET_VECTORIZE_SUPPORT_VECTOR_MISALIGNMENT</strong> <em>(enum machine_mode <var>mode</var>, const_tree <var>type</var>, int <var>misalignment</var>, bool <var>is_packed</var>)</em></dt>
+<dt><a name="index-TARGET_005fVECTORIZE_005fSUPPORT_005fVECTOR_005fMISALIGNMENT"></a>Target Hook: <em>bool</em> <strong>TARGET_VECTORIZE_SUPPORT_VECTOR_MISALIGNMENT</strong> <em>(machine_mode <var>mode</var>, const_tree <var>type</var>, int <var>misalignment</var>, bool <var>is_packed</var>)</em></dt>
 <dd><p>This hook should return true if the target supports misaligned vector
 store/load of a specific factor denoted in the <var>misalignment</var>
 parameter.  The vector store/load should be of machine mode <var>mode</var> and
@@ -461,7 +461,7 @@ parameter is true if the memory access is defined in a packed struct.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fVECTORIZE_005fPREFERRED_005fSIMD_005fMODE"></a>Target Hook: <em>enum machine_mode</em> <strong>TARGET_VECTORIZE_PREFERRED_SIMD_MODE</strong> <em>(enum machine_mode <var>mode</var>)</em></dt>
+<dt><a name="index-TARGET_005fVECTORIZE_005fPREFERRED_005fSIMD_005fMODE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_VECTORIZE_PREFERRED_SIMD_MODE</strong> <em>(machine_mode <var>mode</var>)</em></dt>
 <dd><p>This hook should return the preferred mode for vectorizing scalar
 mode <var>mode</var>.  The default is
 equal to <code>word_mode</code>, because the vectorizer can do some

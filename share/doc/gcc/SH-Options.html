@@ -75,7 +75,7 @@ Next: <a href="Solaris-2-Options.html#Solaris-2-Options" accesskey="n" rel="next
 </div>
 <hr>
 <a name="SH-Options-1"></a>
-<h4 class="subsection">3.17.42 SH Options</h4>
+<h4 class="subsection">3.17.41 SH Options</h4>
 
 <p>These &lsquo;<samp>-m</samp>&rsquo; options are defined for the SH implementations:
 </p>
@@ -406,7 +406,7 @@ built-in functions.  The generated atomic sequences require additional support
 from the interrupt/exception handling code of the system and are only suitable
 for SH3* and SH4* single-core systems.  This option is enabled by default when
 the target is <code>sh*-*-linux*</code> and SH3* or SH4*.  When the target is SH4A,
-this option will also partially utilize the hardware atomic instructions
+this option also partially utilizes the hardware atomic instructions
 <code>movli.l</code> and <code>movco.l</code> to create more efficient code, unless
 &lsquo;<samp>strict</samp>&rsquo; is specified.  
 </p>
@@ -434,7 +434,7 @@ required.  This model is enabled by default when the target is
 instructions only.  This is only available on SH4A and is suitable for
 multi-core systems.  Since the hardware instructions support only 32 bit atomic
 variables access to 8 or 16 bit variables is emulated with 32 bit accesses.
-Code compiled with this option will also be compatible with other software
+Code compiled with this option is also compatible with other software
 atomic model interrupt/exception handling systems if executed on an SH4A
 system.  Additional support from the interrupt/exception handling code of the
 system is not required for this model.
@@ -449,8 +449,8 @@ and in the range 0-1020.
 </p>
 </dd>
 <dt>&lsquo;<samp>strict</samp>&rsquo;</dt>
-<dd><p>This parameter prevents mixed usage of multiple atomic models, even though they
-would be compatible, and will make the compiler generate atomic sequences of the
+<dd><p>This parameter prevents mixed usage of multiple atomic models, even if they
+are compatible, and makes the compiler generate atomic sequences of the
 specified model only.
 </p>
 </dd>
@@ -570,7 +570,7 @@ SH2A and SHcompact.
 <dd><p>Calls a library function that performs the operation in double precision
 floating point.  Division by zero causes a floating-point exception.  This is
 the default for SHcompact with FPU.  Specifying this for targets that do not
-have a double precision FPU will default to <code>call-div1</code>.
+have a double precision FPU defaults to <code>call-div1</code>.
 </p>
 </dd>
 <dt>&lsquo;<samp>call-table</samp>&rsquo;</dt>
@@ -578,19 +578,19 @@ have a double precision FPU will default to <code>call-div1</code>.
 the <code>div1</code> instruction with case distinction for larger divisors.  Division
 by zero calculates an unspecified result and does not trap.  This is the default
 for SH4.  Specifying this for targets that do not have dynamic shift
-instructions will default to <code>call-div1</code>.
+instructions defaults to <code>call-div1</code>.
 </p>
 </dd>
 </dl>
 
-<p>When a division strategy has not been specified the default strategy will be
+<p>When a division strategy has not been specified the default strategy is
 selected based on the current target.  For SH2A the default strategy is to
 use the <code>divs</code> and <code>divu</code> instructions instead of library function
 calls.
 </p>
 </dd>
 <dt><code>-maccumulate-outgoing-args</code></dt>
-<dd><a name="index-maccumulate_002doutgoing_002dargs-1"></a>
+<dd><a name="index-maccumulate_002doutgoing_002dargs"></a>
 <p>Reserve space once for outgoing arguments in the function prologue rather
 than around each call.  Generally beneficial for performance and size.  Also
 needed for unwinding to avoid changing the stack frame around conditional code.
@@ -683,9 +683,17 @@ is being compiled for.
 <a name="index-mno_002dzdcbranch"></a>
 <p>Assume (do not assume) that zero displacement conditional branch instructions
 <code>bt</code> and <code>bf</code> are fast.  If <samp>-mzdcbranch</samp> is specified, the
-compiler will try to prefer zero displacement branch code sequences.  This is
+compiler prefers zero displacement branch code sequences.  This is
 enabled by default when generating code for SH4 and SH4A.  It can be explicitly
 disabled by specifying <samp>-mno-zdcbranch</samp>.
+</p>
+</dd>
+<dt><code>-mcbranch-force-delay-slot</code></dt>
+<dd><a name="index-mcbranch_002dforce_002ddelay_002dslot"></a>
+<p>Force the usage of delay slots for conditional branches, which stuffs the delay
+slot with a <code>nop</code> if a suitable instruction can&rsquo;t be found.  By default
+this option is disabled.  It can be enabled to work around hardware bugs as
+found in the original SH7055.
 </p>
 </dd>
 <dt><code>-mfused-madd</code></dt>
@@ -705,10 +713,10 @@ mapped to <samp>-ffp-contract=off</samp>.
 <dd><a name="index-mfsca"></a>
 <a name="index-mno_002dfsca"></a>
 <p>Allow or disallow the compiler to emit the <code>fsca</code> instruction for sine
-and cosine approximations.  The option <code>-mfsca</code> must be used in
-combination with <code>-funsafe-math-optimizations</code>.  It is enabled by default
-when generating code for SH4A.  Using <code>-mno-fsca</code> disables sine and cosine
-approximations even if <code>-funsafe-math-optimizations</code> is in effect.
+and cosine approximations.  The option <samp>-mfsca</samp> must be used in
+combination with <samp>-funsafe-math-optimizations</samp>.  It is enabled by default
+when generating code for SH4A.  Using <samp>-mno-fsca</samp> disables sine and cosine
+approximations even if <samp>-funsafe-math-optimizations</samp> is in effect.
 </p>
 </dd>
 <dt><code>-mfsrra</code></dt>
@@ -716,11 +724,11 @@ approximations even if <code>-funsafe-math-optimizations</code> is in effect.
 <dd><a name="index-mfsrra"></a>
 <a name="index-mno_002dfsrra"></a>
 <p>Allow or disallow the compiler to emit the <code>fsrra</code> instruction for
-reciprocal square root approximations.  The option <code>-mfsrra</code> must be used
-in combination with <code>-funsafe-math-optimizations</code> and
-<code>-ffinite-math-only</code>.  It is enabled by default when generating code for
-SH4A.  Using <code>-mno-fsrra</code> disables reciprocal square root approximations
-even if <code>-funsafe-math-optimizations</code> and <code>-ffinite-math-only</code> are
+reciprocal square root approximations.  The option <samp>-mfsrra</samp> must be used
+in combination with <samp>-funsafe-math-optimizations</samp> and
+<samp>-ffinite-math-only</samp>.  It is enabled by default when generating code for
+SH4A.  Using <samp>-mno-fsrra</samp> disables reciprocal square root approximations
+even if <samp>-funsafe-math-optimizations</samp> and <samp>-ffinite-math-only</samp> are
 in effect.
 </p>
 </dd>

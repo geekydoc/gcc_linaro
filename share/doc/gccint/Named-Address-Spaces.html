@@ -75,7 +75,7 @@ Next: <a href="Misc.html#Misc" accesskey="n" rel="next">Misc</a>, Previous: <a h
 </div>
 <hr>
 <a name="Adding-support-for-named-address-spaces"></a>
-<h3 class="section">17.30 Adding support for named address spaces</h3>
+<h3 class="section">17.29 Adding support for named address spaces</h3>
 <a name="index-named-address-spaces"></a>
 
 <p>The draft technical report of the ISO/IEC JTC1 S22 WG14 N1275
@@ -113,7 +113,7 @@ c_register_addr_space (&quot;__ea&quot;, ADDR_SPACE_EA);
 </pre></div>
 
 <dl>
-<dt><a name="index-TARGET_005fADDR_005fSPACE_005fPOINTER_005fMODE"></a>Target Hook: <em>enum machine_mode</em> <strong>TARGET_ADDR_SPACE_POINTER_MODE</strong> <em>(addr_space_t <var>address_space</var>)</em></dt>
+<dt><a name="index-TARGET_005fADDR_005fSPACE_005fPOINTER_005fMODE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_ADDR_SPACE_POINTER_MODE</strong> <em>(addr_space_t <var>address_space</var>)</em></dt>
 <dd><p>Define this to return the machine mode to use for pointers to
 <var>address_space</var> if the target supports named address spaces.
 The default version of this hook returns <code>ptr_mode</code> for the
@@ -121,7 +121,7 @@ generic address space only.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fADDR_005fSPACE_005fADDRESS_005fMODE"></a>Target Hook: <em>enum machine_mode</em> <strong>TARGET_ADDR_SPACE_ADDRESS_MODE</strong> <em>(addr_space_t <var>address_space</var>)</em></dt>
+<dt><a name="index-TARGET_005fADDR_005fSPACE_005fADDRESS_005fMODE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_ADDR_SPACE_ADDRESS_MODE</strong> <em>(addr_space_t <var>address_space</var>)</em></dt>
 <dd><p>Define this to return the machine mode to use for addresses in
 <var>address_space</var> if the target supports named address spaces.
 The default version of this hook returns <code>Pmode</code> for the
@@ -129,7 +129,7 @@ generic address space only.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fADDR_005fSPACE_005fVALID_005fPOINTER_005fMODE"></a>Target Hook: <em>bool</em> <strong>TARGET_ADDR_SPACE_VALID_POINTER_MODE</strong> <em>(enum machine_mode <var>mode</var>, addr_space_t <var>as</var>)</em></dt>
+<dt><a name="index-TARGET_005fADDR_005fSPACE_005fVALID_005fPOINTER_005fMODE"></a>Target Hook: <em>bool</em> <strong>TARGET_ADDR_SPACE_VALID_POINTER_MODE</strong> <em>(machine_mode <var>mode</var>, addr_space_t <var>as</var>)</em></dt>
 <dd><p>Define this to return nonzero if the port can handle pointers
 with machine mode <var>mode</var> to address space <var>as</var>.  This target
 hook is the same as the <code>TARGET_VALID_POINTER_MODE</code> target hook,
@@ -140,7 +140,7 @@ target hooks for the given address space.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fADDR_005fSPACE_005fLEGITIMATE_005fADDRESS_005fP"></a>Target Hook: <em>bool</em> <strong>TARGET_ADDR_SPACE_LEGITIMATE_ADDRESS_P</strong> <em>(enum machine_mode <var>mode</var>, rtx <var>exp</var>, bool <var>strict</var>, addr_space_t <var>as</var>)</em></dt>
+<dt><a name="index-TARGET_005fADDR_005fSPACE_005fLEGITIMATE_005fADDRESS_005fP"></a>Target Hook: <em>bool</em> <strong>TARGET_ADDR_SPACE_LEGITIMATE_ADDRESS_P</strong> <em>(machine_mode <var>mode</var>, rtx <var>exp</var>, bool <var>strict</var>, addr_space_t <var>as</var>)</em></dt>
 <dd><p>Define this to return true if <var>exp</var> is a valid address for mode
 <var>mode</var> in the named address space <var>as</var>.  The <var>strict</var>
 parameter says whether strict addressing is in effect after reload has
@@ -150,7 +150,7 @@ explicit named address space support.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fADDR_005fSPACE_005fLEGITIMIZE_005fADDRESS"></a>Target Hook: <em>rtx</em> <strong>TARGET_ADDR_SPACE_LEGITIMIZE_ADDRESS</strong> <em>(rtx <var>x</var>, rtx <var>oldx</var>, enum machine_mode <var>mode</var>, addr_space_t <var>as</var>)</em></dt>
+<dt><a name="index-TARGET_005fADDR_005fSPACE_005fLEGITIMIZE_005fADDRESS"></a>Target Hook: <em>rtx</em> <strong>TARGET_ADDR_SPACE_LEGITIMIZE_ADDRESS</strong> <em>(rtx <var>x</var>, rtx <var>oldx</var>, machine_mode <var>mode</var>, addr_space_t <var>as</var>)</em></dt>
 <dd><p>Define this to modify an invalid address <var>x</var> to be a valid address
 with mode <var>mode</var> in the named address space <var>as</var>.  This target
 hook is the same as the <code>TARGET_LEGITIMIZE_ADDRESS</code> target hook,

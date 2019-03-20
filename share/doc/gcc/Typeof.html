@@ -214,24 +214,6 @@ evaluated only once when using <code>__auto_type</code>, but twice if
 <code>typeof</code> is used.
 </li></ul>
 
-<p><em>Compatibility Note:</em> In addition to <code>typeof</code>, GCC 2 supported
-a more limited extension that permitted one to write
-</p>
-<div class="smallexample">
-<pre class="smallexample">typedef <var>T</var> = <var>expr</var>;
-</pre></div>
-
-<p>with the effect of declaring <var>T</var> to have the type of the expression
-<var>expr</var>.  This extension does not work with GCC 3 (versions between
-3.0 and 3.2 crash; 3.2.1 and later give an error).  Code that
-relies on it should be rewritten to use <code>typeof</code>:
-</p>
-<div class="smallexample">
-<pre class="smallexample">typedef typeof(<var>expr</var>) <var>T</var>;
-</pre></div>
-
-<p>This works with all versions of GCC.
-</p>
 <hr>
 <div class="header">
 <p>

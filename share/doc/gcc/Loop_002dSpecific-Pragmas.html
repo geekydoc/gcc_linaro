@@ -75,7 +75,7 @@ Previous: <a href="Function-Specific-Option-Pragmas.html#Function-Specific-Optio
 </div>
 <hr>
 <a name="Loop_002dSpecific-Pragmas-1"></a>
-<h4 class="subsection">6.59.14 Loop-Specific Pragmas</h4>
+<h4 class="subsection">6.60.15 Loop-Specific Pragmas</h4>
 
 <dl compact="compact">
 <dt><code>#pragma GCC ivdep</code></dt>
@@ -84,8 +84,8 @@ Previous: <a href="Function-Specific-Option-Pragmas.html#Function-Specific-Optio
 </dl>
 
 <p>With this pragma, the programmer asserts that there are no loop-carried
-dependencies which would prevent that consecutive iterations of
-the following loop can be executed concurrently with SIMD
+dependencies which would prevent consecutive iterations of
+the following loop from executing concurrently with SIMD
 (single instruction multiple data) instructions.
 </p>
 <p>For example, the compiler can only unconditionally vectorize the following

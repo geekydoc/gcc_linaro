@@ -1,4 +1,4 @@
-# Copyright (C) 2014 Free Software Foundation, Inc.
+# Copyright (C) 2016 Free Software Foundation, Inc.
 #
 # This file is part of DejaGnu.
 #
@@ -22,7 +22,7 @@ proc ${board}_init { hostname } {
 
     # Get the full path to the Foundation Model
     if {[board_info $hostname exists model]} {
-        set model "[board_info $hostname model]"
+	set model "[board_info $hostname model]"
     }
 }
 
@@ -33,9 +33,9 @@ proc ${board}_download { dest file args } {
     set status [catch "exec od -An -v -j5 -N1 -t x1 $file" bigendian]
     set args "--quiet"
     if { $bigendian == "02"} {
-     	set args "$args --bigendian"
+	set args "$args --bigendian"
     }
-    
+
     set result [local_exec "$model --image $file $args" "" "" $timeout]
     set status [lindex $result 0]
     set output [lindex $result 1]

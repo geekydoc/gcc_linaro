@@ -75,7 +75,7 @@ Next: <a href="S_002f390-and-zSeries-Options.html#S_002f390-and-zSeries-Options"
 </div>
 <hr>
 <a name="RX-Options-1"></a>
-<h4 class="subsection">3.17.39 RX Options</h4>
+<h4 class="subsection">3.17.38 RX Options</h4>
 <a name="index-RX-Options"></a>
 
 <p>These command-line options are defined for RX targets:
@@ -83,8 +83,8 @@ Next: <a href="S_002f390-and-zSeries-Options.html#S_002f390-and-zSeries-Options"
 <dl compact="compact">
 <dt><code>-m64bit-doubles</code></dt>
 <dt><code>-m32bit-doubles</code></dt>
-<dd><a name="index-m64bit_002ddoubles"></a>
-<a name="index-m32bit_002ddoubles"></a>
+<dd><a name="index-m64bit_002ddoubles-1"></a>
+<a name="index-m32bit_002ddoubles-1"></a>
 <p>Make the <code>double</code> data type be 64 bits (<samp>-m64bit-doubles</samp>)
 or 32 bits (<samp>-m32bit-doubles</samp>) in size.  The default is
 <samp>-m32bit-doubles</samp>.  <em>Note</em> RX floating-point hardware only
@@ -97,8 +97,8 @@ works on 32-bit values, which is why the default is
 <dd><a name="index-fpu"></a>
 <a name="index-nofpu"></a>
 <p>Enables (<samp>-fpu</samp>) or disables (<samp>-nofpu</samp>) the use of RX
-floating-point hardware.  The default is enabled for the <var>RX600</var>
-series and disabled for the <var>RX200</var> series.
+floating-point hardware.  The default is enabled for the RX600
+series and disabled for the RX200 series.
 </p>
 <p>Floating-point instructions are only generated for 32-bit floating-point 
 values, however, so the FPU hardware is not used for doubles if the
@@ -110,15 +110,15 @@ This is because the RX FPU instructions are themselves unsafe.
 </p>
 </dd>
 <dt><code>-mcpu=<var>name</var></code></dt>
-<dd><a name="index-_002dmcpu"></a>
+<dd><a name="index-mcpu-9"></a>
 <p>Selects the type of RX CPU to be targeted.  Currently three types are
-supported, the generic <var>RX600</var> and <var>RX200</var> series hardware and
-the specific <var>RX610</var> CPU.  The default is <var>RX600</var>.
+supported, the generic &lsquo;<samp>RX600</samp>&rsquo; and &lsquo;<samp>RX200</samp>&rsquo; series hardware and
+the specific &lsquo;<samp>RX610</samp>&rsquo; CPU.  The default is &lsquo;<samp>RX600</samp>&rsquo;.
 </p>
-<p>The only difference between <var>RX600</var> and <var>RX610</var> is that the
-<var>RX610</var> does not support the <code>MVTIPL</code> instruction.
+<p>The only difference between &lsquo;<samp>RX600</samp>&rsquo; and &lsquo;<samp>RX610</samp>&rsquo; is that the
+&lsquo;<samp>RX610</samp>&rsquo; does not support the <code>MVTIPL</code> instruction.
 </p>
-<p>The <var>RX200</var> series does not have a hardware floating-point unit
+<p>The &lsquo;<samp>RX200</samp>&rsquo; series does not have a hardware floating-point unit
 and so <samp>-nofpu</samp> is enabled by default when this type is
 selected.
 </p>

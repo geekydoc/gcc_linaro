@@ -75,7 +75,7 @@ Next: <a href="Dispatch-Tables.html#Dispatch-Tables" accesskey="n" rel="next">Di
 </div>
 <hr>
 <a name="Output-of-Assembler-Instructions"></a>
-<h4 class="subsection">17.21.7 Output of Assembler Instructions</h4>
+<h4 class="subsection">17.20.7 Output of Assembler Instructions</h4>
 
 <p>This describes assembler instruction output.
 </p>
@@ -163,7 +163,7 @@ writing conditional output routines in those patterns.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fASM_005fFINAL_005fPOSTSCAN_005fINSN"></a>Target Hook: <em>void</em> <strong>TARGET_ASM_FINAL_POSTSCAN_INSN</strong> <em>(FILE *<var>file</var>, rtx <var>insn</var>, rtx *<var>opvec</var>, int <var>noperands</var>)</em></dt>
+<dt><a name="index-TARGET_005fASM_005fFINAL_005fPOSTSCAN_005fINSN"></a>Target Hook: <em>void</em> <strong>TARGET_ASM_FINAL_POSTSCAN_INSN</strong> <em>(FILE *<var>file</var>, rtx_insn *<var>insn</var>, rtx *<var>opvec</var>, int <var>noperands</var>)</em></dt>
 <dd><p>If defined, this target hook is a function which is executed just after the
 output of assembler code for <var>insn</var>, to change the mode of the assembler
 if necessary.

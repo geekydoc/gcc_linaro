@@ -75,23 +75,12 @@ Next: <a href="Function-Entry.html#Function-Entry" accesskey="n" rel="next">Func
 </div>
 <hr>
 <a name="Caller_002dSaves-Register-Allocation"></a>
-<h4 class="subsection">17.10.10 Caller-Saves Register Allocation</h4>
+<h4 class="subsection">17.9.10 Caller-Saves Register Allocation</h4>
 
 <p>If you enable it, GCC can save registers around function calls.  This
 makes it possible to use call-clobbered registers to hold variables that
 must live across calls.
 </p>
-<dl>
-<dt><a name="index-CALLER_005fSAVE_005fPROFITABLE"></a>Macro: <strong>CALLER_SAVE_PROFITABLE</strong> <em>(<var>refs</var>, <var>calls</var>)</em></dt>
-<dd><p>A C expression to determine whether it is worthwhile to consider placing
-a pseudo-register in a call-clobbered hard register and saving and
-restoring it around each function call.  The expression should be 1 when
-this is worth doing, and 0 otherwise.
-</p>
-<p>If you don&rsquo;t define this macro, a default is used which is good on most
-machines: <code>4 * <var>calls</var> &lt; <var>refs</var></code>.
-</p></dd></dl>
-
 <dl>
 <dt><a name="index-HARD_005fREGNO_005fCALLER_005fSAVE_005fMODE"></a>Macro: <strong>HARD_REGNO_CALLER_SAVE_MODE</strong> <em>(<var>regno</var>, <var>nregs</var>)</em></dt>
 <dd><p>A C expression specifying which mode is required for saving <var>nregs</var>

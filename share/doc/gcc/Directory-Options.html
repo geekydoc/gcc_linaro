@@ -116,8 +116,8 @@ to be used by the user, but only passed by the driver.
 <dt><code>-iquote<var>dir</var></code></dt>
 <dd><a name="index-iquote-1"></a>
 <p>Add the directory <var>dir</var> to the head of the list of directories to
-be searched for header files only for the case of &lsquo;<samp>#include
-&quot;<var>file</var>&quot;</samp>&rsquo;; they are not searched for &lsquo;<samp>#include &lt;<var>file</var>&gt;</samp>&rsquo;,
+be searched for header files only for the case of <code>#include
+&quot;<var>file</var>&quot;</code>; they are not searched for <code>#include &lt;<var>file</var>&gt;</code>,
 otherwise just like <samp>-I</samp>.
 </p>
 </dd>
@@ -145,7 +145,7 @@ those results in a file name that is found, the unmodified program
 name is searched for using the directories specified in your
 <code>PATH</code> environment variable.
 </p>
-<p>The compiler checks to see if the path provided by the <samp>-B</samp>
+<p>The compiler checks to see if the path provided by <samp>-B</samp>
 refers to a directory, and if necessary it adds a directory
 separator character at the end of the path.
 </p>
@@ -210,19 +210,20 @@ such a suffix.
 <dt><code>-I-</code></dt>
 <dd><a name="index-I_002d-1"></a>
 <p>This option has been deprecated.  Please use <samp>-iquote</samp> instead for
-<samp>-I</samp> directories before the <samp>-I-</samp> and remove the <samp>-I-</samp>.
+<samp>-I</samp> directories before the <samp>-I-</samp> and remove the <samp>-I-</samp>
+option.
 Any directories you specify with <samp>-I</samp> options before the <samp>-I-</samp>
-option are searched only for the case of &lsquo;<samp>#include &quot;<var>file</var>&quot;</samp>&rsquo;;
-they are not searched for &lsquo;<samp>#include &lt;<var>file</var>&gt;</samp>&rsquo;.
+option are searched only for the case of <code>#include &quot;<var>file</var>&quot;</code>;
+they are not searched for <code>#include &lt;<var>file</var>&gt;</code>.
 </p>
 <p>If additional directories are specified with <samp>-I</samp> options after
-the <samp>-I-</samp>, these directories are searched for all &lsquo;<samp>#include</samp>&rsquo;
+the <samp>-I-</samp> option, these directories are searched for all <code>#include</code>
 directives.  (Ordinarily <em>all</em> <samp>-I</samp> directories are used
 this way.)
 </p>
 <p>In addition, the <samp>-I-</samp> option inhibits the use of the current
 directory (where the current input file came from) as the first search
-directory for &lsquo;<samp>#include &quot;<var>file</var>&quot;</samp>&rsquo;.  There is no way to
+directory for <code>#include &quot;<var>file</var>&quot;</code>.  There is no way to
 override this effect of <samp>-I-</samp>.  With <samp>-I.</samp> you can specify
 searching the directory that is current when the compiler is
 invoked.  That is not exactly the same as what the preprocessor does

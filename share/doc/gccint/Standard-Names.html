@@ -377,18 +377,6 @@ method is deprecated.
 must have mode <var>m</var>.  This can be used even on two-address machines, by
 means of constraints requiring operands 1 and 0 to be the same location.
 </p>
-<a name="index-addptrm3-instruction-pattern"></a>
-</dd>
-<dt>&lsquo;<samp>addptr<var>m</var>3</samp>&rsquo;</dt>
-<dd><p>Like <code>add<var>m</var>3</code> but is guaranteed to only be used for address
-calculations.  The expanded code is not allowed to clobber the
-condition code.  It only needs to be defined if <code>add<var>m</var>3</code>
-sets the condition code.  If adds used for address calculations and
-normal adds are not compatible it is required to expand a distinct
-pattern (e.g. using an unspec).  The pattern is used by LRA to emit
-address calculations.  <code>add<var>m</var>3</code> is used if
-<code>addptr<var>m</var>3</code> is not defined.
-</p>
 <a name="index-ssaddm3-instruction-pattern"></a>
 <a name="index-usaddm3-instruction-pattern"></a>
 <a name="index-subm3-instruction-pattern"></a>
@@ -418,6 +406,39 @@ address calculations.  <code>add<var>m</var>3</code> is used if
 <dt>&lsquo;<samp>umin<var>m</var>3</samp>&rsquo;, &lsquo;<samp>umax<var>m</var>3</samp>&rsquo;</dt>
 <dt>&lsquo;<samp>and<var>m</var>3</samp>&rsquo;, &lsquo;<samp>ior<var>m</var>3</samp>&rsquo;, &lsquo;<samp>xor<var>m</var>3</samp>&rsquo;</dt>
 <dd><p>Similar, for other arithmetic operations.
+</p>
+<a name="index-addvm4-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>addv<var>m</var>4</samp>&rsquo;</dt>
+<dd><p>Like <code>add<var>m</var>3</code> but takes a <code>code_label</code> as operand 3 and
+emits code to jump to it if signed overflow occurs during the addition.
+This pattern is used to implement the built-in functions performing
+signed integer addition with overflow checking.
+</p>
+<a name="index-subvm4-instruction-pattern"></a>
+<a name="index-mulvm4-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>subv<var>m</var>4</samp>&rsquo;, &lsquo;<samp>mulv<var>m</var>4</samp>&rsquo;</dt>
+<dd><p>Similar, for other signed arithmetic operations.
+</p>
+<a name="index-umulvm4-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>umulv<var>m</var>4</samp>&rsquo;</dt>
+<dd><p>Like <code>mulv<var>m</var>4</code> but for unsigned multiplication.  That is to
+say, the operation is the same as signed multiplication but the jump
+is taken only on unsigned overflow.
+</p>
+<a name="index-addptrm3-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>addptr<var>m</var>3</samp>&rsquo;</dt>
+<dd><p>Like <code>add<var>m</var>3</code> but is guaranteed to only be used for address
+calculations.  The expanded code is not allowed to clobber the
+condition code.  It only needs to be defined if <code>add<var>m</var>3</code>
+sets the condition code.  If adds used for address calculations and
+normal adds are not compatible it is required to expand a distinct
+pattern (e.g. using an unspec).  The pattern is used by LRA to emit
+address calculations.  <code>add<var>m</var>3</code> is used if
+<code>addptr<var>m</var>3</code> is not defined.
 </p>
 <a name="index-fmam4-instruction-pattern"></a>
 </dd>
@@ -534,12 +555,24 @@ wider mode, is computed and added to operand 3. Operand 3 is of a mode equal or
 wider than the mode of the product. The result is placed in operand 0, which
 is of the same mode as operand 3.
 </p>
-<a name="index-ssum_005fwidenm3-instruction-pattern"></a>
+<a name="index-ssadm-instruction-pattern"></a>
 </dd>
-<dt>&lsquo;<samp>ssum_widen<var>m3</var></samp>&rsquo;</dt>
-<dd><a name="index-usum_005fwidenm3-instruction-pattern"></a>
+<dt>&lsquo;<samp>ssad<var>m</var></samp>&rsquo;</dt>
+<dd><a name="index-usadm-instruction-pattern"></a>
 </dd>
-<dt>&lsquo;<samp>usum_widen<var>m3</var></samp>&rsquo;</dt>
+<dt>&lsquo;<samp>usad<var>m</var></samp>&rsquo;</dt>
+<dd><p>Compute the sum of absolute differences of two signed/unsigned elements.
+Operand 1 and operand 2 are of the same mode. Their absolute difference, which
+is of a wider mode, is computed and added to operand 3. Operand 3 is of a mode
+equal or wider than the mode of the absolute difference. The result is placed
+in operand 0, which is of the same mode as operand 3.
+</p>
+<a name="index-widen_005fssumm3-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>widen_ssum<var>m3</var></samp>&rsquo;</dt>
+<dd><a name="index-widen_005fusumm3-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>widen_usum<var>m3</var></samp>&rsquo;</dt>
 <dd><p>Operands 0 and 2 are of the same mode, which is wider than the mode of
 operand 1. Add operand 1 to operand 2 and place the widened result in
 operand 0. (This is used express accumulation of elements into an accumulator
@@ -548,7 +581,7 @@ of a wider mode.)
 <a name="index-vec_005fshr_005fm-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>vec_shr_<var>m</var></samp>&rsquo;</dt>
-<dd><p>Whole vector right shift in bits.
+<dd><p>Whole vector right shift in bits, i.e. towards element 0.
 Operand 1 is a vector to be shifted.
 Operand 2 is an integer shift amount in bits.
 Operand 0 is where the resulting shifted vector is stored.
@@ -817,6 +850,12 @@ instead of a scalar type.
 </dd>
 <dt>&lsquo;<samp>neg<var>m</var>2</samp>&rsquo;, &lsquo;<samp>ssneg<var>m</var>2</samp>&rsquo;, &lsquo;<samp>usneg<var>m</var>2</samp>&rsquo;</dt>
 <dd><p>Negate operand 1 and store the result in operand 0.
+</p>
+<a name="index-negvm3-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>negv<var>m</var>3</samp>&rsquo;</dt>
+<dd><p>Like <code>neg<var>m</var>2</code> but takes a <code>code_label</code> as operand 2 and
+emits code to jump to it if signed overflow occurs during the negation.
 </p>
 <a name="index-absm2-instruction-pattern"></a>
 </dd>
@@ -1515,14 +1554,14 @@ from the machine description.
 <dd><p>Conditional branch instruction combined with a compare instruction.
 Operand 0 is a comparison operator.  Operand 1 and operand 2 are the
 first and second operands of the comparison, respectively.  Operand 3
-is a <code>label_ref</code> that refers to the label to jump to.
+is the <code>code_label</code> to jump to.
 </p>
 <a name="index-jump-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>jump</samp>&rsquo;</dt>
 <dd><p>A jump inside a function; an unconditional branch.  Operand 0 is the
-<code>label_ref</code> of the label to jump to.  This pattern name is mandatory
-on all machines.
+<code>code_label</code> to jump to.  This pattern name is mandatory on all
+machines.
 </p>
 <a name="index-call-instruction-pattern"></a>
 </dd>
@@ -2034,8 +2073,7 @@ comparison.  Operand 3 is the trap code, an integer.
 <a name="index-prefetch-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>prefetch</samp>&rsquo;</dt>
-<dd>
-<p>This pattern, if defined, emits code for a non-faulting data prefetch
+<dd><p>This pattern, if defined, emits code for a non-faulting data prefetch
 instruction.  Operand 0 is the address of the memory to prefetch.  Operand 1
 is a constant 1 if the prefetch is preparing for a write to the memory
 address, or a constant 0 otherwise.  Operand 2 is the expected degree of
@@ -2051,8 +2089,7 @@ the values of operands 1 and 2.
 <a name="index-blockage-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>blockage</samp>&rsquo;</dt>
-<dd>
-<p>This pattern defines a pseudo insn that prevents the instruction
+<dd><p>This pattern defines a pseudo insn that prevents the instruction
 scheduler and other passes from moving instructions and using register
 equivalences across the boundary defined by the blockage insn.
 This needs to be an UNSPEC_VOLATILE pattern or a volatile ASM.
@@ -2060,8 +2097,7 @@ This needs to be an UNSPEC_VOLATILE pattern or a volatile ASM.
 <a name="index-memory_005fbarrier-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>memory_barrier</samp>&rsquo;</dt>
-<dd>
-<p>If the target memory model is not fully synchronous, then this pattern
+<dd><p>If the target memory model is not fully synchronous, then this pattern
 should be defined to an instruction that orders both loads and stores
 before the instruction with respect to loads and stores after the instruction.
 This pattern has no operands.
@@ -2069,8 +2105,7 @@ This pattern has no operands.
 <a name="index-sync_005fcompare_005fand_005fswapmode-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>sync_compare_and_swap<var>mode</var></samp>&rsquo;</dt>
-<dd>
-<p>This pattern, if defined, emits code for an atomic compare-and-swap
+<dd><p>This pattern, if defined, emits code for an atomic compare-and-swap
 operation.  Operand 1 is the memory on which the atomic operation is
 performed.  Operand 2 is the &ldquo;old&rdquo; value to be compared against the
 current contents of the memory location.  Operand 3 is the &ldquo;new&rdquo; value
@@ -2119,8 +2154,7 @@ interruptable locking.
 <dt>&lsquo;<samp>sync_add<var>mode</var></samp>&rsquo;, &lsquo;<samp>sync_sub<var>mode</var></samp>&rsquo;</dt>
 <dt>&lsquo;<samp>sync_ior<var>mode</var></samp>&rsquo;, &lsquo;<samp>sync_and<var>mode</var></samp>&rsquo;</dt>
 <dt>&lsquo;<samp>sync_xor<var>mode</var></samp>&rsquo;, &lsquo;<samp>sync_nand<var>mode</var></samp>&rsquo;</dt>
-<dd>
-<p>These patterns emit code for an atomic operation on memory.
+<dd><p>These patterns emit code for an atomic operation on memory.
 Operand 0 is the memory on which the atomic operation is performed.
 Operand 1 is the second operand to the binary operator.
 </p>
@@ -2142,8 +2176,7 @@ from a compare-and-swap operation, if defined.
 <dt>&lsquo;<samp>sync_old_add<var>mode</var></samp>&rsquo;, &lsquo;<samp>sync_old_sub<var>mode</var></samp>&rsquo;</dt>
 <dt>&lsquo;<samp>sync_old_ior<var>mode</var></samp>&rsquo;, &lsquo;<samp>sync_old_and<var>mode</var></samp>&rsquo;</dt>
 <dt>&lsquo;<samp>sync_old_xor<var>mode</var></samp>&rsquo;, &lsquo;<samp>sync_old_nand<var>mode</var></samp>&rsquo;</dt>
-<dd>
-<p>These patterns emit code for an atomic operation on memory,
+<dd><p>These patterns emit code for an atomic operation on memory,
 and return the value that the memory contained before the operation.
 Operand 0 is the result value, operand 1 is the memory on which the
 atomic operation is performed, and operand 2 is the second operand
@@ -2167,16 +2200,14 @@ from a compare-and-swap operation, if defined.
 <dt>&lsquo;<samp>sync_new_add<var>mode</var></samp>&rsquo;, &lsquo;<samp>sync_new_sub<var>mode</var></samp>&rsquo;</dt>
 <dt>&lsquo;<samp>sync_new_ior<var>mode</var></samp>&rsquo;, &lsquo;<samp>sync_new_and<var>mode</var></samp>&rsquo;</dt>
 <dt>&lsquo;<samp>sync_new_xor<var>mode</var></samp>&rsquo;, &lsquo;<samp>sync_new_nand<var>mode</var></samp>&rsquo;</dt>
-<dd>
-<p>These patterns are like their <code>sync_old_<var>op</var></code> counterparts,
+<dd><p>These patterns are like their <code>sync_old_<var>op</var></code> counterparts,
 except that they return the value that exists in the memory location
 after the operation, rather than before the operation.
 </p>
 <a name="index-sync_005flock_005ftest_005fand_005fsetmode-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>sync_lock_test_and_set<var>mode</var></samp>&rsquo;</dt>
-<dd>
-<p>This pattern takes two forms, based on the capabilities of the target.
+<dd><p>This pattern takes two forms, based on the capabilities of the target.
 In either case, operand 0 is the result of the operand, operand 1 is
 the memory on which the atomic operation is performed, and operand 2
 is the value to set in the lock.
@@ -2201,8 +2232,7 @@ a compare-and-swap operation, if defined.
 <a name="index-sync_005flock_005freleasemode-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>sync_lock_release<var>mode</var></samp>&rsquo;</dt>
-<dd>
-<p>This pattern, if defined, releases a lock set by
+<dd><p>This pattern, if defined, releases a lock set by
 <code>sync_lock_test_and_set<var>mode</var></code>.  Operand 0 is the memory
 that contains the lock; operand 1 is the value to store in the lock.
 </p>
@@ -2296,8 +2326,7 @@ compare and swap loop.
 <dt>&lsquo;<samp>atomic_add<var>mode</var></samp>&rsquo;, &lsquo;<samp>atomic_sub<var>mode</var></samp>&rsquo;</dt>
 <dt>&lsquo;<samp>atomic_or<var>mode</var></samp>&rsquo;, &lsquo;<samp>atomic_and<var>mode</var></samp>&rsquo;</dt>
 <dt>&lsquo;<samp>atomic_xor<var>mode</var></samp>&rsquo;, &lsquo;<samp>atomic_nand<var>mode</var></samp>&rsquo;</dt>
-<dd>
-<p>These patterns emit code for an atomic operation on memory with memory
+<dd><p>These patterns emit code for an atomic operation on memory with memory
 model semantics. Operand 0 is the memory on which the atomic operation is
 performed.  Operand 1 is the second operand to the binary operator.
 Operand 2 is the memory model to be used by the operation.
@@ -2316,8 +2345,7 @@ none of these are available a compare-and-swap loop will be used.
 <dt>&lsquo;<samp>atomic_fetch_add<var>mode</var></samp>&rsquo;, &lsquo;<samp>atomic_fetch_sub<var>mode</var></samp>&rsquo;</dt>
 <dt>&lsquo;<samp>atomic_fetch_or<var>mode</var></samp>&rsquo;, &lsquo;<samp>atomic_fetch_and<var>mode</var></samp>&rsquo;</dt>
 <dt>&lsquo;<samp>atomic_fetch_xor<var>mode</var></samp>&rsquo;, &lsquo;<samp>atomic_fetch_nand<var>mode</var></samp>&rsquo;</dt>
-<dd>
-<p>These patterns emit code for an atomic operation on memory with memory
+<dd><p>These patterns emit code for an atomic operation on memory with memory
 model semantics, and return the original value. Operand 0 is an output 
 operand which contains the value of the memory location before the 
 operation was performed.  Operand 1 is the memory on which the atomic 
@@ -2338,8 +2366,7 @@ loop will be used.
 <dt>&lsquo;<samp>atomic_add_fetch<var>mode</var></samp>&rsquo;, &lsquo;<samp>atomic_sub_fetch<var>mode</var></samp>&rsquo;</dt>
 <dt>&lsquo;<samp>atomic_or_fetch<var>mode</var></samp>&rsquo;, &lsquo;<samp>atomic_and_fetch<var>mode</var></samp>&rsquo;</dt>
 <dt>&lsquo;<samp>atomic_xor_fetch<var>mode</var></samp>&rsquo;, &lsquo;<samp>atomic_nand_fetch<var>mode</var></samp>&rsquo;</dt>
-<dd>
-<p>These patterns emit code for an atomic operation on memory with memory
+<dd><p>These patterns emit code for an atomic operation on memory with memory
 model semantics and return the result after the operation is performed.
 Operand 0 is an output operand which contains the value after the
 operation.  Operand 1 is the memory on which the atomic operation is
@@ -2355,8 +2382,7 @@ used.
 <a name="index-atomic_005ftest_005fand_005fset-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>atomic_test_and_set</samp>&rsquo;</dt>
-<dd>
-<p>This pattern emits code for <code>__builtin_atomic_test_and_set</code>.
+<dd><p>This pattern emits code for <code>__builtin_atomic_test_and_set</code>.
 Operand 0 is an output operand which is set to true if the previous
 previous contents of the byte was &quot;set&quot;, and false otherwise.  Operand 1
 is the <code>QImode</code> memory to be modified.  Operand 2 is the memory
@@ -2406,8 +2432,7 @@ with <var>mode</var> intended to be <code>Pmode</code>.
 <a name="index-stack_005fprotect_005fset-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>stack_protect_set</samp>&rsquo;</dt>
-<dd>
-<p>This pattern, if defined, moves a <code>ptr_mode</code> value from the memory
+<dd><p>This pattern, if defined, moves a <code>ptr_mode</code> value from the memory
 in operand 1 to the memory in operand 0 without leaving the value in
 a register afterward.  This is to avoid leaking the value some place
 that an attacker might use to rewrite the stack guard slot after
@@ -2418,8 +2443,7 @@ having clobbered it.
 <a name="index-stack_005fprotect_005ftest-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>stack_protect_test</samp>&rsquo;</dt>
-<dd>
-<p>This pattern, if defined, compares a <code>ptr_mode</code> value from the
+<dd><p>This pattern, if defined, compares a <code>ptr_mode</code> value from the
 memory in operand 1 with the memory in operand 0 without leaving the
 value in a register afterward and branches to operand 2 if the values
 were equal.
@@ -2430,8 +2454,7 @@ conditional branch pattern is used.
 <a name="index-clear_005fcache-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>clear_cache</samp>&rsquo;</dt>
-<dd>
-<p>This pattern, if defined, flushes the instruction cache for a region of
+<dd><p>This pattern, if defined, flushes the instruction cache for a region of
 memory.  The region is bounded to by the Pmode pointers in operand 0
 inclusive and operand 1 exclusive.
 </p>

@@ -17,17 +17,10 @@
 # along with DejaGnu; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street - Fifth Floor, Boston, MA 02110-1301, USA.
 
-# Connect to HOSTNAME using rsh or ssh(1).
+# Connect to HOSTNAME using rsh(1).
 #
-
-set rsh_initialized "no"
-
-set RSH rsh
-set RCP rcp
-
 proc rsh_open { hostname } {
-    global spawn_id rsh_initialized
-    global RSH
+    global spawn_id
 
     set tries 0
     set result -1
@@ -35,6 +28,8 @@ proc rsh_open { hostname } {
     if {![board_info $hostname exists rsh_prog]} {
 	if { [which remsh] != 0 } {
 	    set RSH remsh
+	} else {
+	    set RSH rsh
 	}
     } else {
 	set RSH [board_info $hostname rsh_prog]
@@ -139,7 +134,7 @@ proc rsh_open { hostname } {
     }
 
     if { $result < 0 } {
-	catch close -i $spawn_id
+	close -i $spawn_id
 	set spawn_id -1
     } else {
 	set board_info($hostname,fileid) $spawn_id
@@ -151,11 +146,11 @@ proc rsh_open { hostname } {
 # Download SRCFILE to DESTFILE on DESTHOST.
 #
 proc rsh_download {desthost srcfile destfile} {
-    global RSH RCP rsh_initialized
-
     # must be done before desthost is rewritten
     if {[board_info $desthost exists rcp_prog]} {
 	set RCP [board_info $desthost rcp_prog]
+    } else {
+	set RCP rcp
     }
 
     if {[board_info $desthost exists rsh_prog]} {
@@ -163,6 +158,8 @@ proc rsh_download {desthost srcfile destfile} {
     } else {
 	if { [which remsh] != 0 } {
 	    set RSH remsh
+	} else {
+	    set RSH rsh
 	}
     }
 
@@ -170,20 +167,8 @@ proc rsh_download {desthost srcfile destfile} {
 	set rsh_useropts "-l [board_info $desthost username]"
 	set rcp_user "[board_info $desthost username]@"
     } else {
-	set rcp_user ""
 	set rsh_useropts ""
-    }
-
-    if {[board_info $desthost exists rsh_opts]} {
-	append rsh_useropts " [board_info $desthost rsh_opts]"
-    }
-
-    if {[board_info $desthost exists port]} {
-	set rsh_port " -p [board_info $desthost port]"
-	set rcp_port " -P [board_info $desthost port]"
-    } else {
-	set rsh_port ""
-	set rcp_port ""
+	set rcp_user ""
     }
 
     if {[board_info $desthost exists name]} {
@@ -194,7 +179,8 @@ proc rsh_download {desthost srcfile destfile} {
 	set desthost [board_info $desthost hostname]
     }
 
-    set status [catch "exec $RCP $rcp_port $srcfile $rcp_user$desthost:$destfile |& cat" output]
+    set status [catch "exec $RSH $rsh_useropts $desthost rm -f $destfile |& cat" output]
+    set status [catch "exec $RCP $srcfile $rcp_user$desthost:$destfile |& cat" output]
     if { $status == 0 } {
 	verbose "Copied $srcfile to $desthost:$destfile" 2
 	return $destfile
@@ -205,7 +191,6 @@ proc rsh_download {desthost srcfile destfile} {
 }
 
 proc rsh_upload {desthost srcfile destfile} {
-    global RCP
     if {[board_info $desthost exists rcp_prog]} {
 	set RCP [board_info $desthost rcp_prog]
     } else {
@@ -241,12 +226,7 @@ proc rsh_upload {desthost srcfile destfile} {
 proc rsh_exec { boardname program pargs inp outp } {
     global timeout
 
-    # Don't try to execute a data file
-    if {[regexp "^\.txt$" $program]} {
-	return ""
-    }
-
-    verbose "Executing $boardname:$program $pargs < $inp"
+    verbose "Executing on $boardname: $program $pargs < $inp"
 
     if {![board_info $boardname exists rsh_prog]} {
 	if { [which remsh] != 0 } {
@@ -264,28 +244,14 @@ proc rsh_exec { boardname program pargs inp outp } {
 	set rsh_useropts ""
     }
 
-    if {[board_info $boardname exists rsh_opts]} {
-	append rsh_useropts " [board_info $boardname rsh_opts]"
-    }
-
     if {[board_info $boardname exists name]} {
 	set boardname [board_info $boardname name]
-    }
-
-    if {[board_info $boardname exists timeout]} {
-	set exec_timeout [board_info $boardname timeout]
-    } else {
-	set exec_timeout $timeout
     }
 
     if {[board_info $boardname exists hostname]} {
 	set hostname [board_info $boardname hostname]
     } else {
 	set hostname $boardname
-    }
-
-    if {[board_info $boardname  exists port]} {
-	append rsh_useropts " -p [board_info $boardname port]"
     }
 
     # If CMD sends any output to stderr, exec will think it failed.
@@ -295,7 +261,7 @@ proc rsh_exec { boardname program pargs inp outp } {
 	set inp "/dev/null"
     }
 
-    set ret [local_exec "$RSH $rsh_useropts $hostname sh -c '$program $pargs \\; echo XYZ\\\${?}ZYX'" $inp $outp $exec_timeout]
+    set ret [local_exec "$RSH $rsh_useropts $hostname sh -c '$program $pargs \\; echo XYZ\\\${?}ZYX'" $inp $outp $timeout]
     set status [lindex $ret 0]
     set output [lindex $ret 1]
 
@@ -310,14 +276,13 @@ proc rsh_exec { boardname program pargs inp outp } {
 	regsub "XYZ(\[0-9\]*)ZYX\n?" $output "" output
 	return [list $status "$RSH to $boardname failed for $program, $output"]
     }
-    regexp "XYZ(\[0-9\]*)ZYX" $output junk status
+    if { [regexp "XYZ(\[0-9\]*)ZYX" $output junk status] == 0 } {
+	set status ""
+    }
     verbose "rsh_exec: status:$status text:$output" 4
     if { $status == "" } {
 	return [list -1 "Couldn't parse $RSH output, $output."]
     }
     regsub "XYZ(\[0-9\]*)ZYX\n?" $output "" output
-    # Delete one trailing \n because that is what `exec' will do and we want
-    # to behave identical to it.
-    regsub "\n$" $output "" output
     return [list [expr {$status != 0}] $output]
 }

@@ -75,7 +75,7 @@ Next: <a href="Designated-Inits.html#Designated-Inits" accesskey="n" rel="next">
 </div>
 <hr>
 <a name="Compound-Literals-1"></a>
-<h3 class="section">6.25 Compound Literals</h3>
+<h3 class="section">6.26 Compound Literals</h3>
 <a name="index-constructor-expressions"></a>
 <a name="index-initializations-in-expressions"></a>
 <a name="index-structures_002c-constructor-expression"></a>
@@ -152,12 +152,12 @@ static int z[] = {1, 0, 0};
 automatic storage duration.  In C++, a compound literal designates a
 temporary object, which only lives until the end of its
 full-expression.  As a result, well-defined C code that takes the
-address of a subobject of a compound literal can be undefined in C++.
+address of a subobject of a compound literal can be undefined in C++,
+so the C++ compiler rejects the conversion of a temporary array to a pointer.
 For instance, if the array compound literal example above appeared
 inside a function, any subsequent use of &lsquo;<samp>foo</samp>&rsquo; in C++ has
 undefined behavior because the lifetime of the array ends after the
-declaration of &lsquo;<samp>foo</samp>&rsquo;.  As a result, the C++ compiler now rejects
-the conversion of a temporary array to a pointer.
+declaration of &lsquo;<samp>foo</samp>&rsquo;.  
 </p>
 <p>As an optimization, the C++ compiler sometimes gives array compound
 literals longer lifetimes: when the array either appears outside a

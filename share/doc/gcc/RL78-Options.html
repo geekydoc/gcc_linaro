@@ -75,7 +75,7 @@ Next: <a href="RS_002f6000-and-PowerPC-Options.html#RS_002f6000-and-PowerPC-Opti
 </div>
 <hr>
 <a name="RL78-Options-1"></a>
-<h4 class="subsection">3.17.37 RL78 Options</h4>
+<h4 class="subsection">3.17.36 RL78 Options</h4>
 <a name="index-RL78-Options"></a>
 
 <dl compact="compact">
@@ -90,10 +90,19 @@ simulator.
 <dt><code>-mmul=rl78</code></dt>
 <dd><a name="index-mmul"></a>
 <p>Specifies the type of hardware multiplication support to be used.  The
-default is <code>none</code>, which uses software multiplication functions.
-The <code>g13</code> option is for the hardware multiply/divide peripheral
-only on the RL78/G13 targets.  The <code>rl78</code> option is for the
+default is &lsquo;<samp>none</samp>&rsquo;, which uses software multiplication functions.
+The &lsquo;<samp>g13</samp>&rsquo; option is for the hardware multiply/divide peripheral
+only on the RL78/G13 targets.  The &lsquo;<samp>rl78</samp>&rsquo; option is for the
 standard hardware multiplication defined in the RL78 software manual.
+</p>
+</dd>
+<dt><code>-m64bit-doubles</code></dt>
+<dt><code>-m32bit-doubles</code></dt>
+<dd><a name="index-m64bit_002ddoubles"></a>
+<a name="index-m32bit_002ddoubles"></a>
+<p>Make the <code>double</code> data type be 64 bits (<samp>-m64bit-doubles</samp>)
+or 32 bits (<samp>-m32bit-doubles</samp>) in size.  The default is
+<samp>-m32bit-doubles</samp>.
 </p>
 </dd>
 </dl>

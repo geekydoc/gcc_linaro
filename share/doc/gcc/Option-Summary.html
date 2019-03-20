@@ -98,8 +98,8 @@ in the following sections.
 <pre class="smallexample">-ansi  -std=<var>standard</var>  -fgnu89-inline 
 -aux-info <var>filename</var> -fallow-parameterless-variadic-functions 
 -fno-asm  -fno-builtin  -fno-builtin-<var>function</var> 
--fhosted  -ffreestanding -fopenmp -fopenmp-simd -fms-extensions 
--fplan9-extensions -trigraphs  -traditional  -traditional-cpp 
+-fhosted  -ffreestanding -fopenacc -fopenmp -fopenmp-simd 
+-fms-extensions -fplan9-extensions -trigraphs -traditional -traditional-cpp 
 -fallow-single-precision  -fcond-mismatch -flax-vector-conversions 
 -fsigned-bitfields  -fsigned-char 
 -funsigned-bitfields  -funsigned-char
@@ -120,15 +120,17 @@ in the following sections.
 -fno-nonansi-builtins  -fnothrow-opt  -fno-operator-names 
 -fno-optional-diags  -fpermissive 
 -fno-pretty-templates 
--frepo  -fno-rtti  -fstats  -ftemplate-backtrace-limit=<var>n</var> 
+-frepo  -fno-rtti -fsized-deallocation 
+-fstats  -ftemplate-backtrace-limit=<var>n</var> 
 -ftemplate-depth=<var>n</var> 
--fno-threadsafe-statics -fuse-cxa-atexit  -fno-weak  -nostdinc++ 
+-fno-threadsafe-statics  -fuse-cxa-atexit 
+-fno-weak  -nostdinc++ 
 -fvisibility-inlines-hidden 
--fvtable-verify=<var>std|preinit|none</var> 
+-fvtable-verify=<span class="roman">[</span>std<span class="roman">|</span>preinit<span class="roman">|</span>none<span class="roman">]</span> 
 -fvtv-counts -fvtv-debug 
 -fvisibility-ms-compat 
 -fext-numeric-literals 
--Wabi  -Wconversion-null  -Wctor-dtor-privacy 
+-Wabi=<var>n</var>  -Wabi-tag  -Wconversion-null  -Wctor-dtor-privacy 
 -Wdelete-non-virtual-dtor -Wliteral-suffix -Wnarrowing 
 -Wnoexcept -Wnon-virtual-dtor  -Wreorder 
 -Weffc++  -Wstrict-null-sentinel 
@@ -152,6 +154,8 @@ Objective-C and Objective-C++ Dialects</a>.
 -fobjc-gc 
 -fobjc-nilcheck 
 -fobjc-std=objc1 
+-fno-local-ivars 
+-fivar-visibility=<span class="roman">[</span>public<span class="roman">|</span>protected<span class="roman">|</span>private<span class="roman">|</span>package<span class="roman">]</span> 
 -freplace-objc-classes 
 -fzero-link 
 -gen-decls 
@@ -178,39 +182,46 @@ Objective-C and Objective-C++ Dialects</a>.
 <pre class="smallexample">-fsyntax-only  -fmax-errors=<var>n</var>  -Wpedantic 
 -pedantic-errors 
 -w  -Wextra  -Wall  -Waddress  -Waggregate-return  
--Waggressive-loop-optimizations -Warray-bounds 
+-Waggressive-loop-optimizations -Warray-bounds -Warray-bounds=<var>n</var> 
+-Wbool-compare 
 -Wno-attributes -Wno-builtin-macro-redefined 
--Wc++-compat -Wc++11-compat -Wcast-align  -Wcast-qual  
--Wchar-subscripts -Wclobbered  -Wcomment -Wconditionally-supported  
+-Wc90-c99-compat -Wc99-c11-compat 
+-Wc++-compat -Wc++11-compat -Wc++14-compat -Wcast-align  -Wcast-qual  
+-Wchar-subscripts -Wchkp -Wclobbered  -Wcomment -Wconditionally-supported  
 -Wconversion -Wcoverage-mismatch -Wdate-time -Wdelete-incomplete -Wno-cpp  
--Wno-deprecated -Wno-deprecated-declarations -Wdisabled-optimization  
+-Wno-deprecated -Wno-deprecated-declarations -Wno-designated-init 
+-Wdisabled-optimization 
+-Wno-discarded-qualifiers -Wno-discarded-array-qualifiers 
 -Wno-div-by-zero -Wdouble-promotion -Wempty-body  -Wenum-compare 
 -Wno-endif-labels -Werror  -Werror=* 
 -Wfatal-errors  -Wfloat-equal  -Wformat  -Wformat=2 
 -Wno-format-contains-nul -Wno-format-extra-args -Wformat-nonliteral 
--Wformat-security  -Wformat-y2k 
+-Wformat-security  -Wformat-signedness  -Wformat-y2k 
 -Wframe-larger-than=<var>len</var> -Wno-free-nonheap-object -Wjump-misses-init 
--Wignored-qualifiers 
+-Wignored-qualifiers  -Wincompatible-pointer-types 
 -Wimplicit  -Wimplicit-function-declaration  -Wimplicit-int 
--Winit-self  -Winline -Wmaybe-uninitialized 
+-Winit-self  -Winline  -Wno-int-conversion 
 -Wno-int-to-pointer-cast -Wno-invalid-offsetof 
 -Winvalid-pch -Wlarger-than=<var>len</var>  -Wunsafe-loop-optimizations 
--Wlogical-op -Wlong-long 
--Wmain -Wmaybe-uninitialized -Wmissing-braces  -Wmissing-field-initializers 
--Wmissing-include-dirs 
--Wno-multichar  -Wnonnull  -Wno-overflow -Wopenmp-simd 
+-Wlogical-op -Wlogical-not-parentheses -Wlong-long 
+-Wmain -Wmaybe-uninitialized -Wmemset-transposed-args -Wmissing-braces 
+-Wmissing-field-initializers -Wmissing-include-dirs 
+-Wno-multichar  -Wnonnull  -Wnormalized=<span class="roman">[</span>none<span class="roman">|</span>id<span class="roman">|</span>nfc<span class="roman">|</span>nfkc<span class="roman">]</span> 
+ -Wodr  -Wno-overflow  -Wopenmp-simd 
 -Woverlength-strings  -Wpacked  -Wpacked-bitfield-compat  -Wpadded 
 -Wparentheses  -Wpedantic-ms-format -Wno-pedantic-ms-format 
 -Wpointer-arith  -Wno-pointer-to-int-cast 
 -Wredundant-decls  -Wno-return-local-addr 
--Wreturn-type  -Wsequence-point  -Wshadow 
+-Wreturn-type  -Wsequence-point  -Wshadow  -Wno-shadow-ivar 
+-Wshift-count-negative -Wshift-count-overflow 
 -Wsign-compare  -Wsign-conversion -Wfloat-conversion 
--Wsizeof-pointer-memaccess 
+-Wsizeof-pointer-memaccess  -Wsizeof-array-argument 
 -Wstack-protector -Wstack-usage=<var>len</var> -Wstrict-aliasing 
 -Wstrict-aliasing=n  -Wstrict-overflow -Wstrict-overflow=<var>n</var> 
 -Wsuggest-attribute=<span class="roman">[</span>pure<span class="roman">|</span>const<span class="roman">|</span>noreturn<span class="roman">|</span>format<span class="roman">]</span> 
+-Wsuggest-final-types  -Wsuggest-final-methods  -Wsuggest-override 
 -Wmissing-format-attribute 
--Wswitch  -Wswitch-default  -Wswitch-enum -Wsync-nand 
+-Wswitch  -Wswitch-default  -Wswitch-enum -Wswitch-bool -Wsync-nand 
 -Wsystem-headers  -Wtrampolines  -Wtrigraphs  -Wtype-limits  -Wundef 
 -Wuninitialized  -Wunknown-pragmas  -Wno-pragmas 
 -Wunsuffixed-float-constants  -Wunused  -Wunused-function 
@@ -218,7 +229,8 @@ Objective-C and Objective-C++ Dialects</a>.
 -Wno-unused-result -Wunused-value  -Wunused-variable 
 -Wunused-but-set-parameter -Wunused-but-set-variable 
 -Wuseless-cast -Wvariadic-macros -Wvector-operation-performance 
--Wvla -Wvolatile-register-var  -Wwrite-strings -Wzero-as-null-pointer-constant
+-Wvla -Wvolatile-register-var  -Wwrite-strings 
+-Wzero-as-null-pointer-constant
 </pre></div>
 
 </dd>
@@ -236,7 +248,17 @@ Objective-C and Objective-C++ Dialects</a>.
 <dd><p>See <a href="Debugging-Options.html#Debugging-Options">Options for Debugging Your Program or GCC</a>.
 </p><div class="smallexample">
 <pre class="smallexample">-d<var>letters</var>  -dumpspecs  -dumpmachine  -dumpversion 
--fsanitize=<var>style</var> 
+-fsanitize=<var>style</var> -fsanitize-recover -fsanitize-recover=<var>style</var> 
+-fasan-shadow-offset=<var>number</var> -fsanitize-undefined-trap-on-error 
+-fcheck-pointer-bounds -fchkp-check-incomplete-type 
+-fchkp-first-field-has-own-bounds -fchkp-narrow-bounds 
+-fchkp-narrow-to-innermost-array -fchkp-optimize 
+-fchkp-use-fast-string-functions -fchkp-use-nochk-string-functions 
+-fchkp-use-static-bounds -fchkp-use-static-const-bounds 
+-fchkp-treat-zero-dynamic-size-as-infinite -fchkp-check-read 
+-fchkp-check-read -fchkp-check-write -fchkp-store-bounds 
+-fchkp-instrument-calls -fchkp-instrument-marked-only 
+-fchkp-use-wrappers 
 -fdbg-cnt-list -fdbg-cnt=<var>counter-value-list</var> 
 -fdisable-ipa-<var>pass_name</var> 
 -fdisable-rtl-<var>pass_name</var> 
@@ -288,7 +310,7 @@ Objective-C and Objective-C++ Dialects</a>.
 -g  -g<var>level</var>  -gtoggle  -gcoff  -gdwarf-<var>version</var> 
 -ggdb  -grecord-gcc-switches  -gno-record-gcc-switches 
 -gstabs  -gstabs+  -gstrict-dwarf  -gno-strict-dwarf 
--gvms  -gxcoff  -gxcoff+ 
+-gvms  -gxcoff  -gxcoff+ -gz<span class="roman">[</span>=<var>type</var><span class="roman">]</span> 
 -fno-merge-debug-strings -fno-dwarf2-cfi-asm 
 -fdebug-prefix-map=<var>old</var>=<var>new</var> 
 -femit-struct-debug-baseonly -femit-struct-debug-reduced 
@@ -307,7 +329,8 @@ Objective-C and Objective-C++ Dialects</a>.
 <pre class="smallexample">-faggressive-loop-optimizations -falign-functions[=<var>n</var>] 
 -falign-jumps[=<var>n</var>] 
 -falign-labels[=<var>n</var>] -falign-loops[=<var>n</var>] 
--fassociative-math -fauto-inc-dec -fbranch-probabilities 
+-fassociative-math -fauto-profile -fauto-profile[=<var>path</var>] 
+-fauto-inc-dec -fbranch-probabilities 
 -fbranch-target-load-optimize -fbranch-target-load-optimize2 
 -fbtr-bb-exclusive -fcaller-saves 
 -fcheck-data-deps -fcombine-stack-adjustments -fconserve-stack 
@@ -315,7 +338,8 @@ Objective-C and Objective-C++ Dialects</a>.
 -fcse-follow-jumps -fcse-skip-blocks -fcx-fortran-rules 
 -fcx-limited-range 
 -fdata-sections -fdce -fdelayed-branch 
--fdelete-null-pointer-checks -fdevirtualize -fdevirtualize-speculatively -fdse 
+-fdelete-null-pointer-checks -fdevirtualize -fdevirtualize-speculatively 
+-fdevirtualize-at-ltrans -fdse 
 -fearly-inlining -fipa-sra -fexpensive-optimizations -ffat-lto-objects 
 -ffast-math -ffinite-math-only -ffloat-store -fexcess-precision=<var>style</var> 
 -fforward-propagate -ffp-contract=<var>style</var> -ffunction-sections 
@@ -323,16 +347,18 @@ Objective-C and Objective-C++ Dialects</a>.
 -fgcse-sm -fhoist-adjacent-loads -fif-conversion 
 -fif-conversion2 -findirect-inlining 
 -finline-functions -finline-functions-called-once -finline-limit=<var>n</var> 
--finline-small-functions -fipa-cp -fipa-cp-clone 
--fipa-pta -fipa-profile -fipa-pure-const -fipa-reference 
+-finline-small-functions -fipa-cp -fipa-cp-clone -fipa-cp-alignment 
+-fipa-pta -fipa-profile -fipa-pure-const -fipa-reference -fipa-icf 
 -fira-algorithm=<var>algorithm</var> 
 -fira-region=<var>region</var> -fira-hoist-pressure 
 -fira-loop-pressure -fno-ira-share-save-slots 
 -fno-ira-share-spill-slots -fira-verbose=<var>n</var> 
--fisolate-erroneous-paths-dereference -fisolate-erroneous-paths-attribute
--fivopts -fkeep-inline-functions -fkeep-static-consts -flive-range-shrinkage 
--floop-block -floop-interchange -floop-strip-mine -floop-nest-optimize 
--floop-parallelize-all -flto -flto-compression-level 
+-fisolate-erroneous-paths-dereference -fisolate-erroneous-paths-attribute 
+-fivopts -fkeep-inline-functions -fkeep-static-consts 
+-flive-range-shrinkage 
+-floop-block -floop-interchange -floop-strip-mine   
+-floop-unroll-and-jam -floop-nest-optimize 
+-floop-parallelize-all -flra-remat -flto -flto-compression-level 
 -flto-partition=<var>alg</var> -flto-report -flto-report-wpa -fmerge-all-constants 
 -fmerge-constants -fmodulo-sched -fmodulo-sched-allow-regmoves 
 -fmove-loop-invariants -fno-branch-count-reg 
@@ -345,7 +371,8 @@ Objective-C and Objective-C++ Dialects</a>.
 -fprefetch-loop-arrays -fprofile-report 
 -fprofile-correction -fprofile-dir=<var>path</var> -fprofile-generate 
 -fprofile-generate=<var>path</var> 
--fprofile-use -fprofile-use=<var>path</var> -fprofile-values -fprofile-reorder-functions 
+-fprofile-use -fprofile-use=<var>path</var> -fprofile-values 
+-fprofile-reorder-functions 
 -freciprocal-math -free -frename-registers -freorder-blocks 
 -freorder-blocks-and-partition -freorder-functions 
 -frerun-cse-after-loop -freschedule-modulo-scheduled-loops 
@@ -355,12 +382,15 @@ Objective-C and Objective-C++ Dialects</a>.
 -fsched-group-heuristic -fsched-critical-path-heuristic 
 -fsched-spec-insn-heuristic -fsched-rank-heuristic 
 -fsched-last-insn-heuristic -fsched-dep-count-heuristic 
+-fschedule-fusion 
 -fschedule-insns -fschedule-insns2 -fsection-anchors 
 -fselective-scheduling -fselective-scheduling2 
 -fsel-sched-pipelining -fsel-sched-pipelining-outer-loops 
+-fsemantic-interposition 
 -fshrink-wrap -fsignaling-nans -fsingle-precision-constant 
--fsplit-ivs-in-unroller -fsplit-wide-types -fstack-protector 
--fstack-protector-all -fstack-protector-strong -fstrict-aliasing 
+-fsplit-ivs-in-unroller -fsplit-wide-types -fssa-phiopt 
+-fstack-protector -fstack-protector-all -fstack-protector-strong 
+-fstack-protector-explicit -fstdarg-opt -fstrict-aliasing 
 -fstrict-overflow -fthread-jumps -ftracer -ftree-bit-ccp 
 -ftree-builtin-call-dce -ftree-ccp -ftree-ch 
 -ftree-coalesce-inline-vars -ftree-coalesce-vars -ftree-copy-prop 
@@ -376,8 +406,8 @@ Objective-C and Objective-C++ Dialects</a>.
 -ftree-vectorize -ftree-vrp 
 -funit-at-a-time -funroll-all-loops -funroll-loops 
 -funsafe-loop-optimizations -funsafe-math-optimizations -funswitch-loops 
--fvariable-expansion-in-unroller -fvect-cost-model -fvpt -fweb 
--fwhole-program -fwpa -fuse-ld=<var>linker</var> -fuse-linker-plugin 
+-fipa-ra -fvariable-expansion-in-unroller -fvect-cost-model -fvpt 
+-fweb -fwhole-program -fwpa -fuse-linker-plugin 
 --param <var>name</var>=<var>value</var>
 -O  -O0  -O1  -O2  -O3  -Os -Ofast -Og
 </pre></div>
@@ -412,13 +442,14 @@ Objective-C and Objective-C++ Dialects</a>.
 <dt><em>Linker Options</em></dt>
 <dd><p>See <a href="Link-Options.html#Link-Options">Options for Linking</a>.
 </p><div class="smallexample">
-<pre class="smallexample"><var>object-file-name</var>  -l<var>library</var> 
+<pre class="smallexample"><var>object-file-name</var>  -fuse-ld=<var>linker</var> -l<var>library</var> 
 -nostartfiles  -nodefaultlibs  -nostdlib -pie -rdynamic 
 -s  -static -static-libgcc -static-libstdc++ 
 -static-libasan -static-libtsan -static-liblsan -static-libubsan 
+-static-libmpx -static-libmpxwrappers 
 -shared -shared-libgcc  -symbolic 
 -T <var>script</var>  -Wl,<var>option</var>  -Xlinker <var>option</var> 
--u <var>symbol</var>
+-u <var>symbol</var> -z <var>keyword</var>
 </pre></div>
 
 </dd>
@@ -442,6 +473,7 @@ Objective-C and Objective-C++ Dialects</a>.
 -mstrict-align 
 -momit-leaf-frame-pointer  -mno-omit-leaf-frame-pointer 
 -mtls-dialect=desc  -mtls-dialect=traditional 
+-mtls-size=<var>size</var> 
 -mfix-cortex-a53-835769  -mno-fix-cortex-a53-835769 
 -mfix-cortex-a53-843419  -mno-fix-cortex-a53-843419 
 -march=<var>name</var>  -mcpu=<var>name</var>  -mtune=<var>name</var>
@@ -484,11 +516,12 @@ Objective-C and Objective-C++ Dialects</a>.
 -mapcs-float  -mno-apcs-float 
 -mapcs-reentrant  -mno-apcs-reentrant 
 -msched-prolog  -mno-sched-prolog 
--mlittle-endian  -mbig-endian  -mwords-little-endian 
+-mlittle-endian  -mbig-endian 
 -mfloat-abi=<var>name</var> 
 -mfp16-format=<var>name</var>
 -mthumb-interwork  -mno-thumb-interwork 
 -mcpu=<var>name</var>  -march=<var>name</var>  -mfpu=<var>name</var>  
+-mtune=<var>name</var> -mprint-tune-info 
 -mstructure-size-boundary=<var>n</var> 
 -mabort-on-noreturn 
 -mlong-calls  -mno-long-calls 
@@ -505,14 +538,15 @@ Objective-C and Objective-C++ Dialects</a>.
 -munaligned-access 
 -mneon-for-64bits 
 -mslow-flash-data 
+-masm-syntax-unified 
 -mrestrict-it
 </pre></div>
 
 <p><em>AVR Options</em>
 </p><div class="smallexample">
 <pre class="smallexample">-mmcu=<var>mcu</var> -maccumulate-args -mbranch-cost=<var>cost</var> 
--mcall-prologues -mint8 -mno-interrupts -mrelax 
--mstrict-X -mtiny-stack -Waddr-space-convert
+-mcall-prologues -mint8 -mn_flash=<var>size</var> -mno-interrupts 
+-mrelax -mrmw -mstrict-X -mtiny-stack -nodevicelib -Waddr-space-convert
 </pre></div>
 
 <p><em>Blackfin Options</em>
@@ -623,7 +657,7 @@ Objective-C and Objective-C++ Dialects</a>.
 
 <p><em>GNU/Linux Options</em>
 </p><div class="smallexample">
-<pre class="smallexample">-mglibc -muclibc -mbionic -mandroid 
+<pre class="smallexample">-mglibc -muclibc -mmusl -mbionic -mandroid 
 -tno-android-cc -tno-android-ld
 </pre></div>
 
@@ -647,47 +681,6 @@ Objective-C and Objective-C++ Dialects</a>.
 -mpa-risc-1-1  -mpa-risc-2-0  -mportable-runtime 
 -mschedule=<var>cpu-type</var>  -mspace-regs  -msio  -mwsio 
 -munix=<var>unix-std</var>  -nolibdld  -static  -threads
-</pre></div>
-
-<p><em>i386 and x86-64 Options</em>
-</p><div class="smallexample">
-<pre class="smallexample">-mtune=<var>cpu-type</var>  -march=<var>cpu-type</var> 
--mtune-ctrl=<var>feature-list</var> -mdump-tune-features -mno-default 
--mfpmath=<var>unit</var> 
--masm=<var>dialect</var>  -mno-fancy-math-387 
--mno-fp-ret-in-387  -msoft-float 
--mno-wide-multiply  -mrtd  -malign-double 
--mpreferred-stack-boundary=<var>num</var> 
--mincoming-stack-boundary=<var>num</var> 
--mcld -mcx16 -msahf -mmovbe -mcrc32 
--mrecip -mrecip=<var>opt</var> 
--mvzeroupper -mprefer-avx128 
--mmmx  -msse  -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -msse4 -mavx 
--mavx2 -mavx512f -mavx512pf -mavx512er -mavx512cd -msha 
--maes -mpclmul -mfsgsbase -mrdrnd -mf16c -mfma -mprefetchwt1 
--msse4a -m3dnow -mpopcnt -mabm -mbmi -mtbm -mfma4 -mxop -mlzcnt 
--mbmi2 -mfxsr -mxsave -mxsaveopt -mrtm -mlwp -mthreads 
--mno-align-stringops  -minline-all-stringops 
--minline-stringops-dynamically -mstringop-strategy=<var>alg</var> 
--mmemcpy-strategy=<var>strategy</var> -mmemset-strategy=<var>strategy</var>
--mpush-args  -maccumulate-outgoing-args  -m128bit-long-double 
--m96bit-long-double -mlong-double-64 -mlong-double-80 -mlong-double-128 
--mregparm=<var>num</var>  -msseregparm 
--mveclibabi=<var>type</var> -mvect8-ret-in-mem 
--mpc32 -mpc64 -mpc80 -mstackrealign 
--momit-leaf-frame-pointer  -mno-red-zone -mno-tls-direct-seg-refs 
--mcmodel=<var>code-model</var> -mabi=<var>name</var> -maddress-mode=<var>mode</var> 
--m32 -m64 -mx32 -m16 -mlarge-data-threshold=<var>num</var> 
--msse2avx -mfentry -m8bit-idiv 
--mavx256-split-unaligned-load -mavx256-split-unaligned-store 
--mstack-protector-guard=<var>guard</var>
-</pre></div>
-
-<p><em>i386 and x86-64 Windows Options</em>
-</p><div class="smallexample">
-<pre class="smallexample">-mconsole -mcygwin -mno-cygwin -mdll 
--mnop-fun-dllimport -mthread 
--municode -mwin32 -mwindows -fno-set-stack-executable
 </pre></div>
 
 <p><em>IA-64 Options</em>
@@ -742,7 +735,7 @@ Objective-C and Objective-C++ Dialects</a>.
 
 <p><em>M680x0 Options</em>
 </p><div class="smallexample">
-<pre class="smallexample">-march=<var>arch</var>  -mcpu=<var>cpu</var>  -mtune=<var>tune</var>
+<pre class="smallexample">-march=<var>arch</var>  -mcpu=<var>cpu</var>  -mtune=<var>tune</var> 
 -m68000  -m68020  -m68020-40  -m68020-60  -m68030  -m68040 
 -m68060  -mcpu32  -m5200  -m5206e  -m528x  -m5307  -m5407 
 -mcfv4e  -mbitfield  -mno-bitfield  -mc68000  -mc68020 
@@ -783,20 +776,22 @@ Objective-C and Objective-C++ Dialects</a>.
 <p><em>MIPS Options</em>
 </p><div class="smallexample">
 <pre class="smallexample">-EL  -EB  -march=<var>arch</var>  -mtune=<var>arch</var> 
--mips1  -mips2  -mips3  -mips4  -mips32  -mips32r2 
--mips64  -mips64r2 
+-mips1  -mips2  -mips3  -mips4  -mips32  -mips32r2  -mips32r3  -mips32r5 
+-mips32r6  -mips64  -mips64r2  -mips64r3  -mips64r5  -mips64r6 
 -mips16  -mno-mips16  -mflip-mips16 
 -minterlink-compressed -mno-interlink-compressed 
 -minterlink-mips16  -mno-interlink-mips16 
 -mabi=<var>abi</var>  -mabicalls  -mno-abicalls 
 -mshared  -mno-shared  -mplt  -mno-plt  -mxgot  -mno-xgot 
--mgp32  -mgp64  -mfp32  -mfp64  -mhard-float  -msoft-float 
+-mgp32  -mgp64  -mfp32  -mfpxx  -mfp64  -mhard-float  -msoft-float 
 -mno-float  -msingle-float  -mdouble-float 
+-modd-spreg -mno-odd-spreg 
 -mabs=<var>mode</var>  -mnan=<var>encoding</var> 
 -mdsp  -mno-dsp  -mdspr2  -mno-dspr2 
 -mmcu -mmno-mcu 
 -meva -mno-eva 
 -mvirt -mno-virt 
+-mxpa -mno-xpa 
 -mmicromips -mno-micromips 
 -mfpu=<var>fpu-type</var> 
 -msmartmips  -mno-smartmips 
@@ -845,7 +840,7 @@ Objective-C and Objective-C++ Dialects</a>.
 
 <p><em>Moxie Options</em>
 </p><div class="smallexample">
-<pre class="smallexample">-meb -mel -mno-crt0
+<pre class="smallexample">-meb -mel -mmul.x -mno-crt0
 </pre></div>
 
 <p><em>MSP430 Options</em>
@@ -862,17 +857,17 @@ Objective-C and Objective-C++ Dialects</a>.
 -mperf-ext -mno-perf-ext 
 -mv3push -mno-v3push 
 -m16bit -mno-16bit 
--mgp-direct -mno-gp-direct 
 -misr-vector-size=<var>num</var> 
 -mcache-block-size=<var>num</var> 
 -march=<var>arch</var> 
--mforce-fp-as-gp -mforbid-fp-as-gp 
--mex9 -mctor-dtor -mrelax
+-mcmodel=<var>code-model</var> 
+-mctor-dtor -mrelax
 </pre></div>
 
 <p><em>Nios II Options</em>
 </p><div class="smallexample">
-<pre class="smallexample">-G <var>num</var> -mgpopt -mno-gpopt -mel -meb 
+<pre class="smallexample">-G <var>num</var> -mgpopt=<var>option</var> -mgpopt -mno-gpopt 
+-mel -meb 
 -mno-bypass-cache -mbypass-cache 
 -mno-cache-volatile -mcache-volatile 
 -mno-fast-sw-div -mfast-sw-div 
@@ -880,6 +875,11 @@ Objective-C and Objective-C++ Dialects</a>.
 -mcustom-<var>insn</var>=<var>N</var> -mno-custom-<var>insn</var> 
 -mcustom-fpu-cfg=<var>name</var> 
 -mhal -msmallc -msys-crt0=<var>name</var> -msys-lib=<var>name</var>
+</pre></div>
+
+<p><em>Nvidia PTX Options</em>
+</p><div class="smallexample">
+<pre class="smallexample">-m32 -m64 -mmainkernel
 </pre></div>
 
 <p><em>PDP-11 Options</em>
@@ -903,7 +903,8 @@ See RS/6000 and PowerPC Options.
 </p>
 <p><em>RL78 Options</em>
 </p><div class="smallexample">
-<pre class="smallexample">-msim -mmul=none -mmul=g13 -mmul=rl78
+<pre class="smallexample">-msim -mmul=none -mmul=g13 -mmul=rl78 
+-m64bit-doubles -m32bit-doubles
 </pre></div>
 
 <p><em>RS/6000 and PowerPC Options</em>
@@ -956,10 +957,12 @@ See RS/6000 and PowerPC Options.
 -mpointers-to-nested-functions -mno-pointers-to-nested-functions 
 -msave-toc-indirect -mno-save-toc-indirect 
 -mpower8-fusion -mno-mpower8-fusion -mpower8-vector -mno-power8-vector 
--mcrypto -mno-crypto -mdirect-move -mno-direct-move 
+-mcrypto -mno-crypto -mhtm -mno-htm -mdirect-move -mno-direct-move 
 -mquad-memory -mno-quad-memory 
 -mquad-memory-atomic -mno-quad-memory-atomic 
--mcompat-align-parm -mno-compat-align-parm
+-mcompat-align-parm -mno-compat-align-parm 
+-mupper-regs-df -mno-upper-regs-df -mupper-regs-sf -mno-upper-regs-sf 
+-mupper-regs -mno-upper-regs
 </pre></div>
 
 <p><em>RX Options</em>
@@ -1019,6 +1022,7 @@ See RS/6000 and PowerPC Options.
 -maccumulate-outgoing-args -minvalid-symbols 
 -matomic-model=<var>atomic-model</var> 
 -mbranch-cost=<var>num</var> -mzdcbranch -mno-zdcbranch 
+-mcbranch-force-delay-slot 
 -mfused-madd -mno-fused-madd -mfsca -mno-fsca -mfsrra -mno-fsrra 
 -mpretend-cmove -mtas
 </pre></div>
@@ -1102,6 +1106,12 @@ See RS/6000 and PowerPC Options.
 <pre class="smallexample">-mg  -mgnu  -munix
 </pre></div>
 
+<p><em>Visium Options</em>
+</p><div class="smallexample">
+<pre class="smallexample">-mdebug -msim -mfpu -mno-fpu -mhard-float -msoft-float 
+-mcpu=<var>cpu-type</var> -mtune=<var>cpu-type</var> -msv-mode -muser-mode
+</pre></div>
+
 <p><em>VMS Options</em>
 </p><div class="smallexample">
 <pre class="smallexample">-mvms-return-codes -mdebug-main=<var>prefix</var> -mmalloc64 
@@ -1114,9 +1124,48 @@ See RS/6000 and PowerPC Options.
 -Xbind-lazy  -Xbind-now
 </pre></div>
 
-<p><em>x86-64 Options</em>
-See i386 and x86-64 Options.
-</p>
+<p><em>x86 Options</em>
+</p><div class="smallexample">
+<pre class="smallexample">-mtune=<var>cpu-type</var>  -march=<var>cpu-type</var> 
+-mtune-ctrl=<var>feature-list</var> -mdump-tune-features -mno-default 
+-mfpmath=<var>unit</var> 
+-masm=<var>dialect</var>  -mno-fancy-math-387 
+-mno-fp-ret-in-387  -msoft-float 
+-mno-wide-multiply  -mrtd  -malign-double 
+-mpreferred-stack-boundary=<var>num</var> 
+-mincoming-stack-boundary=<var>num</var> 
+-mcld -mcx16 -msahf -mmovbe -mcrc32 
+-mrecip -mrecip=<var>opt</var> 
+-mvzeroupper -mprefer-avx128 
+-mmmx  -msse  -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -msse4 -mavx 
+-mavx2 -mavx512f -mavx512pf -mavx512er -mavx512cd -msha 
+-maes -mpclmul -mfsgsbase -mrdrnd -mf16c -mfma -mprefetchwt1 
+-mclflushopt -mxsavec -mxsaves 
+-msse4a -m3dnow -mpopcnt -mabm -mbmi -mtbm -mfma4 -mxop -mlzcnt 
+-mbmi2 -mfxsr -mxsave -mxsaveopt -mrtm -mlwp -mmpx -mmwaitx -mthreads 
+-mno-align-stringops  -minline-all-stringops 
+-minline-stringops-dynamically -mstringop-strategy=<var>alg</var> 
+-mmemcpy-strategy=<var>strategy</var> -mmemset-strategy=<var>strategy</var> 
+-mpush-args  -maccumulate-outgoing-args  -m128bit-long-double 
+-m96bit-long-double -mlong-double-64 -mlong-double-80 -mlong-double-128 
+-mregparm=<var>num</var>  -msseregparm 
+-mveclibabi=<var>type</var> -mvect8-ret-in-mem 
+-mpc32 -mpc64 -mpc80 -mstackrealign 
+-momit-leaf-frame-pointer  -mno-red-zone -mno-tls-direct-seg-refs 
+-mcmodel=<var>code-model</var> -mabi=<var>name</var> -maddress-mode=<var>mode</var> 
+-m32 -m64 -mx32 -m16 -mlarge-data-threshold=<var>num</var> 
+-msse2avx -mfentry -mrecord-mcount -mnop-mcount -m8bit-idiv 
+-mavx256-split-unaligned-load -mavx256-split-unaligned-store 
+-malign-data=<var>type</var> -mstack-protector-guard=<var>guard</var>
+</pre></div>
+
+<p><em>x86 Windows Options</em>
+</p><div class="smallexample">
+<pre class="smallexample">-mconsole -mcygwin -mno-cygwin -mdll 
+-mnop-fun-dllimport -mthread 
+-municode -mwin32 -mwindows -fno-set-stack-executable
+</pre></div>
+
 <p><em>Xstormy16 Options</em>
 </p><div class="smallexample">
 <pre class="smallexample">-msim
@@ -1149,7 +1198,7 @@ See S/390 and zSeries Options.
 -finstrument-functions-exclude-function-list=<var>sym</var>,<var>sym</var>,&hellip; 
 -finstrument-functions-exclude-file-list=<var>file</var>,<var>file</var>,&hellip; 
 -fno-common  -fno-ident 
--fpcc-struct-return  -fpic  -fPIC -fpie -fPIE 
+-fpcc-struct-return  -fpic  -fPIC -fpie -fPIE -fno-plt 
 -fno-jump-tables 
 -frecord-gcc-switches 
 -freg-struct-return  -fshort-enums 
@@ -1160,7 +1209,8 @@ See S/390 and zSeries Options.
 -fleading-underscore  -ftls-model=<var>model</var> 
 -fstack-reuse=<var>reuse_level</var> 
 -ftrapv  -fwrapv  -fbounds-check 
--fvisibility -fstrict-volatile-bitfields -fsync-libcalls
+-fvisibility=<span class="roman">[</span>default<span class="roman">|</span>internal<span class="roman">|</span>hidden<span class="roman">|</span>protected<span class="roman">]</span> 
+-fstrict-volatile-bitfields -fsync-libcalls
 </pre></div>
 </dd>
 </dl>

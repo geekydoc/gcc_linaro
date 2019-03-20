@@ -91,11 +91,10 @@ honor these options.
 <dl compact="compact">
 <dt><code>-fmessage-length=<var>n</var></code></dt>
 <dd><a name="index-fmessage_002dlength"></a>
-<p>Try to format error messages so that they fit on lines of about <var>n</var>
-characters.  The default is 72 characters for <code>g++</code> and 0 for the rest of
-the front ends supported by GCC.  If <var>n</var> is zero, then no
-line-wrapping is done; each error message appears on a single
-line.
+<p>Try to format error messages so that they fit on lines of about
+<var>n</var> characters.  If <var>n</var> is zero, then no line-wrapping is
+done; each error message appears on a single line.  This is the
+default for all front ends.
 </p>
 </dd>
 <dt><code>-fdiagnostics-show-location=once</code></dt>
@@ -121,8 +120,10 @@ a message which is too long to fit on a single line.
 <a name="index-highlight_002c-color_002c-colour"></a>
 <a name="index-GCC_005fCOLORS-environment-variable"></a>
 <p>Use color in diagnostics.  <var>WHEN</var> is &lsquo;<samp>never</samp>&rsquo;, &lsquo;<samp>always</samp>&rsquo;,
-or &lsquo;<samp>auto</samp>&rsquo;.  The default is &lsquo;<samp>never</samp>&rsquo; if <code>GCC_COLORS</code> environment
-variable isn&rsquo;t present in the environment, and &lsquo;<samp>auto</samp>&rsquo; otherwise.
+or &lsquo;<samp>auto</samp>&rsquo;.  The default depends on how the compiler has been configured,
+it can be any of the above <var>WHEN</var> options or also &lsquo;<samp>never</samp>&rsquo;
+if <code>GCC_COLORS</code> environment variable isn&rsquo;t present in the environment,
+and &lsquo;<samp>auto</samp>&rsquo; otherwise.
 &lsquo;<samp>auto</samp>&rsquo; means to use color only when the standard error is a terminal.
 The forms <samp>-fdiagnostics-color</samp> and <samp>-fno-diagnostics-color</samp> are
 aliases for <samp>-fdiagnostics-color=always</samp> and
@@ -152,8 +153,10 @@ and &lsquo;<samp>48;5;0</samp>&rsquo; to &lsquo;<samp>48;5;255</samp>&rsquo;
 for 88-color and 256-color modes background colors.
 </p>
 <p>The default <code>GCC_COLORS</code> is
-&lsquo;<samp>error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01</samp>&rsquo;
-where &lsquo;<samp>01;31</samp>&rsquo; is bold red, &lsquo;<samp>01;35</samp>&rsquo; is bold magenta,
+</p><div class="smallexample">
+<pre class="smallexample">error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01
+</pre></div>
+<p>where &lsquo;<samp>01;31</samp>&rsquo; is bold red, &lsquo;<samp>01;35</samp>&rsquo; is bold magenta,
 &lsquo;<samp>01;36</samp>&rsquo; is bold cyan, &lsquo;<samp>01;32</samp>&rsquo; is bold green and
 &lsquo;<samp>01</samp>&rsquo; is bold. Setting <code>GCC_COLORS</code> to the empty
 string disables colors.
@@ -207,7 +210,10 @@ option is known to the diagnostic machinery).  Specifying the
 <a name="index-fdiagnostics_002dshow_002dcaret"></a>
 <p>By default, each diagnostic emitted includes the original source line
 and a caret &rsquo;^&rsquo; indicating the column.  This option suppresses this
-information.
+information.  The source line is truncated to <var>n</var> characters, if
+the <samp>-fmessage-length=n</samp> option is given.  When the output is done
+to the terminal, the width is limited to the width given by the
+<code>COLUMNS</code> environment variable or, if not set, to the terminal width.
 </p>
 </dd>
 </dl>

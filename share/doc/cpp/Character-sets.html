@@ -112,11 +112,11 @@ the character in the source character set that they represent, then
 converted to the execution character set, just like unescaped
 characters.
 </p>
-<p>Unless the experimental <samp>-fextended-identifiers</samp> option is used,
-GCC does not permit the use of characters outside the ASCII range, nor
-&lsquo;<samp>\u</samp>&rsquo; and &lsquo;<samp>\U</samp>&rsquo; escapes, in identifiers.  Even with that
-option, characters outside the ASCII range can only be specified with
-the &lsquo;<samp>\u</samp>&rsquo; and &lsquo;<samp>\U</samp>&rsquo; escapes, not used directly in identifiers.
+<p>In identifiers, characters outside the ASCII range can only be
+specified with the &lsquo;<samp>\u</samp>&rsquo; and &lsquo;<samp>\U</samp>&rsquo; escapes, not used
+directly.  If strict ISO C90 conformance is specified with an option
+such as <samp>-std=c90</samp>, or <samp>-fno-extended-identifiers</samp> is
+used, then those escapes are not permitted in identifiers.
 </p>
 <div class="footnote">
 <hr>

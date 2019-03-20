@@ -103,6 +103,16 @@ to the linker.
 <p>If any of these options is used, then the linker is not run, and
 object file names should not be used as arguments.  See <a href="Overall-Options.html#Overall-Options">Overall Options</a>.
 </p>
+</dd>
+<dt><code>-fuse-ld=bfd</code></dt>
+<dd><a name="index-fuse_002dld_003dbfd"></a>
+<p>Use the <code>bfd</code> linker instead of the default linker.
+</p>
+</dd>
+<dt><code>-fuse-ld=gold</code></dt>
+<dd><a name="index-fuse_002dld_003dgold"></a>
+<p>Use the <code>gold</code> linker instead of the default linker.
+</p>
 <a name="index-Libraries"></a>
 </dd>
 <dt><code>-l<var>library</var></code></dt>
@@ -152,8 +162,8 @@ or <samp>-nodefaultlibs</samp> is used.
 <dd><a name="index-nodefaultlibs"></a>
 <p>Do not use the standard system libraries when linking.
 Only the libraries you specify are passed to the linker, and options
-specifying linkage of the system libraries, such as <code>-static-libgcc</code>
-or <code>-shared-libgcc</code>, are ignored.  
+specifying linkage of the system libraries, such as <samp>-static-libgcc</samp>
+or <samp>-shared-libgcc</samp>, are ignored.  
 The standard startup files are used normally, unless <samp>-nostartfiles</samp>
 is used.  
 </p>
@@ -169,7 +179,7 @@ mechanism when this option is specified.
 <p>Do not use the standard system startup files or libraries when linking.
 No startup files and only the libraries you specify are passed to
 the linker, and options specifying linkage of the system libraries, such as
-<code>-static-libgcc</code> or <code>-shared-libgcc</code>, are ignored.
+<samp>-static-libgcc</samp> or <samp>-shared-libgcc</samp>, are ignored.
 </p>
 <p>The compiler may generate calls to <code>memcmp</code>, <code>memset</code>,
 <code>memcpy</code> and <code>memmove</code>.
@@ -195,7 +205,7 @@ other standard libraries.  In other words, when you specify <samp>-nostdlib</sam
 or <samp>-nodefaultlibs</samp> you should usually specify <samp>-lgcc</samp> as well.
 This ensures that you have no unresolved references to internal GCC
 library subroutines.
-(An example of such an internal subroutine is &lsquo;<samp>__main</samp>&rsquo;, used to ensure C++
+(An example of such an internal subroutine is <code>__main</code>, used to ensure C++
 constructors are called; see <a href="http://gcc.gnu.org/onlinedocs/gccint/Collect2.html#Collect2"><code>collect2</code></a> in <cite>GNU Compiler Collection (GCC) Internals</cite>.)
 </p>
 </dd>
@@ -318,6 +328,29 @@ driver to link <samp>libubsan</samp> statically, without necessarily linking
 other libraries statically.
 </p>
 </dd>
+<dt><code>-static-libmpx</code></dt>
+<dd><a name="index-static_002dlibmpx"></a>
+<p>When the <samp>-fcheck-pointer bounds</samp> and <samp>-mmpx</samp> options are
+used to link a program, the GCC driver automatically links against
+<samp>libmpx</samp>.  If <samp>libmpx</samp> is available as a shared library,
+and the <samp>-static</samp> option is not used, then this links against
+the shared version of <samp>libmpx</samp>.  The <samp>-static-libmpx</samp>
+option directs the GCC driver to link <samp>libmpx</samp> statically,
+without necessarily linking other libraries statically.
+</p>
+</dd>
+<dt><code>-static-libmpxwrappers</code></dt>
+<dd><a name="index-static_002dlibmpxwrappers"></a>
+<p>When the <samp>-fcheck-pointer bounds</samp> and <samp>-mmpx</samp> options are used
+to link a program without also using <samp>-fno-chkp-use-wrappers</samp>, the
+GCC driver automatically links against <samp>libmpxwrappers</samp>.  If
+<samp>libmpxwrappers</samp> is available as a shared library, and the
+<samp>-static</samp> option is not used, then this links against the shared
+version of <samp>libmpxwrappers</samp>.  The <samp>-static-libmpxwrappers</samp>
+option directs the GCC driver to link <samp>libmpxwrappers</samp> statically,
+without necessarily linking other libraries statically.
+</p>
+</dd>
 <dt><code>-static-libstdc++</code></dt>
 <dd><a name="index-static_002dlibstdc_002b_002b"></a>
 <p>When the <code>g++</code> program is used to link a C++ program, it
@@ -384,6 +417,13 @@ linker.  When using the GNU linker, you can also get the same effect with
 <p>Pretend the symbol <var>symbol</var> is undefined, to force linking of
 library modules to define it.  You can use <samp>-u</samp> multiple times with
 different symbols to force loading of additional library modules.
+</p>
+</dd>
+<dt><code>-z <var>keyword</var></code></dt>
+<dd><a name="index-z"></a>
+<p><samp>-z</samp> is passed directly on to the linker along with the keyword
+<var>keyword</var>. See the section in the documentation of your linker for
+permitted values and their meanings.
 </p></dd>
 </dl>
 

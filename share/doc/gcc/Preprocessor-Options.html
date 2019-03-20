@@ -320,7 +320,7 @@ suitable for <code>make</code> describing the dependencies of the main
 source file.  The preprocessor outputs one <code>make</code> rule containing
 the object file name for that source file, a colon, and the names of all
 the included files, including those coming from <samp>-include</samp> or
-<samp>-imacros</samp> command line options.
+<samp>-imacros</samp> command-line options.
 </p>
 <p>Unless specified explicitly (with <samp>-MT</samp> or <samp>-MQ</samp>), the
 object file name consists of the name of the source file with any
@@ -704,8 +704,7 @@ files previously preprocessed with <code>-E -fdirectives-only</code>.
 <dt><code>-fextended-identifiers</code></dt>
 <dd><a name="index-fextended_002didentifiers"></a>
 <p>Accept universal character names in identifiers.  This option is
-experimental; in a future version of GCC, it will be enabled by
-default for C99 and C++.
+enabled by default for C99 (and later C standard versions) and C++.
 </p>
 </dd>
 <dt><code>-fno-canonical-system-headers</code></dt>
@@ -769,7 +768,7 @@ tokens locations completely. This value is the most memory hungry.
 When this option is given no argument, the default parameter value is
 &lsquo;<samp>2</samp>&rsquo;.
 </p>
-<p>Note that -ftrack-macro-expansion=2 is activated by default.
+<p>Note that <code>-ftrack-macro-expansion=2</code> is activated by default.
 </p>
 </dd>
 <dt><code>-fexec-charset=<var>charset</var></code></dt>
@@ -798,7 +797,7 @@ problems with encodings that do not fit exactly in <code>wchar_t</code>.
 set of the input file to the source character set used by GCC.  If the
 locale does not specify, or GCC cannot get this information from the
 locale, the default is UTF-8.  This can be overridden by either the locale
-or this command line option.  Currently the command line option takes
+or this command-line option.  Currently the command-line option takes
 precedence if there&rsquo;s a conflict.  <var>charset</var> can be any encoding
 supported by the system&rsquo;s <code>iconv</code> library routine.
 </p>
@@ -966,7 +965,7 @@ short file names, such as MS-DOS.
 <dt><code>--target-help</code></dt>
 <dd><a name="index-help-1"></a>
 <a name="index-target_002dhelp-1"></a>
-<p>Print text describing all the command line options instead of
+<p>Print text describing all the command-line options instead of
 preprocessing anything.
 </p>
 </dd>

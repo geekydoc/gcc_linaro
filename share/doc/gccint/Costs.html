@@ -75,7 +75,7 @@ Next: <a href="Scheduling.html#Scheduling" accesskey="n" rel="next">Scheduling</
 </div>
 <hr>
 <a name="Describing-Relative-Costs-of-Operations"></a>
-<h3 class="section">17.17 Describing Relative Costs of Operations</h3>
+<h3 class="section">17.16 Describing Relative Costs of Operations</h3>
 <a name="index-costs-of-instructions"></a>
 <a name="index-relative-costs"></a>
 <a name="index-speed-of-instructions"></a>
@@ -107,7 +107,7 @@ if the &lsquo;<samp>mov<var>m</var></samp>&rsquo; pattern&rsquo;s constraints do
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fREGISTER_005fMOVE_005fCOST"></a>Target Hook: <em>int</em> <strong>TARGET_REGISTER_MOVE_COST</strong> <em>(enum machine_mode <var>mode</var>, reg_class_t <var>from</var>, reg_class_t <var>to</var>)</em></dt>
+<dt><a name="index-TARGET_005fREGISTER_005fMOVE_005fCOST"></a>Target Hook: <em>int</em> <strong>TARGET_REGISTER_MOVE_COST</strong> <em>(machine_mode <var>mode</var>, reg_class_t <var>from</var>, reg_class_t <var>to</var>)</em></dt>
 <dd><p>This target hook should return the cost of moving data of mode <var>mode</var>
 from a register in class <var>from</var> to one in class <var>to</var>.  The classes
 are expressed using the enumeration values such as <code>GENERAL_REGS</code>.
@@ -157,7 +157,7 @@ are the same as to this macro.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fMEMORY_005fMOVE_005fCOST"></a>Target Hook: <em>int</em> <strong>TARGET_MEMORY_MOVE_COST</strong> <em>(enum machine_mode <var>mode</var>, reg_class_t <var>rclass</var>, bool <var>in</var>)</em></dt>
+<dt><a name="index-TARGET_005fMEMORY_005fMOVE_005fCOST"></a>Target Hook: <em>int</em> <strong>TARGET_MEMORY_MOVE_COST</strong> <em>(machine_mode <var>mode</var>, reg_class_t <var>rclass</var>, bool <var>in</var>)</em></dt>
 <dd><p>This target hook should return the cost of moving data of mode <var>mode</var>
 between a register of class <var>rclass</var> and memory; <var>in</var> is <code>false</code>
 if the value is to be written to memory, <code>true</code> if it is to be read in.
@@ -418,7 +418,7 @@ processed, and false when <code>rtx_cost</code> should recurse.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fADDRESS_005fCOST"></a>Target Hook: <em>int</em> <strong>TARGET_ADDRESS_COST</strong> <em>(rtx <var>address</var>, enum machine_mode <var>mode</var>, addr_space_t <var>as</var>, bool <var>speed</var>)</em></dt>
+<dt><a name="index-TARGET_005fADDRESS_005fCOST"></a>Target Hook: <em>int</em> <strong>TARGET_ADDRESS_COST</strong> <em>(rtx <var>address</var>, machine_mode <var>mode</var>, addr_space_t <var>as</var>, bool <var>speed</var>)</em></dt>
 <dd><p>This hook computes the cost of an addressing mode that contains
 <var>address</var>.  If not defined, the cost is computed from
 the <var>address</var> expression and the <code>TARGET_RTX_COST</code> hook.

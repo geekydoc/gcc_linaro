@@ -75,7 +75,7 @@ Previous: <a href="CC0-Condition-Codes.html#CC0-Condition-Codes" accesskey="p" r
 </div>
 <hr>
 <a name="Representation-of-condition-codes-using-registers"></a>
-<h4 class="subsection">17.16.2 Representation of condition codes using registers</h4>
+<h4 class="subsection">17.15.2 Representation of condition codes using registers</h4>
 <a name="index-CCmode-1"></a>
 <a name="index-MODE_005fCC-1"></a>
 
@@ -207,7 +207,7 @@ integer pointed to by <var>p2</var> should be set to
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fCC_005fMODES_005fCOMPATIBLE"></a>Target Hook: <em>enum machine_mode</em> <strong>TARGET_CC_MODES_COMPATIBLE</strong> <em>(enum machine_mode <var>m1</var>, enum machine_mode <var>m2</var>)</em></dt>
+<dt><a name="index-TARGET_005fCC_005fMODES_005fCOMPATIBLE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_CC_MODES_COMPATIBLE</strong> <em>(machine_mode <var>m1</var>, machine_mode <var>m2</var>)</em></dt>
 <dd><p>On targets which use multiple condition code modes in class
 <code>MODE_CC</code>, it is sometimes the case that a comparison can be
 validly done in more than one mode.  On such a system, define this

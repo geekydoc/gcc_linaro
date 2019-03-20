@@ -75,7 +75,7 @@ Next: <a href="PowerPC-AltiVec_002fVSX-Built_002din-Functions.html#PowerPC-AltiV
 </div>
 <hr>
 <a name="PowerPC-Built_002din-Functions-1"></a>
-<h4 class="subsection">6.57.21 PowerPC Built-in Functions</h4>
+<h4 class="subsection">6.58.19 PowerPC Built-in Functions</h4>
 
 <p>These built-in functions are available for the PowerPC family of
 processors:
@@ -126,25 +126,25 @@ unsigned int addg6s (unsigned int, unsigned int);
 </pre></div>
 
 <p>The <code>__builtin_divde</code>, <code>__builtin_divdeo</code>,
-<code>__builitin_divdeu</code>, <code>__builtin_divdeou</code> functions require a
+<code>__builtin_divdeu</code>, <code>__builtin_divdeou</code> functions require a
 64-bit environment support ISA 2.06 or later.
 </p>
 <p>The following built-in functions are available for the PowerPC family
 of processors when hardware decimal floating point
 (<samp>-mhard-dfp</samp>) is available:
 </p><div class="smallexample">
-<pre class="smallexample">_Decimal64 __builtin_dxex (_Decimal64);
-_Decimal128 __builtin_dxexq (_Decimal128);
+<pre class="smallexample">long long __builtin_dxex (_Decimal64);
+long long __builtin_dxexq (_Decimal128);
 _Decimal64 __builtin_ddedpd (int, _Decimal64);
 _Decimal128 __builtin_ddedpdq (int, _Decimal128);
 _Decimal64 __builtin_denbcd (int, _Decimal64);
 _Decimal128 __builtin_denbcdq (int, _Decimal128);
-_Decimal64 __builtin_diex (_Decimal64, _Decimal64);
-_Decimal128 _builtin_diexq (_Decimal128, _Decimal128);
+_Decimal64 __builtin_diex (long long, _Decimal64);
+_Decimal128 _builtin_diexq (long long, _Decimal128);
 _Decimal64 __builtin_dscli (_Decimal64, int);
-_Decimal128 __builitn_dscliq (_Decimal128, int);
+_Decimal128 __builtin_dscliq (_Decimal128, int);
 _Decimal64 __builtin_dscri (_Decimal64, int);
-_Decimal128 __builitn_dscriq (_Decimal128, int);
+_Decimal128 __builtin_dscriq (_Decimal128, int);
 unsigned long long __builtin_unpack_dec128 (_Decimal128, int);
 _Decimal128 __builtin_pack_dec128 (unsigned long long, unsigned long long);
 </pre></div>

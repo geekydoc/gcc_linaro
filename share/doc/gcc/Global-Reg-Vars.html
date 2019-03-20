@@ -75,7 +75,7 @@ Next: <a href="Local-Reg-Vars.html#Local-Reg-Vars" accesskey="n" rel="next">Loca
 </div>
 <hr>
 <a name="Defining-Global-Register-Variables"></a>
-<h4 class="subsection">6.44.1 Defining Global Register Variables</h4>
+<h4 class="subsubsection">6.43.5.1 Defining Global Register Variables</h4>
 <a name="index-global-register-variables"></a>
 <a name="index-registers_002c-global-variables-in"></a>
 
@@ -89,8 +89,8 @@ Next: <a href="Local-Reg-Vars.html#Local-Reg-Vars" accesskey="n" rel="next">Loca
 register that is normally saved and restored by function calls on your
 machine, so that library routines will not clobber it.
 </p>
-<p>Naturally the register name is cpu-dependent, so you need to
-conditionalize your program according to cpu type.  The register
+<p>Naturally the register name is CPU-dependent, so you need to
+conditionalize your program according to CPU type.  The register
 <code>a5</code> is a good choice on a 68000 for a variable of pointer
 type.  On machines with register windows, be sure to choose a &ldquo;global&rdquo;
 register that is not affected magically by the function call mechanism.

@@ -128,10 +128,8 @@ preprocessor.  See <a href="C_002b_002b-Named-Operators.html#C_002b_002b-Named-O
 part of the &ldquo;basic source character set&rdquo;, at the implementation&rsquo;s
 discretion (such as accented Latin letters, Greek letters, or Chinese
 ideograms).  This may be done with an extended character set, or the
-&lsquo;<samp>\u</samp>&rsquo; and &lsquo;<samp>\U</samp>&rsquo; escape sequences.  The implementation of this
-feature in GCC is experimental; such characters are only accepted in
-the &lsquo;<samp>\u</samp>&rsquo; and &lsquo;<samp>\U</samp>&rsquo; forms and only if
-<samp>-fextended-identifiers</samp> is used.
+&lsquo;<samp>\u</samp>&rsquo; and &lsquo;<samp>\U</samp>&rsquo; escape sequences.  GCC only accepts such
+characters in the &lsquo;<samp>\u</samp>&rsquo; and &lsquo;<samp>\U</samp>&rsquo; forms.
 </p>
 <p>As an extension, GCC treats &lsquo;<samp>$</samp>&rsquo; as a letter.  This is for
 compatibility with some systems, such as VMS, where &lsquo;<samp>$</samp>&rsquo; is commonly

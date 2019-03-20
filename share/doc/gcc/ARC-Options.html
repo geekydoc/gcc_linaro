@@ -85,7 +85,7 @@ is being compiled:
 <dt><code>-mbarrel-shifter</code></dt>
 <dd><a name="index-mbarrel_002dshifter"></a>
 <p>Generate instructions supported by barrel shifter.  This is the default
-unless &lsquo;<samp>-mcpu=ARC601</samp>&rsquo; is in effect.
+unless <samp>-mcpu=ARC601</samp> is in effect.
 </p>
 </dd>
 <dt><code>-mcpu=<var>cpu</var></code></dt>
@@ -112,7 +112,7 @@ values for <var>cpu</var> are
 <dd><a name="index-mA7"></a>
 <a name="index-mARC700"></a>
 <p>Compile for ARC700.  Aliases: <samp>-mA7</samp>, <samp>-mARC700</samp>.
-This is the default when configured with &lsquo;<samp>--with-cpu=arc700</samp>&rsquo;.
+This is the default when configured with <samp>--with-cpu=arc700</samp>.
 </p></dd>
 </dl>
 
@@ -141,7 +141,7 @@ implementation.
 <dd><a name="index-mea"></a>
 <p>Generate Extended arithmetic instructions.  Currently only
 <code>divaw</code>, <code>adds</code>, <code>subs</code>, and <code>sat16</code> are
-supported.  This is always enabled for &lsquo;<samp>-mcpu=ARC700</samp>&rsquo;.
+supported.  This is always enabled for <samp>-mcpu=ARC700</samp>.
 </p>
 </dd>
 <dt><code>-mno-mpy</code></dt>
@@ -156,12 +156,12 @@ supported.  This is always enabled for &lsquo;<samp>-mcpu=ARC700</samp>&rsquo;.
 </dd>
 <dt><code>-mmul64</code></dt>
 <dd><a name="index-mmul64"></a>
-<p>Generate mul64 and mulu64 instructions.  Only valid for &lsquo;<samp>-mcpu=ARC600</samp>&rsquo;.
+<p>Generate mul64 and mulu64 instructions.  Only valid for <samp>-mcpu=ARC600</samp>.
 </p>
 </dd>
 <dt><code>-mnorm</code></dt>
 <dd><a name="index-mnorm"></a>
-<p>Generate norm instruction.  This is the default if &lsquo;<samp>-mcpu=ARC700</samp>&rsquo;
+<p>Generate norm instruction.  This is the default if <samp>-mcpu=ARC700</samp>
 is in effect.
 </p>
 </dd>
@@ -183,7 +183,7 @@ implementation.
 <dt><code>-msimd</code></dt>
 <dd><a name="index-msimd"></a>
 <p>Enable generation of ARC SIMD instructions via target-specific
-builtins.  Only valid for &lsquo;<samp>-mcpu=ARC700</samp>&rsquo;.
+builtins.  Only valid for <samp>-mcpu=ARC700</samp>.
 </p>
 </dd>
 <dt><code>-msoft-float</code></dt>
@@ -425,7 +425,7 @@ offset range because they are conditionalized, you should consider using
 <dt><code>-mindexed-loads</code></dt>
 <dd><a name="index-mindexed_002dloads"></a>
 <p>Enable the use of indexed loads.  This can be problematic because some
-optimizers will then assume the that indexed stores exist, which is not
+optimizers then assume that indexed stores exist, which is not
 the case.
 </p>
 </dd>
@@ -433,7 +433,7 @@ the case.
 <dd><a name="index-mlra"></a>
 <p>Enable Local Register Allocation.  This is still experimental for ARC,
 so by default the compiler uses standard reload
-(i.e. &lsquo;<samp>-mno-lra</samp>&rsquo;).
+(i.e. <samp>-mno-lra</samp>).
 </p>
 </dd>
 <dt><code>-mlra-priority-none</code></dt>
@@ -600,47 +600,47 @@ building the tool chain, for which little-endian is the default.
 </dd>
 <dt><code>-mbarrel_shifter</code></dt>
 <dd><a name="index-mbarrel_005fshifter"></a>
-<p>Replaced by &lsquo;<samp>-mbarrel-shifter</samp>&rsquo;
+<p>Replaced by <samp>-mbarrel-shifter</samp>.
 </p>
 </dd>
 <dt><code>-mdpfp_compact</code></dt>
 <dd><a name="index-mdpfp_005fcompact"></a>
-<p>Replaced by &lsquo;<samp>-mdpfp-compact</samp>&rsquo;
+<p>Replaced by <samp>-mdpfp-compact</samp>.
 </p>
 </dd>
 <dt><code>-mdpfp_fast</code></dt>
 <dd><a name="index-mdpfp_005ffast"></a>
-<p>Replaced by &lsquo;<samp>-mdpfp-fast</samp>&rsquo;
+<p>Replaced by <samp>-mdpfp-fast</samp>.
 </p>
 </dd>
 <dt><code>-mdsp_packa</code></dt>
 <dd><a name="index-mdsp_005fpacka"></a>
-<p>Replaced by &lsquo;<samp>-mdsp-packa</samp>&rsquo;
+<p>Replaced by <samp>-mdsp-packa</samp>.
 </p>
 </dd>
 <dt><code>-mEA</code></dt>
 <dd><a name="index-mEA"></a>
-<p>Replaced by &lsquo;<samp>-mea</samp>&rsquo;
+<p>Replaced by <samp>-mea</samp>.
 </p>
 </dd>
 <dt><code>-mmac_24</code></dt>
 <dd><a name="index-mmac_005f24"></a>
-<p>Replaced by &lsquo;<samp>-mmac-24</samp>&rsquo;
+<p>Replaced by <samp>-mmac-24</samp>.
 </p>
 </dd>
 <dt><code>-mmac_d16</code></dt>
 <dd><a name="index-mmac_005fd16"></a>
-<p>Replaced by &lsquo;<samp>-mmac-d16</samp>&rsquo;
+<p>Replaced by <samp>-mmac-d16</samp>.
 </p>
 </dd>
 <dt><code>-mspfp_compact</code></dt>
 <dd><a name="index-mspfp_005fcompact"></a>
-<p>Replaced by &lsquo;<samp>-mspfp-compact</samp>&rsquo;
+<p>Replaced by <samp>-mspfp-compact</samp>.
 </p>
 </dd>
 <dt><code>-mspfp_fast</code></dt>
 <dd><a name="index-mspfp_005ffast"></a>
-<p>Replaced by &lsquo;<samp>-mspfp-fast</samp>&rsquo;
+<p>Replaced by <samp>-mspfp-fast</samp>.
 </p>
 </dd>
 <dt><code>-mtune=<var>cpu</var></code></dt>
@@ -652,7 +652,7 @@ building the tool chain, for which little-endian is the default.
 </dd>
 <dt><code>-multcost=<var>num</var></code></dt>
 <dd><a name="index-multcost"></a>
-<p>Replaced by &lsquo;<samp>-mmultcost</samp>&rsquo;.
+<p>Replaced by <samp>-mmultcost</samp>.
 </p>
 </dd>
 </dl>

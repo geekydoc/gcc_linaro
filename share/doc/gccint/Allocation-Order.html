@@ -118,8 +118,8 @@ register; and so on.
 prologue and restoring it in the epilogue.  This discourages it from
 using call-saved registers.  If a machine wants to ensure that IRA
 allocates registers in the order given by REG_ALLOC_ORDER even if some
-call-saved registers appear earlier than call-used ones, this macro
-should be defined.
+call-saved registers appear earlier than call-used ones, then define this
+macro as a C expression to nonzero. Default is 0.
 </p></dd></dl>
 
 <dl>

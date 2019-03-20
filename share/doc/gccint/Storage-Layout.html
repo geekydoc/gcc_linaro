@@ -202,7 +202,7 @@ sign-extend the result to 64 bits.  On such machines, set
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fPROMOTE_005fFUNCTION_005fMODE"></a>Target Hook: <em>enum machine_mode</em> <strong>TARGET_PROMOTE_FUNCTION_MODE</strong> <em>(const_tree <var>type</var>, enum machine_mode <var>mode</var>, int *<var>punsignedp</var>, const_tree <var>funtype</var>, int <var>for_return</var>)</em></dt>
+<dt><a name="index-TARGET_005fPROMOTE_005fFUNCTION_005fMODE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_PROMOTE_FUNCTION_MODE</strong> <em>(const_tree <var>type</var>, machine_mode <var>mode</var>, int *<var>punsignedp</var>, const_tree <var>funtype</var>, int <var>for_return</var>)</em></dt>
 <dd><p>Like <code>PROMOTE_MODE</code>, but it is applied to outgoing function arguments or
 function return values.  The target hook should return the new mode
 and possibly change <code>*<var>punsignedp</var></code> if the promotion should
@@ -270,6 +270,13 @@ just the biggest alignment that, when violated, may cause a fault.
 </p></dd></dl>
 
 <dl>
+<dt><a name="index-TARGET_005fABSOLUTE_005fBIGGEST_005fALIGNMENT"></a>Target Hook: <em>HOST_WIDE_INT</em> <strong>TARGET_ABSOLUTE_BIGGEST_ALIGNMENT</strong></dt>
+<dd><p>If defined, this target hook specifies the absolute biggest alignment
+that a type or variable can have on this machine, otherwise,
+<code>BIGGEST_ALIGNMENT</code> is used.
+</p></dd></dl>
+
+<dl>
 <dt><a name="index-MALLOC_005fABI_005fALIGNMENT"></a>Macro: <strong>MALLOC_ABI_ALIGNMENT</strong></dt>
 <dd><p>Alignment, in bits, a C conformant malloc implementation has to
 provide.  If not defined, the default value is <code>BITS_PER_WORD</code>.
@@ -325,7 +332,7 @@ the default value is <code>BIGGEST_ALIGNMENT</code>.
 </p>
 <p>On systems that use ELF, the default (in <samp>config/elfos.h</samp>) is
 the largest supported 32-bit ELF section alignment representable on
-a 32-bit host e.g. &lsquo;<samp>(((unsigned HOST_WIDEST_INT) 1 &lt;&lt; 28) * 8)</samp>&rsquo;.
+a 32-bit host e.g. &lsquo;<samp>(((uint64_t) 1 &lt;&lt; 28) * 8)</samp>&rsquo;.
 On 32-bit ELF the largest supported section alignment in bits is
 &lsquo;<samp>(0x80000000 * 8)</samp>&rsquo;, but this is not representable on 32-bit hosts.
 </p></dd></dl>
@@ -552,7 +559,7 @@ these accesses should use the bitfield container type.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fMEMBER_005fTYPE_005fFORCES_005fBLK"></a>Target Hook: <em>bool</em> <strong>TARGET_MEMBER_TYPE_FORCES_BLK</strong> <em>(const_tree <var>field</var>, enum machine_mode <var>mode</var>)</em></dt>
+<dt><a name="index-TARGET_005fMEMBER_005fTYPE_005fFORCES_005fBLK"></a>Target Hook: <em>bool</em> <strong>TARGET_MEMBER_TYPE_FORCES_BLK</strong> <em>(const_tree <var>field</var>, machine_mode <var>mode</var>)</em></dt>
 <dd><p>Return true if a structure, union or array containing <var>field</var> should
 be accessed using <code>BLKMODE</code>.
 </p>
@@ -586,7 +593,7 @@ appropriate sizes.  If this macro is undefined, <code>GET_MODE_BITSIZE
 
 <dl>
 <dt><a name="index-STACK_005fSAVEAREA_005fMODE"></a>Macro: <strong>STACK_SAVEAREA_MODE</strong> <em>(<var>save_level</var>)</em></dt>
-<dd><p>If defined, an expression of type <code>enum machine_mode</code> that
+<dd><p>If defined, an expression of type <code>machine_mode</code> that
 specifies the mode of the save area operand of a
 <code>save_stack_<var>level</var></code> named pattern (see <a href="Standard-Names.html#Standard-Names">Standard Names</a>).
 <var>save_level</var> is one of <code>SAVE_BLOCK</code>, <code>SAVE_FUNCTION</code>, or
@@ -601,7 +608,7 @@ would most commonly define this macro if the
 
 <dl>
 <dt><a name="index-STACK_005fSIZE_005fMODE"></a>Macro: <strong>STACK_SIZE_MODE</strong></dt>
-<dd><p>If defined, an expression of type <code>enum machine_mode</code> that
+<dd><p>If defined, an expression of type <code>machine_mode</code> that
 specifies the mode of the size increment operand of an
 <code>allocate_stack</code> named pattern (see <a href="Standard-Names.html#Standard-Names">Standard Names</a>).
 </p>
@@ -611,7 +618,7 @@ pattern needs to support both a 32- and a 64-bit mode.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fLIBGCC_005fCMP_005fRETURN_005fMODE"></a>Target Hook: <em>enum machine_mode</em> <strong>TARGET_LIBGCC_CMP_RETURN_MODE</strong> <em>(void)</em></dt>
+<dt><a name="index-TARGET_005fLIBGCC_005fCMP_005fRETURN_005fMODE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_LIBGCC_CMP_RETURN_MODE</strong> <em>(void)</em></dt>
 <dd><p>This target hook should return the mode to be used for the return value
 of compare instructions expanded to libgcc calls.  If not defined
 <code>word_mode</code> is returned which is the right choice for a majority of
@@ -619,7 +626,7 @@ targets.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fLIBGCC_005fSHIFT_005fCOUNT_005fMODE"></a>Target Hook: <em>enum machine_mode</em> <strong>TARGET_LIBGCC_SHIFT_COUNT_MODE</strong> <em>(void)</em></dt>
+<dt><a name="index-TARGET_005fLIBGCC_005fSHIFT_005fCOUNT_005fMODE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_LIBGCC_SHIFT_COUNT_MODE</strong> <em>(void)</em></dt>
 <dd><p>This target hook should return the mode to be used for the shift count operand
 of shift instructions expanded to libgcc calls.  If not defined
 <code>word_mode</code> is returned which is the right choice for a majority of
@@ -627,7 +634,7 @@ targets.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fUNWIND_005fWORD_005fMODE"></a>Target Hook: <em>enum machine_mode</em> <strong>TARGET_UNWIND_WORD_MODE</strong> <em>(void)</em></dt>
+<dt><a name="index-TARGET_005fUNWIND_005fWORD_005fMODE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_UNWIND_WORD_MODE</strong> <em>(void)</em></dt>
 <dd><p>Return machine mode to be used for <code>_Unwind_Word</code> type.
 The default is to use <code>word_mode</code>.
 </p></dd></dl>
